@@ -1,73 +1,42 @@
-# React + TypeScript + Vite
+# Glossary Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An AI-powered glossary generator that helps you create comprehensive, organized glossaries from a single seed word. Perfect for students, educators, researchers, technical writers, or anyone who needs to build domain-specific glossaries quickly.
 
-Currently, two official plugins are available:
+## What It Does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Glossary Builder** uses Claude AI to automatically generate complete glossaries based on your topic. Simply provide a title and a seed word, and the app will:
 
-## React Compiler
+- Generate 10 relevant terms with clear definitions
+- Rate each term's importance (1-10 scale)
+- Identify related terms for cross-referencing
+- Allow you to expand your glossary with additional terms
+- Provide detailed explanations when you want to learn more about specific terms
+- Export your complete glossary as a markdown file
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **Smart Generation**: Start with any seed word and get a curated list of related terms
+- **Expandable**: Add more terms to your glossary as needed (10 at a time)
+- **Deep Dive**: Click "Learn More" on any term for detailed explanations, examples, and context
+- **Export Ready**: Download your glossary as a formatted markdown file
+- **Clean Interface**: Simple, intuitive design that keeps you focused on learning
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Clone this repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file with your Anthropic API key:
+   ```
+   VITE_ANTHROPIC_API_KEY=your_api_key_here
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Built with React, TypeScript, and Vite for a fast, modern development experience. Powered by Claude AI via the Anthropic API for intelligent content generation.
