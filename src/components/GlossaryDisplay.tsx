@@ -5,6 +5,7 @@ interface GlossaryDisplayProps {
   glossary: Glossary;
   onAddMore: () => void;
   onExport: () => void;
+  onReset: () => void;
   onLearnMore: (termName: string) => void;
   termDetails: Map<string, string>;
   loading: boolean;
@@ -14,6 +15,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
   glossary,
   onAddMore,
   onExport,
+  onReset,
   onLearnMore,
   termDetails,
   loading,
@@ -34,42 +36,42 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
   const isExpanded = (termName: string) => expandedTerms.has(termName);
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 space-y-6">
+    <div className="w-full space-y-6">
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow-lg p-8 text-white">
-        <h1 className="text-3xl font-bold mb-3">
+      <div className="max-w-[900px] pb-8 border-b border-gray-300">
+        <h1 className="text-3xl font-bold mb-3 text-black">
           {glossary.title || 'Glossary'}
         </h1>
         {glossary.description && (
-          <p className="text-blue-100 text-lg">{glossary.description}</p>
+          <p className="text-black text-lg">{glossary.description}</p>
         )}
-        <div className="mt-4 text-sm text-blue-200">
+        <div className="mt-4 text-sm text-black">
           {glossary.terms.length} {glossary.terms.length === 1 ? 'term' : 'terms'}
         </div>
       </div>
 
       {/* Terms List */}
-      <div className="space-y-4">
+      <div className="max-w-[900px]">
         {glossary.terms.map((term, index) => (
           <div
             key={`${term.term}-${index}`}
-            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden"
+            className="py-6 border-b border-gray-300"
           >
-            <div className="p-6">
+            <div>
               {/* Term Header */}
-              <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+              <h2 className="text-2xl font-semibold text-black mb-3">
                 {term.term}
               </h2>
 
               {/* Definition */}
-              <p className="text-gray-700 leading-relaxed mb-4">
+              <p className="text-black leading-relaxed mb-4">
                 {term.definition}
               </p>
 
               {/* Importance Score */}
               <div className="mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-600">
+                  <span className="text-sm font-medium text-black">
                     Importance:
                   </span>
                   <div className="flex items-center gap-1">
@@ -78,12 +80,12 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                         key={i}
                         className={`h-2 w-2 rounded-full ${
                           i < term.importance
-                            ? 'bg-blue-600'
+                            ? 'bg-black'
                             : 'bg-gray-300'
                         }`}
                       />
                     ))}
-                    <span className="ml-2 text-sm font-semibold text-gray-700">
+                    <span className="ml-2 text-sm font-semibold text-black">
                       {term.importance}/10
                     </span>
                   </div>
@@ -93,16 +95,16 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
               {/* Related Terms */}
               {term.relatedTerms.length > 0 && (
                 <div className="mb-4">
-                  <h3 className="text-sm font-medium text-gray-600 mb-2">
+                  <h3 className="text-sm font-medium text-black mb-2">
                     Related Terms:
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {term.relatedTerms.map((relatedTerm, idx) => (
                       <span
                         key={idx}
-                        className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full"
+                        className="text-black text-sm"
                       >
-                        {relatedTerm}
+                        {relatedTerm}{idx < term.relatedTerms.length - 1 ? ', ' : ''}
                       </span>
                     ))}
                   </div>
@@ -111,9 +113,9 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
 
               {/* Expanded Detail Content */}
               {isExpanded(term.term) && termDetails.has(term.term) && (
-                <div className="mt-4 pt-4 border-t border-gray-200">
+                <div className="mt-4 pt-4 border-t border-gray-300">
                   <div
-                    className="prose prose-sm max-w-none text-gray-700"
+                    className="prose prose-sm max-w-none text-black"
                     dangerouslySetInnerHTML={{
                       __html: termDetails.get(term.term)!.replace(/\n/g, '<br />'),
                     }}
@@ -124,7 +126,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
               {/* Learn More Button */}
               <button
                 onClick={() => toggleTerm(term.term)}
-                className="mt-4 text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1 transition-colors"
+                className="mt-4 text-black hover:text-gray-700 font-medium text-sm flex items-center gap-1 transition-colors"
               >
                 {isExpanded(term.term) ? (
                   <>
@@ -168,11 +170,30 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 pt-4">
+      <div className="max-w-[900px] flex flex-col sm:flex-row gap-4 pt-4">
+        <button
+          onClick={onReset}
+          className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-md transition duration-200 flex items-center justify-center gap-2"
+        >
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+          Start New Glossary
+        </button>
         <button
           onClick={onAddMore}
           disabled={loading}
-          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-md transition duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <svg
             className="w-5 h-5"
@@ -191,7 +212,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
         </button>
         <button
           onClick={onExport}
-          className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+          className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-md transition duration-200 flex items-center justify-center gap-2"
         >
           <svg
             className="w-5 h-5"
