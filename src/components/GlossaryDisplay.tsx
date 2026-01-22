@@ -68,8 +68,9 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                 {term.definition}
               </p>
 
-              {/* Importance Score */}
-              <div className="mb-4">
+              {/* Importance Score - Hidden for review */}
+              {/* TODO: Review importance scale UI/UX - see backlog/implementation-plan.md */}
+              {/* <div className="mb-4">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium text-black">
                     Importance:
@@ -90,7 +91,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                     </span>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Related Terms */}
               {term.relatedTerms.length > 0 && (

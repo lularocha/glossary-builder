@@ -1,6 +1,85 @@
-# Backlog: Multiple Glossaries with History Feature
+# Backlog: Future Features & Improvements
 
-## Overview
+This document tracks future enhancements and features under review for the Glossary Builder.
+
+---
+
+## 1. Review: Importance Scale UI/UX
+
+### Current State
+- ✅ API generates importance score (1-10) for each term
+- ✅ Data model includes `importance` field
+- ❌ UI display hidden (previously showed visual dots + "X/10" rating)
+
+### Issues to Address
+The importance scale display was hidden due to UX concerns:
+- **Visual clutter**: Dots + numeric rating felt redundant
+- **Unclear value**: Users may not understand what "importance" means in context
+- **Inconsistent usage**: How should users act on this information?
+
+### Questions for Review
+1. **Should we show importance at all?**
+   - Is it valuable to users or just noise?
+   - Does it help prioritize which terms to learn first?
+
+2. **If yes, how should we display it?**
+   - Options:
+     - A. Simple numeric score (e.g., "8/10")
+     - B. Star rating (★★★★☆)
+     - C. Badge/label (e.g., "Core Concept", "Advanced", "Foundational")
+     - D. Sort order only (don't show, just use for ranking)
+     - E. Color coding (highlight important terms differently)
+
+3. **What does "importance" actually mean?**
+   - Should we rename it? (e.g., "Priority", "Relevance", "Fundamentality")
+   - Should we add a tooltip explaining the score?
+
+### Proposed Approaches
+
+#### Option A: Remove Entirely (Simplest)
+- Stop generating importance scores from API
+- Remove field from data model
+- Focus on alphabetical or creation-order display
+
+#### Option B: Use for Sorting Only (Hidden Intelligence)
+- Keep generating scores
+- Sort terms by importance by default
+- Don't display the score to users
+- Add toggle: "Sort by: Importance | Alphabetical"
+
+#### Option C: Redesign Display (Better UX)
+- Keep the score but improve how it's shown
+- Use badges: "Essential", "Important", "Supplementary"
+- Based on score ranges: 8-10 = Essential, 5-7 = Important, 1-4 = Supplementary
+- Cleaner, more meaningful to users
+
+#### Option D: Make It Interactive
+- Allow users to adjust importance scores manually
+- Use scores to create custom study lists
+- "Show only essential terms" filter
+
+### Recommendation
+**Option B (Use for Sorting Only)** seems like the best balance:
+- Keeps the AI intelligence without UI clutter
+- Users benefit from smart ordering without thinking about it
+- Can always add display later if users request it
+
+### Implementation (if pursuing Option B)
+1. Keep importance field in Term interface
+2. Keep API generation of scores
+3. Add default sort by importance in GlossaryDisplay
+4. Add sort toggle UI (Importance vs Alphabetical)
+5. Remove visual display entirely
+
+**Status**: Under review
+**Priority**: Low
+**Estimated effort**: 1-2 hours (if implementing Option B)
+
+---
+
+## 2. Multiple Glossaries with History Feature
+
+### Overview
 Enhance the Glossary Builder to support multiple glossaries with a browsing interface, allowing users to create, save, and manage a collection of glossaries over time.
 
 ## Current State
