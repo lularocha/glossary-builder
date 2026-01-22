@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GlossaryInput } from './components/GlossaryInput';
 import { GlossaryDisplay } from './components/GlossaryDisplay';
 import type { Glossary, GlossaryInput as GlossaryInputType } from './types/glossary';
 import { generateGlossary, expandTerms, expandTermDetail } from './utils/claudeApi';
+import { saveGlossary, loadGlossary, saveTermDetails, loadTermDetails, clearStorage } from './utils/storage';
 
 function App() {
   const [glossary, setGlossary] = useState<Glossary | null>(null);
@@ -10,6 +11,29 @@ function App() {
   const [error, setError] = useState<string>('');
   const [loadingMessage, setLoadingMessage] = useState<string>('');
   const [termDetails, setTermDetails] = useState<Map<string, string>>(new Map());
+
+  // Load saved data on component mount
+  useEffect(() => {
+    const savedGlossary = loadGlossary();
+    const savedTermDetails = loadTermDetails();
+
+    if (savedGlossary) {
+      setGlossary(savedGlossary);
+    }
+    if (savedTermDetails.size > 0) {
+      setTermDetails(savedTermDetails);
+    }
+  }, []);
+
+  // Auto-save glossary whenever it changes
+  useEffect(() => {
+    saveGlossary(glossary);
+  }, [glossary]);
+
+  // Auto-save term details whenever they change
+  useEffect(() => {
+    saveTermDetails(termDetails);
+  }, [termDetails]);
 
   const handleGenerate = async (input: GlossaryInputType) => {
     setLoading(true);
@@ -137,6 +161,7 @@ function App() {
     setGlossary(null);
     setError('');
     setTermDetails(new Map());
+    clearStorage();
   };
 
   return (
