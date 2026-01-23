@@ -2,26 +2,20 @@ import { useState, useEffect } from 'react';
 import { GlossaryInput } from './components/GlossaryInput';
 import { GlossaryDisplay } from './components/GlossaryDisplay';
 import type { Glossary, GlossaryInput as GlossaryInputType } from './types/glossary';
-import { generateGlossary, expandTerms, expandTermDetail } from './utils/claudeApi';
-import { saveGlossary, loadGlossary, saveTermDetails, loadTermDetails, clearStorage } from './utils/storage';
+import { generateGlossary } from './utils/claudeApi';
+import { saveGlossary, loadGlossary, clearStorage } from './utils/storage';
 
 function App() {
   const [glossary, setGlossary] = useState<Glossary | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [loadingMessage, setLoadingMessage] = useState<string>('');
-  const [termDetails, setTermDetails] = useState<Map<string, string>>(new Map());
 
   // Load saved data on component mount
   useEffect(() => {
     const savedGlossary = loadGlossary();
-    const savedTermDetails = loadTermDetails();
-
     if (savedGlossary) {
       setGlossary(savedGlossary);
-    }
-    if (savedTermDetails.size > 0) {
-      setTermDetails(savedTermDetails);
     }
   }, []);
 
@@ -30,52 +24,18 @@ function App() {
     saveGlossary(glossary);
   }, [glossary]);
 
-  // Auto-save term details whenever they change
-  useEffect(() => {
-    saveTermDetails(termDetails);
-  }, [termDetails]);
-
   const handleGenerate = async (input: GlossaryInputType) => {
     setLoading(true);
-    setLoadingMessage('Generating glossary with 10 terms...');
+    setLoadingMessage('Generating glossary with 12 terms...');
     setError('');
 
     try {
       const newGlossary = await generateGlossary(input.title, input.seedWord);
       setGlossary(newGlossary);
-      setTermDetails(new Map()); // Reset term details for new glossary
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to generate glossary';
       setError(errorMessage);
       console.error('Error generating glossary:', err);
-    } finally {
-      setLoading(false);
-      setLoadingMessage('');
-    }
-  };
-
-  const handleAddMore = async () => {
-    if (!glossary) return;
-
-    setLoading(true);
-    setLoadingMessage('Generating 10 more terms...');
-    setError('');
-
-    try {
-      const newTerms = await expandTerms(glossary);
-
-      // Update the glossary with new terms
-      const updatedGlossary: Glossary = {
-        ...glossary,
-        terms: [...glossary.terms, ...newTerms],
-        updatedAt: new Date(),
-      };
-
-      setGlossary(updatedGlossary);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to add more terms';
-      setError(errorMessage);
-      console.error('Error expanding glossary:', err);
     } finally {
       setLoading(false);
       setLoadingMessage('');
@@ -121,46 +81,9 @@ function App() {
     URL.revokeObjectURL(url);
   };
 
-  const handleLearnMore = async (termName: string) => {
-    if (!glossary) return;
-
-    // Check if we already have details for this term
-    if (termDetails.has(termName)) {
-      return; // Already loaded
-    }
-
-    setLoading(true);
-    setLoadingMessage(`Loading details for "${termName}"...`);
-    setError('');
-
-    try {
-      // Find the term in the glossary
-      const term = glossary.terms.find((t) => t.term === termName);
-      if (!term) {
-        throw new Error('Term not found in glossary');
-      }
-
-      const detailedContent = await expandTermDetail(term, {
-        title: glossary.title,
-        seedWord: glossary.seedWord,
-      });
-
-      // Update the termDetails map with the new content
-      setTermDetails(new Map(termDetails.set(termName, detailedContent)));
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load term details';
-      setError(errorMessage);
-      console.error('Error expanding term detail:', err);
-    } finally {
-      setLoading(false);
-      setLoadingMessage('');
-    }
-  };
-
   const handleReset = () => {
     setGlossary(null);
     setError('');
-    setTermDetails(new Map());
     clearStorage();
   };
 
@@ -220,17 +143,11 @@ function App() {
           {!glossary ? (
             <GlossaryInput onGenerate={handleGenerate} />
           ) : (
-            <>
-              <GlossaryDisplay
-                glossary={glossary}
-                onAddMore={handleAddMore}
-                onExport={handleExport}
-                onReset={handleReset}
-                onLearnMore={handleLearnMore}
-                termDetails={termDetails}
-                loading={loading}
-              />
-            </>
+            <GlossaryDisplay
+              glossary={glossary}
+              onExport={handleExport}
+              onReset={handleReset}
+            />
           )}
         </main>
       </div>
