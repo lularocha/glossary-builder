@@ -14,7 +14,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
       <div className="max-w-[900px] mx-auto pb-8 border-b border-gray-300">
         <p className="text-sm uppercase text-gray-400 font-bold mb-2">Generated glossary</p>
         <h1 className="glossary-title text-[2.5rem] font-bold mb-3 text-black">
-          {glossary.title || 'Glossary'}
+          {glossary.title || glossary.seedWord}
         </h1>
         {glossary.description && (
           <p className="text-black text-lg">{glossary.description}</p>

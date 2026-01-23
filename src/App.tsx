@@ -47,7 +47,7 @@ function App() {
     if (!glossary) return;
 
     // Generate markdown content
-    let markdown = `# ${glossary.title || 'Glossary'}\n\n`;
+    let markdown = `# ${glossary.title || glossary.seedWord}\n\n`;
 
     if (glossary.description) {
       markdown += `${glossary.description}\n\n`;
@@ -75,7 +75,7 @@ function App() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${glossary.title || 'glossary'}-${new Date().toISOString().split('T')[0]}.md`;
+    link.download = `${(glossary.title || glossary.seedWord).toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.md`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
