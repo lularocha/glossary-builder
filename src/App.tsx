@@ -11,6 +11,7 @@ function App() {
   const [error, setError] = useState<string>('');
   const [loadingMessage, setLoadingMessage] = useState<string>('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showReminder, setShowReminder] = useState(false);
 
   // Load saved data on component mount
   useEffect(() => {
@@ -33,6 +34,7 @@ function App() {
     try {
       const newGlossary = await generateGlossary(input.title, input.seedWord);
       setGlossary(newGlossary);
+      setShowReminder(true);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to generate glossary';
       setError(errorMessage);
@@ -86,12 +88,44 @@ function App() {
   const handleReset = () => {
     setGlossary(null);
     setError('');
+    setShowReminder(false);
     clearStorage();
     setMenuOpen(false);
   };
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Reminder Banner */}
+      {glossary && showReminder && (
+        <div className="w-full bg-yellow-100/70">
+          <div className="max-w-[900px] mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <p className="text-black text-sm md:text-base flex-1">
+              Don't forget to download your glossary!<br />
+              Your generated glossary will be lost if you hit the "Start New" button or exit this page.
+            </p>
+            <button
+              onClick={() => setShowReminder(false)}
+              className="text-black hover:text-gray-700 transition-colors flex-shrink-0"
+              aria-label="Close reminder"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="mx-auto px-4 pt-3 pb-8 md:pt-8">
         {/* Header */}
         <header className="max-w-[900px] mx-auto mb-20 flex justify-between items-start">
@@ -253,14 +287,14 @@ function App() {
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 border-l-4 border-black pl-4">
+          <div className="max-w-[900px] mx-auto mb-6 border-l-4 border-black pl-4">
             <p className="text-black font-medium">{error}</p>
           </div>
         )}
 
         {/* Loading Indicator */}
         {loading && (
-          <div className="mb-6 border-l-4 border-black pl-4">
+          <div className="max-w-[900px] mx-auto mb-6 border-l-4 border-black pl-4">
             <div className="flex items-center gap-3">
               <svg
                 className="animate-spin h-5 w-5 text-black"

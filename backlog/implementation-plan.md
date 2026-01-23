@@ -2,14 +2,85 @@
 
 This document tracks future enhancements and features under review for the Glossary Builder.
 
+**Last Updated:** January 23, 2026
+
+## Recent Updates (January 23, 2026)
+
+The project received significant UI/UX polish today:
+- Fixed content centering at all viewport sizes
+- Enhanced input page styling and layout
+- Refined UI layout with clear separation of input/display views
+- Added responsive hamburger menu for mobile
+- Improved button positioning and mobile responsiveness
+
+The app is now in a polished state with a clean, professional UI. The next major feature would be **Multiple Glossaries with History** (see below).
+
+---
+
+## Current State of the Project
+
+### ✅ Completed Features (as of Jan 23, 2026)
+- **Core Functionality:**
+  - AI-powered glossary generation (12 terms per seed word)
+  - Single glossary persistence via localStorage
+  - Clean, minimal UI with excellent typography
+  - Markdown export functionality
+
+- **UI/UX Improvements (Jan 23, 2026):**
+  - Responsive design with mobile-first approach
+  - Centered content layout at all viewport sizes (fixed in latest commits)
+  - Enhanced input page styling with clear form hierarchy
+  - Separate input and display views with clean transitions
+  - Header-based action buttons (Start New, Download)
+  - Responsive hamburger menu for mobile devices with slide-out panel
+  - Creator attribution footer ("Created by Lula Rocha + Claude")
+  - Loading states with visual indicators and messages
+  - Error handling with user-friendly messages
+  - Clean monochromatic design with selective color accents
+  - Excellent typography hierarchy
+  - Smooth hover/active states on interactive elements
+
+- **Technical Foundation:**
+  - TypeScript for type safety
+  - Robust localStorage with error handling (`src/utils/storage.ts`)
+  - Serialization/deserialization of Date objects
+  - Data validation on load
+  - Quota exceeded error handling
+  - Clean separation of concerns (API, storage, components)
+
+**Current File Structure:**
+```
+src/
+├── components/
+│   ├── GlossaryInput.tsx      # Input form component
+│   └── GlossaryDisplay.tsx    # Display component for generated glossary
+├── types/
+│   └── glossary.ts            # TypeScript interfaces
+├── utils/
+│   ├── storage.ts             # localStorage persistence
+│   └── claudeApi.ts           # Frontend API wrapper
+└── App.tsx                    # Main app with routing logic
+
+api/
+└── generate.ts                # Vercel serverless function (Claude integration)
+```
+
+### 🚧 Known Limitations
+- Can only save ONE glossary at a time (new glossary overwrites previous)
+- No glossary history or browsing interface
+- Related terms are generated but hidden in UI (CSS `hidden` class)
+- Importance scores generated but not displayed to users
+- No ability to add more terms incrementally to existing glossary
+
 ---
 
 ## 1. Review: Importance Scale UI/UX
 
 ### Current State
 - ✅ API generates importance score (1-10) for each term
-- ✅ Data model includes `importance` field
-- ❌ UI display hidden (previously showed visual dots + "X/10" rating)
+- ✅ Data model includes `importance` field in `Term` interface
+- ✅ Export includes importance scores in markdown
+- ❌ UI display hidden (not shown to users in display view)
 
 ### Issues to Address
 The importance scale display was hidden due to UX concerns:
@@ -82,24 +153,32 @@ The importance scale display was hidden due to UX concerns:
 ### Overview
 Enhance the Glossary Builder to support multiple glossaries with a browsing interface, allowing users to create, save, and manage a collection of glossaries over time.
 
-## Current State
+### Current State (as of Jan 23, 2026)
 - ✅ Single active glossary persisted to localStorage
 - ✅ Auto-save/load on page refresh
-- ✅ Term details persistence
-- ❌ No way to save multiple glossaries
+- ✅ Robust localStorage implementation with error handling
+- ✅ Term details storage infrastructure (prepared but not actively used)
+- ✅ Clean UI foundation ready for expansion
+- ✅ Dexie.js already installed (`dexie@4.2.1`) but not yet used
+- ❌ No way to save multiple glossaries (new overwrites old)
 - ❌ No history or glossary management UI
+- ❌ No search/filter functionality
+- ❌ No IndexedDB implementation yet
 
 ## Proposed Feature
 Add the ability to:
-1. Save multiple glossaries with unique names
+1. Save multiple glossaries (each with unique ID and title)
 2. Browse and load previously created glossaries
-3. Delete old glossaries
+3. Delete glossaries from history
 4. Search/filter through saved glossaries
 5. Import/export glossaries as JSON files
+6. Seamless migration from current localStorage implementation
 
-## UI Mockup
+## UI Mockup (Proposed Design)
 
-### Main View - Glossary List
+**Note:** These are mockups for the future multi-glossary feature. Current UI shows single glossary only.
+
+### Main View - Glossary List (New Screen)
 ```
 ┌─────────────────────────────────────────────────────┐
 │ Glossary Builder                                    │
@@ -169,19 +248,29 @@ glossaries.createIndex('termCount');
 glossaries.createIndex('title');
 ```
 
-### Migration from localStorage
-When the feature is implemented, migrate the current localStorage glossary to IndexedDB:
-1. Check for `glossary-builder:glossary` in localStorage
-2. If found, create a new entry in IndexedDB
-3. Prompt user: "We found a saved glossary. Would you like to save it to your library?"
-4. After migration, clear old localStorage keys
+### Migration from localStorage (Critical for Implementation)
+
+**Important:** When this feature is implemented, existing users may have a glossary saved in localStorage that must not be lost.
+
+**Migration Flow:**
+1. On app load, check for migration completion flag
+2. If not migrated yet:
+   - Check for existing `glossary-builder:glossary` in localStorage
+   - If found, automatically migrate to IndexedDB as first saved glossary
+   - Show user notification: "Your saved glossary has been added to your library"
+   - Set migration completion flag
+3. Optionally offer to clear old localStorage (keep as backup initially)
+
+**Implementation in Step 1.2** (see Phase 1 below)
 
 ## Implementation Plan
+
+**Note:** This is a detailed implementation plan broken into phases. Each phase builds on the previous one. The simpler approach (per project guidelines) would be to start with Phase 1 & 2 only, then iterate based on user feedback.
 
 ### Phase 1: Database Setup (2-3 hours)
 
 #### Step 1.1: Create Dexie Database Wrapper
-**File**: `src/utils/database.ts`
+**File**: `src/utils/database.ts` (new file)
 
 ```typescript
 import Dexie, { Table } from 'dexie';
@@ -228,31 +317,58 @@ export async function searchGlossaries(query: string): Promise<StoredGlossary[]>
 ```
 
 #### Step 1.2: Migrate localStorage to IndexedDB
-**File**: `src/utils/migration.ts`
+**File**: `src/utils/migration.ts` (new file)
 
-Handle one-time migration from localStorage to IndexedDB.
+Handle one-time migration from localStorage to IndexedDB. This is critical since users may have a saved glossary in localStorage that they don't want to lose.
+
+**Migration Flow:**
+1. Check if migration has already been completed (flag in localStorage)
+2. If not migrated, check for existing glossary in localStorage
+3. If found, show user-friendly prompt to migrate
+4. Import into IndexedDB as first saved glossary
+5. Set migration complete flag
+6. Optionally clear old localStorage data (after user confirms)
 
 ### Phase 2: UI Components (3-4 hours)
 
 #### Step 2.1: Create Glossary List Component
-**File**: `src/components/GlossaryList.tsx`
+**File**: `src/components/GlossaryList.tsx` (new file)
 
 Display all saved glossaries in a grid/list view with:
 - Glossary card showing title, seed word, term count, dates
 - Action buttons: Open, Export, Delete
 - Search/filter functionality
 - Sort options (by date, by term count, alphabetically)
+- Empty state when no glossaries exist
+- Responsive design matching current UI aesthetic
 
 #### Step 2.2: Update App.tsx Routing
-Add simple state-based routing:
-- View mode: "list" | "create" | "display"
-- Navigation between views
-- Pass selected glossary to GlossaryDisplay
+**File**: `src/App.tsx` (modify existing)
 
-#### Step 2.3: Add "Save As" / "Save Copy" Functionality
+Current state: App.tsx already has clean separation between input and display views.
+
+Add simple state-based routing:
+- View mode: "list" | "input" | "display"
+- Default to "list" view when app loads
+- "Create New" button navigates to "input" view
+- After generation, navigate to "display" view
+- "Back to List" button returns to "list" view
+- Maintain current responsive header and mobile menu
+
+#### Step 2.3: Update GlossaryDisplay Component
+**File**: `src/components/GlossaryDisplay.tsx` (modify existing)
+
+Minor updates to existing component:
+- Add "Back to List" button in header
+- Keep all existing display functionality
+- Pass through selected glossary from parent
+- No major structural changes needed
+
+#### Step 2.4: Add "Save As" / "Save Copy" Functionality
 Allow users to:
-- Save current glossary with a new title
+- Save current glossary with a new title (prompt for title)
 - Create copies of existing glossaries for variation
+- Useful for creating glossary variations or templates
 
 ### Phase 3: Import/Export (1-2 hours)
 
@@ -414,6 +530,36 @@ May need to add:
 
 ---
 
+## Recommended Implementation Approach
+
+Per project guidelines (CLAUDE.md #11: "When in plan mode, always suggest the simpler approach for development first"), here's the recommended phased approach:
+
+### MVP (Minimum Viable Product) - Start Here
+**Goal:** Enable users to save and browse multiple glossaries
+
+**Scope:**
+- ✅ Phase 1: Database Setup (IndexedDB with Dexie)
+- ✅ Phase 2: Basic UI Components (List view, routing)
+- ✅ Migration from localStorage
+- ⏭️ Skip: Advanced features (search, tags, batch operations)
+
+**Estimated Effort:** 5-7 hours
+
+**Benefits:**
+- Solves the core problem (can't save multiple glossaries)
+- Minimal complexity
+- Foundation for future enhancements
+- Fast time to value
+
+### Future Iterations (Add After MVP)
+**Phase 3:** Import/Export JSON (1-2 hours)
+**Phase 4:** Search, filter, tags, batch operations (2-3 hours)
+
+This approach allows for user feedback after the MVP before investing in advanced features that may or may not be needed.
+
+---
+
 **Status**: Backlog - Not yet started
-**Last Updated**: 2026-01-22
+**Last Updated**: 2026-01-23
 **Dependencies**: Current localStorage implementation (v1)
+**Next Step**: User decision on whether to implement MVP or full feature set
