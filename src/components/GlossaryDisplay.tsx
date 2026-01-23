@@ -12,7 +12,8 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
     <div className="w-full space-y-6">
       {/* Header Section */}
       <div className="max-w-[900px] pb-8 border-b border-gray-300">
-        <h1 className="text-3xl font-bold mb-3 text-black">
+        <p className="text-sm uppercase text-gray-400 font-bold mb-2">Generated glossary</p>
+        <h1 className="glossary-title text-[2.5rem] font-bold mb-3 text-black">
           {glossary.title || 'Glossary'}
         </h1>
         {glossary.description && (

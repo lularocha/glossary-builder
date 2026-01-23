@@ -24,6 +24,27 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate }) => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label
+            htmlFor="seedWord"
+            className="block text-sm font-medium text-black mb-2"
+          >
+            Seed Word
+          </label>
+          <input
+            type="text"
+            id="seedWord"
+            value={seedWord}
+            onChange={(e) => setSeedWord(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
+            placeholder="e.g., neural network"
+            required
+          />
+          <p className="mt-1 text-sm text-black">
+            Enter a technical term or concept to build your glossary around
+          </p>
+        </div>
+
+        <div>
+          <label
             htmlFor="title"
             className="block text-sm font-medium text-black mb-2"
           >
@@ -39,27 +60,6 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate }) => {
           />
           <p className="mt-1 text-sm text-black">
             Give your glossary a descriptive title
-          </p>
-        </div>
-
-        <div>
-          <label
-            htmlFor="seedWord"
-            className="block text-sm font-medium text-black mb-2"
-          >
-            Seed Word <span className="text-black">*</span>
-          </label>
-          <input
-            type="text"
-            id="seedWord"
-            value={seedWord}
-            onChange={(e) => setSeedWord(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
-            placeholder="e.g., neural network"
-            required
-          />
-          <p className="mt-1 text-sm text-black">
-            Enter a technical term or concept to build your glossary around
           </p>
         </div>
 

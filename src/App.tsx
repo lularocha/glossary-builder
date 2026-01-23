@@ -92,10 +92,10 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 pt-3 pb-8 md:pt-8">
         {/* Header */}
-        <header className="mb-4 flex justify-between items-start">
-          <h1 className="text-3xl md:text-5xl font-bold text-black">
+        <header className="mb-20 flex justify-between items-start">
+          <h1 className="tool-title text-5xl font-bold text-black">
             Glossary Builder
           </h1>
 
@@ -150,7 +150,7 @@ function App() {
                 className="md:hidden p-2 text-black"
               >
                 <svg
-                  className="w-6 h-6"
+                  className="w-9 h-9"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -167,10 +167,6 @@ function App() {
           )}
         </header>
 
-        <p className="text-xl text-black mb-12">
-          Build comprehensive glossaries powered by Claude AI
-        </p>
-
         {/* Mobile Slide Menu */}
         {glossary && (
           <div
@@ -180,14 +176,14 @@ function App() {
           >
             {/* Backdrop */}
             <div
-              className="absolute inset-0 bg-black bg-opacity-50"
+              className="absolute inset-0 bg-black/50"
               onClick={() => setMenuOpen(false)}
             />
 
             {/* Slide Panel */}
             <div
-              className={`absolute top-0 right-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-out ${
-                menuOpen ? 'translate-x-0' : 'translate-x-full'
+              className={`absolute top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-out ${
+                menuOpen ? 'translate-x-0' : '-translate-x-full'
               }`}
             >
               <div className="p-4">
