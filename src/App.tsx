@@ -140,7 +140,7 @@ function App() {
               <div className="hidden md:flex gap-3">
                 <button
                   onClick={handleReset}
-                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
+                  className="bg-orange-400 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
                   <svg
                     className="w-5 h-5"
@@ -243,7 +243,7 @@ function App() {
                 <div className="flex flex-col gap-4">
                   <button
                     onClick={handleReset}
-                    className="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                    className="bg-orange-400 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <svg
                       className="w-5 h-5"
