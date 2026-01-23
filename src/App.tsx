@@ -299,7 +299,8 @@ function App() {
         </main>
 
         <footer className="max-w-[900px] mx-auto py-4 text-sm text-left text-black">
-          Created by Lula Rocha + Claude
+          Created by Lula Rocha + Claude<br />
+          <span className="text-[#f90]">Latest update: January 23, 2026</span>
         </footer>
       </div>
     </div>

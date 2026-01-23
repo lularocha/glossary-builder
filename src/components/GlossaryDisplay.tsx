@@ -19,7 +19,6 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
         {glossary.description && (
           <p className="text-black text-lg">{glossary.description}</p>
         )}
-        <p className="mt-2 text-sm text-[#f90]">Latest update: January 23, 2026</p>
       </div>
 
       {/* Terms List */}
