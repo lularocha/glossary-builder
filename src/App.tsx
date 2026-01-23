@@ -301,6 +301,10 @@ function App() {
             <GlossaryDisplay glossary={glossary} />
           )}
         </main>
+
+        <footer className="py-4 text-sm text-left text-black">
+          Created by Lula Rocha + Claude
+        </footer>
       </div>
     </div>
   );
