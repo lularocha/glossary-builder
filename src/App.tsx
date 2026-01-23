@@ -48,36 +48,50 @@ function App() {
   const handleExport = () => {
     if (!glossary) return;
 
-    // Generate markdown content
-    let markdown = `# ${glossary.title || glossary.seedWord}\n\n`;
+    // Helper function to convert text to Title Case
+    const toTitleCase = (str: string) => {
+      return str
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+    };
+
+    // Generate formatted text content
+    let content = `${glossary.title || glossary.seedWord}\n`;
+    content += `${'='.repeat((glossary.title || glossary.seedWord).length)}\n\n`;
 
     if (glossary.description) {
-      markdown += `${glossary.description}\n\n`;
+      content += `${glossary.description}\n\n`;
     }
 
-    markdown += `**Seed Word:** ${glossary.seedWord}\n\n`;
-    markdown += `**Total Terms:** ${glossary.terms.length}\n\n`;
-    markdown += `---\n\n`;
+    content += `Seed Word: ${glossary.seedWord}\n\n`;
+    content += `Total Terms: ${glossary.terms.length}\n\n`;
+    content += `${'-'.repeat(50)}\n\n`;
 
     // Add all terms
     glossary.terms.forEach((term, index) => {
-      markdown += `## ${index + 1}. ${term.term}\n\n`;
-      markdown += `**Definition:** ${term.definition}\n\n`;
-      markdown += `**Importance:** ${term.importance}/10\n\n`;
+      content += `${index + 1}. ${term.term}\n\n`;
+      content += `Definition: ${term.definition}\n\n`;
+      content += `Importance: ${term.importance}/10\n\n`;
 
       if (term.relatedTerms.length > 0) {
-        markdown += `**Related Terms:** ${term.relatedTerms.join(', ')}\n\n`;
+        content += `Related Terms: ${term.relatedTerms.join(', ')}\n\n`;
       }
 
-      markdown += `---\n\n`;
+      content += `${'-'.repeat(50)}\n\n`;
     });
 
-    // Create download link
-    const blob = new Blob([markdown], { type: 'text/markdown' });
+    // Create download link with .txt format
+    const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${(glossary.title || glossary.seedWord).toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.md`;
+
+    // Format filename as "Title Glossary.txt" with proper capitalization and spaces
+    const baseTitle = glossary.title || glossary.seedWord;
+    const formattedTitle = toTitleCase(baseTitle);
+    link.download = `${formattedTitle} Glossary.txt`;
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
