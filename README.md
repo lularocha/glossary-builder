@@ -1,42 +1,105 @@
 # Glossary Builder
 
-An AI-powered glossary generator that helps you create comprehensive, organized glossaries from a single seed word. Perfect for students, educators, researchers, technical writers, or anyone who needs to build domain-specific glossaries quickly.
+An AI-powered glossary generator that creates comprehensive, organized glossaries from a single seed word. Perfect for students, educators, researchers, technical writers, or anyone building domain-specific glossaries.
 
-## What It Does
+## Overview
 
-**Glossary Builder** uses Claude AI to automatically generate complete glossaries based on your topic. Simply provide a title and a seed word, and the app will:
-
-- Generate 10 relevant terms with clear definitions
-- Rate each term's importance (1-10 scale)
-- Identify related terms for cross-referencing
-- Allow you to expand your glossary with additional terms
-- Provide detailed explanations when you want to learn more about specific terms
-- Export your complete glossary as a markdown file
+Glossary Builder uses Claude AI to automatically generate complete glossaries based on your topic. Enter a title and seed word, and the app generates 10 relevant terms with definitions, importance ratings, and related terms. You can expand your glossary, explore terms in depth, and export everything as a formatted text file.
 
 ## Features
 
-- **Smart Generation**: Start with any seed word and get a curated list of related terms
-- **Expandable**: Add more terms to your glossary as needed (10 at a time)
-- **Deep Dive**: Click "Learn More" on any term for detailed explanations, examples, and context
-- **Export Ready**: Download your glossary as a formatted markdown file
-- **Clean Interface**: Simple, intuitive design that keeps you focused on learning
+- **Smart Generation** - AI generates 10 contextually relevant terms from any seed word
+- **Importance Ratings** - Each term rated 1-10 for relevance and significance
+- **Related Terms** - Cross-referenced connections between glossary entries
+- **Expandable** - Add more terms to your glossary (10 at a time)
+- **Deep Dive** - Click "Learn More" for detailed explanations, examples, and context
+- **Export Ready** - Download as formatted .txt file with title, date, and all terms
+- **Local Storage** - All glossaries saved locally in your browser using IndexedDB
+
+## How It Works
+
+1. **Input** - Enter a glossary title and seed word (e.g., "Machine Learning" + "neural networks")
+2. **Generation** - Claude AI analyzes the seed word and generates 10 related terms with definitions, importance scores, and related terms
+3. **Expand** - Add more terms by clicking "Add More Terms" to grow your glossary
+4. **Explore** - Click "Learn More" on any term for in-depth explanations
+5. **Export** - Download your complete glossary as a formatted text file
+6. **Persistence** - All glossaries are automatically saved to your browser's local storage
 
 ## Getting Started
 
-1. Clone this repository
+### Prerequisites
+
+- Node.js (v18 or higher)
+- Anthropic API key ([get one here](https://console.anthropic.com/))
+
+### Installation
+
+1. Clone this repository:
+   ```bash
+   git clone <repository-url>
+   cd glossary-builder
+   ```
+
 2. Install dependencies:
    ```bash
    npm install
    ```
-3. Create a `.env` file with your Anthropic API key:
-   ```
+
+3. Create a `.env` file in the root directory:
+   ```env
    VITE_ANTHROPIC_API_KEY=your_api_key_here
    ```
+
 4. Start the development server:
    ```bash
    npm run dev
    ```
 
+5. Open your browser to `http://localhost:5173`
+
+### Building for Production
+
+```bash
+npm run build
+npm run preview
+```
+
 ## Tech Stack
 
-Built with React, TypeScript, and Vite for a fast, modern development experience. Powered by Claude AI via the Anthropic API for intelligent content generation.
+### Core
+- **React 19** - UI framework
+- **TypeScript** - Type-safe JavaScript
+- **Vite** - Fast build tool and dev server
+
+### Styling
+- **Tailwind CSS v4** - Utility-first CSS framework
+- **Lucide React** - Icon library
+
+### AI & Storage
+- **Anthropic SDK** - Claude AI integration
+- **Dexie** - IndexedDB wrapper for local storage
+
+### Development Tools
+- **ESLint** - Code linting
+- **TypeScript ESLint** - TypeScript-specific linting rules
+- **PostCSS** - CSS processing
+
+## Project Structure
+
+```
+glossary-builder/
+├── src/
+│   ├── components/          # React components
+│   │   ├── GlossaryInput.tsx   # Input form
+│   │   └── GlossaryDisplay.tsx # Term display & interaction
+│   ├── utils/               # Utilities
+│   │   ├── claudeApi.ts        # Claude API integration
+│   │   └── storage.ts          # IndexedDB storage
+│   ├── types/               # TypeScript definitions
+│   │   └── glossary.ts
+│   ├── App.tsx              # Main app component
+│   └── main.tsx             # Entry point
+├── public/                  # Static assets
+├── index.html              # HTML template
+└── package.json            # Dependencies & scripts
+```
