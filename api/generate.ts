@@ -24,12 +24,26 @@ interface GenerateResponse {
 }
 
 /**
- * Strips markdown code blocks from API responses before parsing JSON.
+ * Strips markdown code blocks and other formatting from API responses before parsing JSON.
  */
 function cleanJsonResponse(text: string): string {
+  let cleaned = text.trim();
+
+  // Remove markdown code blocks with optional language identifier
   const codeBlockPattern = /^```(?:json)?\s*\n?([\s\S]*?)\n?```$/;
-  const match = text.trim().match(codeBlockPattern);
-  return match ? match[1].trim() : text.trim();
+  const match = cleaned.match(codeBlockPattern);
+  if (match) {
+    cleaned = match[1].trim();
+  }
+
+  // Remove any leading/trailing text that's not part of the JSON object
+  const jsonPattern = /(\{[\s\S]*\})/;
+  const jsonMatch = cleaned.match(jsonPattern);
+  if (jsonMatch) {
+    cleaned = jsonMatch[1];
+  }
+
+  return cleaned;
 }
 
 export default async function handler(
@@ -102,7 +116,22 @@ Return ONLY valid JSON in this exact format:
     }
 
     const cleanedText = cleanJsonResponse(content.text);
-    const parsed = JSON.parse(cleanedText);
+
+    let parsed;
+    try {
+      parsed = JSON.parse(cleanedText);
+    } catch (parseError) {
+      console.error('JSON Parse Error:', parseError);
+      console.error('Raw response:', content.text.substring(0, 500));
+      console.error('Cleaned text:', cleanedText.substring(0, 500));
+      throw new SyntaxError('Failed to parse Claude API response as JSON');
+    }
+
+    // Validate the parsed response has the expected structure
+    if (!parsed.description || !Array.isArray(parsed.terms)) {
+      console.error('Invalid response structure:', parsed);
+      return response.status(500).json({ error: 'Invalid response structure from Claude API' });
+    }
 
     const glossary: GenerateResponse = {
       id: crypto.randomUUID(),
