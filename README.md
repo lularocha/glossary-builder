@@ -4,11 +4,12 @@ An AI-powered glossary generator that creates comprehensive, organized glossarie
 
 ## Overview
 
-Glossary Builder uses Claude AI to automatically generate complete glossaries based on your topic. Enter a title and seed word, and the app generates 10 relevant terms with definitions, importance ratings, and related terms. You can expand your glossary, explore terms in depth, and export everything as a formatted text file.
+Glossary Builder uses Claude AI to automatically generate complete glossaries based on your topic. Enter a title and seed word, and the app generates 12 relevant terms with definitions, importance ratings, and related terms. You can expand your glossary, explore terms in depth, and export everything as a formatted text file.
 
 ## Features
 
-- **Smart Generation** - AI generates 10 contextually relevant terms from any seed word
+- **Smart Generation** - AI generates 12 contextually relevant terms from any seed word
+- **Quality Rules** - Built-in rules ensure consistent term selection and clear definitions
 - **Importance Ratings** - Each term rated 1-10 for relevance and significance
 - **Related Terms** - Cross-referenced connections between glossary entries
 - **Expandable** - Add more terms to your glossary (10 at a time)
@@ -88,18 +89,31 @@ npm run preview
 
 ```
 glossary-builder/
+├── api/
+│   ├── generate.ts            # Vercel serverless function for Claude API
+│   └── GLOSSARY_RULES.md      # Documentation of generation quality rules
 ├── src/
-│   ├── components/          # React components
-│   │   ├── GlossaryInput.tsx   # Input form
-│   │   └── GlossaryDisplay.tsx # Term display & interaction
-│   ├── utils/               # Utilities
-│   │   ├── claudeApi.ts        # Claude API integration
-│   │   └── storage.ts          # IndexedDB storage
-│   ├── types/               # TypeScript definitions
+│   ├── components/            # React components
+│   │   ├── GlossaryInput.tsx     # Input form
+│   │   └── GlossaryDisplay.tsx   # Term display & interaction
+│   ├── utils/                 # Utilities
+│   │   ├── claudeApi.ts          # Frontend API wrapper
+│   │   └── storage.ts            # Local storage persistence
+│   ├── types/                 # TypeScript definitions
 │   │   └── glossary.ts
-│   ├── App.tsx              # Main app component
-│   └── main.tsx             # Entry point
-├── public/                  # Static assets
-├── index.html              # HTML template
-└── package.json            # Dependencies & scripts
+│   ├── App.tsx                # Main app component
+│   └── main.tsx               # Entry point
+├── public/                    # Static assets
+├── index.html                 # HTML template
+└── package.json               # Dependencies & scripts
 ```
+
+## Quality Rules
+
+The glossary generation follows explicit quality rules to ensure consistent, high-quality output. See [`api/GLOSSARY_RULES.md`](api/GLOSSARY_RULES.md) for full documentation.
+
+Key principles:
+- **Term Selection**: Seed word first, foundational terms before specialized variants
+- **Definition Structure**: Two sentences - WHAT it is, then WHY it matters
+- **Importance Calibration**: 10 = seed word, 9 = prerequisites, 8 = core concepts
+- **Consistency**: No orphan references in related terms
