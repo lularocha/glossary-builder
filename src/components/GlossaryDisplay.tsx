@@ -37,7 +37,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
             <div>
               {/* Term Header */}
               <h2 className="text-2xl font-semibold text-black mb-3">
-                {index + 1}. {term.term}
+                {term.term}
               </h2>
 
               {/* Definition */}
