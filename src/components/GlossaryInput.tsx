@@ -21,11 +21,16 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate }) => {
 
   return (
     <div className="max-w-[900px]">
+      <p className="text-xl text-black mb-12">
+        Build glossaries powered by Claude AI.<br />
+        Enter a single term (Seed Word) and automatically generate 12 related terms with clear definitions.
+      </p>
+
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
+        <div className="mb-8">
           <label
             htmlFor="seedWord"
-            className="block text-sm font-medium text-black mb-2"
+            className="block text-lg font-bold text-black mb-2"
           >
             Seed Word
           </label>
@@ -35,7 +40,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate }) => {
             value={seedWord}
             onChange={(e) => setSeedWord(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
-            placeholder="e.g., neural network"
+            placeholder="e.g., Neural Network"
             required
           />
           <p className="mt-1 text-sm text-black">
@@ -43,10 +48,10 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate }) => {
           </p>
         </div>
 
-        <div>
+        <div className="mb-8">
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-black mb-2"
+            className="block text-lg font-bold text-black mb-2"
           >
             Glossary Title <span className="text-gray-400">(optional)</span>
           </label>
@@ -66,7 +71,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate }) => {
         <button
           type="submit"
           disabled={!seedWord.trim()}
-          className="w-full bg-black hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-3 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full bg-black hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-3 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-[1.02] active:scale-[0.98] mt-8 mb-8"
         >
           Generate Glossary
         </button>

@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+:root {
+  --spacing: 0.25rem;
+}
+
 body {
   border-top: 0.75rem solid #fe0;
+}
+
+.mb-20 {
+  margin-bottom: calc(var(--spacing) * 10);
 }
