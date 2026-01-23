@@ -20,7 +20,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate }) => {
   };
 
   return (
-    <div className="max-w-[900px]">
+    <div className="max-w-[900px] mx-auto">
       <p className="text-xl text-black mb-12">
         Build glossaries powered by Claude AI.<br />
         Enter a single term (Seed Word) and automatically generate 12 related terms with clear definitions.

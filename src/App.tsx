@@ -92,9 +92,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 pt-3 pb-8 md:pt-8">
+      <div className="mx-auto px-4 pt-3 pb-8 md:pt-8">
         {/* Header */}
-        <header className="mb-20 flex justify-between items-start">
+        <header className="max-w-[900px] mx-auto mb-20 flex justify-between items-start">
           <h1 className="tool-title text-5xl font-bold text-black">
             Glossary Builder
           </h1>
@@ -298,7 +298,7 @@ function App() {
           )}
         </main>
 
-        <footer className="py-4 text-sm text-left text-black">
+        <footer className="max-w-[900px] mx-auto py-4 text-sm text-left text-black">
           Created by Lula Rocha + Claude
         </footer>
       </div>
