@@ -22,6 +22,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
         {glossary.description && (
           <p className="text-black text-lg">{glossary.description}</p>
         )}
+        <p className="mt-2 text-sm text-[#f90]">Latest update: January 23, 2026</p>
         <div className="mt-4 text-sm text-black">
           {glossary.terms.length} {glossary.terms.length === 1 ? 'term' : 'terms'}
         </div>
@@ -47,7 +48,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
 
               {/* Related Terms */}
               {term.relatedTerms.length > 0 && (
-                <div>
+                <div className="related-terms hidden">
                   <h3 className="text-sm font-medium text-black mb-2">
                     Related Terms:
                   </h3>
