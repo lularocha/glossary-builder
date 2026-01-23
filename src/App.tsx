@@ -94,15 +94,10 @@ function App() {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <header className="mb-12 flex justify-between items-start">
-          <div>
-            <h1 className="text-3xl md:text-5xl font-bold text-black mb-4">
-              Glossary Builder
-            </h1>
-            <p className="text-xl text-black">
-              Build comprehensive glossaries powered by Claude AI
-            </p>
-          </div>
+        <header className="mb-4 flex justify-between items-start">
+          <h1 className="text-3xl md:text-5xl font-bold text-black">
+            Glossary Builder
+          </h1>
 
           {/* Action Buttons - only show when glossary exists */}
           {glossary && (
@@ -111,7 +106,7 @@ function App() {
               <div className="hidden md:flex gap-3">
                 <button
                   onClick={handleReset}
-                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
                   <svg
                     className="w-5 h-5"
@@ -130,7 +125,7 @@ function App() {
                 </button>
                 <button
                   onClick={handleExport}
-                  className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                  className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
                   <svg
                     className="w-5 h-5"
@@ -171,6 +166,10 @@ function App() {
             </>
           )}
         </header>
+
+        <p className="text-xl text-black mb-12">
+          Build comprehensive glossaries powered by Claude AI
+        </p>
 
         {/* Mobile Slide Menu */}
         {glossary && (
