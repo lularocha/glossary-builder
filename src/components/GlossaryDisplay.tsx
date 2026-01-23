@@ -30,7 +30,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
           >
             <div>
               {/* Term Header */}
-              <h2 className="text-2xl font-semibold text-black mb-3">
+              <h2 className="text-2xl font-bold text-black mb-3">
                 {term.term}
               </h2>
 

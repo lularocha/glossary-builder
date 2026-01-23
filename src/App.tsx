@@ -111,7 +111,7 @@ function App() {
     <div className="min-h-screen bg-white">
       {/* Reminder Banner */}
       {glossary && showReminder && (
-        <div className="w-full bg-yellow-100/70">
+        <div className="w-full bg-yellow-100/70 mb-4">
           <div className="max-w-[900px] mx-auto px-4 py-3 flex items-center justify-between gap-4">
             <p className="text-black text-sm md:text-base flex-1">
               Don't forget to download your glossary!<br />
