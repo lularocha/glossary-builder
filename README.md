@@ -32,6 +32,7 @@ Glossary Builder uses Claude AI to automatically generate complete glossaries ba
 
 - Node.js (v18 or higher)
 - Anthropic API key ([get one here](https://console.anthropic.com/))
+- Vercel CLI (install globally: `npm install -g vercel`)
 
 ### Installation
 
@@ -48,22 +49,34 @@ Glossary Builder uses Claude AI to automatically generate complete glossaries ba
 
 3. Create a `.env` file in the root directory:
    ```env
-   VITE_ANTHROPIC_API_KEY=your_api_key_here
+   ANTHROPIC_API_KEY=your_api_key_here
    ```
 
 4. Start the development server:
    ```bash
-   npm run dev
+   vercel dev
    ```
 
-5. Open your browser to `http://localhost:5173`
+   **Important**: Use `vercel dev` (not `npm run dev`) to run both the frontend and API functions locally.
+
+5. Open your browser to `http://localhost:3000`
 
 ### Building for Production
 
+This project is designed for Vercel deployment:
+
 ```bash
+# Build locally
 npm run build
+
+# Preview production build locally (frontend only)
 npm run preview
+
+# Deploy to Vercel
+vercel --prod
 ```
+
+The API functions in `api/` are deployed as Vercel Serverless Functions.
 
 ## Tech Stack
 
@@ -90,7 +103,7 @@ npm run preview
 ```
 glossary-builder/
 ├── api/
-│   ├── generate.ts            # Vercel serverless function for Claude API
+│   ├── generate.ts            # Vercel serverless function for Claude API (/api/generate)
 │   └── GLOSSARY_RULES.md      # Documentation of generation quality rules
 ├── src/
 │   ├── components/            # React components
@@ -117,3 +130,13 @@ Key principles:
 - **Definition Structure**: Two sentences - WHAT it is, then WHY it matters
 - **Importance Calibration**: 10 = seed word, 9 = prerequisites, 8 = core concepts
 - **Consistency**: No orphan references in related terms
+
+## Deployment
+
+This project is configured for Vercel:
+
+1. Connect your repository to Vercel
+2. Add `ANTHROPIC_API_KEY` to your Vercel project's environment variables
+3. Deploy - Vercel automatically detects and deploys the API functions
+
+The `api/` directory contains Vercel Serverless Functions that handle Claude API calls server-side, keeping your API key secure.
