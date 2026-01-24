@@ -14,7 +14,7 @@ body {
 }
 
 .-mt-1 {
-  margin-top: calc(var(--spacing) * -2);
+  margin-top: calc(var(--spacing) * -1);
 }
 
 h1.glossary-title {
