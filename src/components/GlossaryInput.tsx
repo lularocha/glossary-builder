@@ -53,7 +53,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate }) => {
             htmlFor="title"
             className="block text-lg font-bold text-black mb-2"
           >
-            Glossary Title <span className="text-gray-400">(optional)</span>
+            Glossary Title <span className="text-gray-400 font-semibold">(optional)</span>
           </label>
           <input
             type="text"
