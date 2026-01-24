@@ -195,7 +195,7 @@ function App() {
               {/* Mobile Hamburger Button */}
               <button
                 onClick={() => setMenuOpen(true)}
-                className="md:hidden p-2 text-black"
+                className="md:hidden p-2 text-black -mt-1"
               >
                 <svg
                   className="w-9 h-9"
