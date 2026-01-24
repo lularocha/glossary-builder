@@ -61,10 +61,10 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
-            placeholder="e.g., Machine Learning Glossary"
+            placeholder="e.g., Machine Learning"
           />
           <p className="mt-1 text-sm text-black">
-            Give your glossary a descriptive title
+            Give your glossary a descriptive title. This helps Claude understand the context of the Seed Word.
           </p>
         </div>
 

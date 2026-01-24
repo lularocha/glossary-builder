@@ -67,7 +67,7 @@ export default async function handler(
     });
 
     const domainContext = title
-      ? `The glossary is titled "${title}", so focus on terms relevant to this domain.`
+      ? `The glossary is titled "${title}". IMPORTANT: Interpret the seed word "${seedWord}" within this context. Select terms and write definitions that are specific to this domain. If the seed word has multiple meanings, use only the meaning relevant to "${title}".`
       : 'Focus on technical and development-related terms.';
 
     const prompt = `You are a technical glossary expert. Generate a comprehensive glossary based on the seed word: "${seedWord}".
