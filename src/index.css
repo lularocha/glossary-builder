@@ -15,3 +15,7 @@ body {
 .-mt-1 {
   margin-top: calc(var(--spacing) * -2);
 }
+
+h1.glossary-title {
+  line-height: 1.25;
+}
