@@ -19,3 +19,11 @@ body {
 h1.glossary-title {
   line-height: 1.25;
 }
+
+/* Lighter font-weight for bold text on mobile to prevent overly heavy appearance */
+@media (max-width: 768px) {
+  .font-bold,
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600 !important;
+  }
+}
