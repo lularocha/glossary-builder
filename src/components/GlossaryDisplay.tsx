@@ -9,7 +9,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
   glossary,
 }) => {
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full">
       {/* Header Section */}
       <div className="max-w-[900px] mx-auto pb-8 border-b border-gray-300">
         <p className="text-sm uppercase text-gray-400 font-bold mb-2">Generated glossary</p>
