@@ -25,6 +25,6 @@ h1.glossary-title {
 @media (max-width: 768px) {
   .font-bold,
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 900 !important;
+    font-weight: 800 !important;
   }
 }
