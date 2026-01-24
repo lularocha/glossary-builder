@@ -11,3 +11,7 @@ body {
 .mb-20 {
   margin-bottom: calc(var(--spacing) * 10);
 }
+
+.-mt-1 {
+  margin-top: calc(var(--spacing) * -2);
+}
