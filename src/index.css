@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
 
 :root {
   --spacing: 0.25rem;
@@ -6,6 +9,7 @@
 
 body {
   border-top: 0.75rem solid #fe0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .mb-20 {
@@ -18,12 +22,4 @@ body {
 
 h1.glossary-title {
   line-height: 1.25;
-}
-
-/* Lighter font-weight for bold text on mobile to prevent overly heavy appearance */
-@media (max-width: 768px) {
-  .font-bold,
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 600 !important;
-  }
 }
