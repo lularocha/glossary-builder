@@ -4,7 +4,7 @@ An AI-powered glossary generator that creates comprehensive, organized glossarie
 
 ## Overview
 
-Glossary Builder uses Claude AI to automatically generate complete glossaries based on your topic. Enter a title and seed word, and the app generates 12 relevant terms with clear definitions, importance ratings, and related terms. Smart formatting automatically detects abbreviations and acronyms, displaying their full expansion for clarity. Export everything as a formatted markdown file.
+Glossary Builder uses Claude AI to automatically generate complete glossaries based on your topic. Enter a title and seed word, and the app generates 12 relevant terms with clear definitions, importance ratings, and related terms. Smart formatting automatically detects abbreviations and acronyms, displaying their full expansion for clarity. Copy to clipboard or download as a formatted markdown file.
 
 ## Features
 
@@ -14,7 +14,8 @@ Glossary Builder uses Claude AI to automatically generate complete glossaries ba
 - **Quality Rules** - Built-in rules ensure consistent term selection and clear definitions
 - **Importance Ratings** - Each term rated 1-10 for relevance and significance
 - **Related Terms** - Cross-referenced connections between glossary entries
-- **Export Ready** - Download as formatted markdown file with title, date, and all terms
+- **Copy to Clipboard** - One-click copy of your glossary in markdown format
+- **Export Ready** - Download as formatted markdown file (.md) with all terms and expanded content
 - **Local Storage** - Glossary automatically saved in your browser's localStorage
 
 ## How It Works
@@ -24,7 +25,7 @@ Glossary Builder uses Claude AI to automatically generate complete glossaries ba
 3. **Smart Formatting** - Abbreviations and acronyms automatically show their full expansion on the first line
 4. **Review** - Browse through your generated glossary with clean, readable formatting
 5. **Learn More** - Click "Learn More" on any term to expand it with additional context and source citations from official documentation
-6. **Export** - Download your complete glossary as a formatted markdown file
+6. **Copy or Download** - Copy your glossary to clipboard or download as a markdown file (.md) - includes expanded content and sources
 7. **Persistence** - Your glossary is automatically saved to your browser's localStorage
 
 ## Getting Started

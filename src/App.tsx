@@ -13,6 +13,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showReminder, setShowReminder] = useState(false);
   const [expandingTermIndex, setExpandingTermIndex] = useState<number | null>(null);
+  const [copied, setCopied] = useState(false);
 
   // Load saved data on component mount
   useEffect(() => {
@@ -46,20 +47,19 @@ function App() {
     }
   };
 
-  const handleExport = () => {
-    if (!glossary) return;
+  // Helper function to convert text to Title Case
+  const toTitleCase = (str: string) => {
+    return str
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
 
-    // Helper function to convert text to Title Case
-    const toTitleCase = (str: string) => {
-      return str
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ');
-    };
+  // Generate markdown formatted content
+  const getFormattedContent = () => {
+    if (!glossary) return '';
 
-    // Generate formatted text content
-    let content = `${glossary.title || glossary.seedWord}\n`;
-    content += `${'='.repeat((glossary.title || glossary.seedWord).length)}\n\n`;
+    let content = `# ${glossary.title || glossary.seedWord}\n\n`;
 
     if (glossary.description) {
       content += `${glossary.description}\n\n`;
@@ -67,31 +67,67 @@ function App() {
 
     content += `Seed Word: ${glossary.seedWord}\n\n`;
     content += `Total Terms: ${glossary.terms.length}\n\n`;
-    content += `${'-'.repeat(50)}\n\n`;
+    content += `---\n\n`;
 
     // Add all terms
     glossary.terms.forEach((term, index) => {
-      content += `${index + 1}. ${term.term}\n\n`;
-      content += `Definition: ${term.definition}\n\n`;
-      content += `Importance: ${term.importance}/10\n\n`;
+      content += `## ${index + 1}. ${term.term}\n\n`;
+      content += `${term.definition}\n\n`;
 
-      if (term.relatedTerms.length > 0) {
-        content += `Related Terms: ${term.relatedTerms.join(', ')}\n\n`;
+      // Include expanded content if available
+      if (term.expandedContent) {
+        term.expandedContent.paragraphs.forEach((paragraph) => {
+          content += `${paragraph}\n\n`;
+        });
+
+        // Include sources
+        if (term.expandedContent.sources.length > 0) {
+          content += `**Sources:**\n`;
+          term.expandedContent.sources.forEach((source) => {
+            if (source.url) {
+              content += `- [${source.name}](${source.url})`;
+            } else {
+              content += `- ${source.name}`;
+            }
+            if (source.description) {
+              content += ` - ${source.description}`;
+            }
+            content += `\n`;
+          });
+          content += `\n*Links verified at time of generation. External sites may change.*\n\n`;
+        }
       }
 
-      content += `${'-'.repeat(50)}\n\n`;
+      content += `---\n\n`;
     });
 
-    // Create download link with .txt format
-    const blob = new Blob([content], { type: 'text/plain' });
+    return content;
+  };
+
+  const handleCopy = async () => {
+    if (!glossary) return;
+    const content = getFormattedContent();
+    await navigator.clipboard.writeText(content);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+    setMenuOpen(false);
+  };
+
+  const handleExport = () => {
+    if (!glossary) return;
+
+    const content = getFormattedContent();
+
+    // Create download link with .md format
+    const blob = new Blob([content], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
 
-    // Format filename as "Title Glossary.txt" with proper capitalization and spaces
+    // Format filename as "Title Glossary.md" with proper capitalization and spaces
     const baseTitle = glossary.title || glossary.seedWord;
     const formattedTitle = toTitleCase(baseTitle);
-    link.download = `${formattedTitle} Glossary.txt`;
+    link.download = `${formattedTitle} Glossary.md`;
 
     document.body.appendChild(link);
     link.click();
@@ -222,6 +258,25 @@ function App() {
                   Start New
                 </button>
                 <button
+                  onClick={handleCopy}
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
+                  </svg>
+                  {copied ? 'Copied!' : 'Copy'}
+                </button>
+                <button
                   onClick={handleExport}
                   className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
@@ -325,6 +380,25 @@ function App() {
                     Start New
                   </button>
                   <button
+                    onClick={handleCopy}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                      />
+                    </svg>
+                    {copied ? 'Copied!' : 'Copy'}
+                  </button>
+                  <button
                     onClick={handleExport}
                     className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
@@ -402,7 +476,7 @@ function App() {
 
         <footer className="max-w-[900px] mx-auto py-4 text-sm text-left text-black">
           Created by Lula Rocha + Claude<br />
-          <span className="text-[#f90]">Latest update: January 24, 2026</span>
+          <span className="text-[#f90]">Latest update: January 25, 2026</span>
         </footer>
       </div>
     </div>
