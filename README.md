@@ -4,27 +4,26 @@ An AI-powered glossary generator that creates comprehensive, organized glossarie
 
 ## Overview
 
-Glossary Builder uses Claude AI to automatically generate complete glossaries based on your topic. Enter a title and seed word, and the app generates 12 relevant terms with definitions, importance ratings, and related terms. You can expand your glossary, explore terms in depth, and export everything as a formatted text file.
+Glossary Builder uses Claude AI to automatically generate complete glossaries based on your topic. Enter a title and seed word, and the app generates 12 relevant terms with clear definitions, importance ratings, and related terms. Smart formatting automatically detects abbreviations and acronyms, displaying their full expansion for clarity. Export everything as a formatted markdown file.
 
 ## Features
 
 - **Smart Generation** - AI generates 12 contextually relevant terms from any seed word
+- **Abbreviation Formatting** - Automatically detects abbreviations/acronyms and displays their full expansion (e.g., "API stands for Application Programming Interface")
 - **Quality Rules** - Built-in rules ensure consistent term selection and clear definitions
 - **Importance Ratings** - Each term rated 1-10 for relevance and significance
 - **Related Terms** - Cross-referenced connections between glossary entries
-- **Expandable** - Add more terms to your glossary (10 at a time)
-- **Deep Dive** - Click "Learn More" for detailed explanations, examples, and context
-- **Export Ready** - Download as formatted .txt file with title, date, and all terms
-- **Local Storage** - All glossaries saved locally in your browser using IndexedDB
+- **Export Ready** - Download as formatted markdown file with title, date, and all terms
+- **Local Storage** - Glossary automatically saved in your browser's localStorage
 
 ## How It Works
 
-1. **Input** - Enter a glossary title and seed word (e.g., "Machine Learning" + "neural networks")
-2. **Generation** - Claude AI analyzes the seed word and generates 10 related terms with definitions, importance scores, and related terms
-3. **Expand** - Add more terms by clicking "Add More Terms" to grow your glossary
-4. **Explore** - Click "Learn More" on any term for in-depth explanations
-5. **Export** - Download your complete glossary as a formatted text file
-6. **Persistence** - All glossaries are automatically saved to your browser's local storage
+1. **Input** - Enter a glossary title (optional) and seed word (e.g., "Working with APIs" + "API")
+2. **Generation** - Claude AI analyzes the seed word and generates 12 related terms with clear definitions, importance scores, and related terms
+3. **Smart Formatting** - Abbreviations and acronyms automatically show their full expansion on the first line
+4. **Review** - Browse through your generated glossary with clean, readable formatting
+5. **Export** - Download your complete glossary as a formatted markdown file
+6. **Persistence** - Your glossary is automatically saved to your browser's localStorage
 
 ## Getting Started
 
@@ -90,8 +89,8 @@ The API functions in `api/` are deployed as Vercel Serverless Functions.
 - **Lucide React** - Icon library
 
 ### AI & Storage
-- **Anthropic SDK** - Claude AI integration
-- **Dexie** - IndexedDB wrapper for local storage
+- **Anthropic SDK** - Claude AI integration (Claude Sonnet 4)
+- **localStorage** - Browser-based persistence (Dexie installed for future IndexedDB migration)
 
 ### Development Tools
 - **ESLint** - Code linting
@@ -127,7 +126,9 @@ The glossary generation follows explicit quality rules to ensure consistent, hig
 
 Key principles:
 - **Term Selection**: Seed word first, foundational terms before specialized variants
-- **Definition Structure**: Two sentences - WHAT it is, then WHY it matters
+- **Definition Structure**:
+  - For abbreviations/acronyms: Expansion sentence, line break, then WHAT it is and WHY it matters
+  - For regular terms: Two sentences - WHAT it is, then WHY it matters
 - **Importance Calibration**: 10 = seed word, 9 = prerequisites, 8 = core concepts
 - **Consistency**: No orphan references in related terms
 

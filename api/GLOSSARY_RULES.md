@@ -25,24 +25,40 @@ Balance the 12 terms across difficulty levels:
 
 ## Definition Rules
 
-### Two-Sentence Structure
+### Standard Structure (Regular Terms)
 1. **Sentence 1**: WHAT it is (category + distinguishing characteristic)
 2. **Sentence 2**: WHY it matters or HOW it's used
+
+### Abbreviation/Acronym Structure
+For terms that are abbreviations or acronyms:
+1. **Sentence 1**: State what it stands for (e.g., "API stands for Application Programming Interface.")
+2. **Line break** (`\n`)
+3. **Sentence 2**: WHAT it is (category + key characteristic)
+4. **Sentence 3**: WHY it matters or HOW it's used
 
 ### Writing Guidelines
 - Start with "A/An [category]..." or "The [noun/process]..." to immediately classify
 - Never use the term being defined within its own definition
 - Avoid vague quantifiers ("various", "different", "many") - be specific
 - For abstract concepts, include one concrete example or analogy
-- **Maximum 50 words** per definition
+- **Maximum 50 words** per definition (expansion sentence for abbreviations not counted toward limit)
 - Each definition should be understandable without reading other definitions first
 
-### Example of a Good Definition
+### Example of a Good Definition (Regular Term)
 ```
 Term: Gradient Descent
 Definition: An optimization algorithm that iteratively adjusts parameters by
 moving in the direction of steepest decrease of a loss function. It forms the
 foundation of how neural networks learn from training data.
+```
+
+### Example of a Good Definition (Abbreviation)
+```
+Term: API
+Definition: API stands for Application Programming Interface.
+A set of protocols and tools that defines how software components should interact.
+Essential for creating modular, interoperable systems that can communicate across
+different platforms.
 ```
 
 ---

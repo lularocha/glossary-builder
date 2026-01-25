@@ -2,11 +2,18 @@
 
 This document tracks future enhancements and features under review for the Glossary Builder.
 
-**Last Updated:** January 23, 2026
+**Last Updated:** January 25, 2026
 
-## Recent Updates (January 23, 2026)
+## Recent Updates
 
-The project received significant UI/UX polish today:
+### January 25, 2026
+- Added abbreviation/acronym formatting rule to glossary generation
+- Abbreviations now display expansion on first line (e.g., "API stands for Application Programming Interface.")
+- Added line break between expansion and definition for improved readability
+- Updated GlossaryDisplay component to preserve line breaks with `whitespace-pre-line`
+
+### January 23, 2026
+The project received significant UI/UX polish:
 - Fixed content centering at all viewport sizes
 - Enhanced input page styling and layout
 - Refined UI layout with clear separation of input/display views
@@ -19,9 +26,10 @@ The app is now in a polished state with a clean, professional UI. The next major
 
 ## Current State of the Project
 
-### ✅ Completed Features (as of Jan 23, 2026)
+### ✅ Completed Features (as of Jan 25, 2026)
 - **Core Functionality:**
   - AI-powered glossary generation (12 terms per seed word)
+  - Smart abbreviation/acronym formatting (expansion + line break + definition)
   - Single glossary persistence via localStorage
   - Clean, minimal UI with excellent typography
   - Markdown export functionality
@@ -42,6 +50,8 @@ The app is now in a polished state with a clean, professional UI. The next major
 
 - **Technical Foundation:**
   - TypeScript for type safety
+  - AI prompt engineering for smart abbreviation detection and formatting
+  - CSS `whitespace-pre-line` for preserving line breaks in definitions
   - Robust localStorage with error handling (`src/utils/storage.ts`)
   - Serialization/deserialization of Date objects
   - Data validation on load
