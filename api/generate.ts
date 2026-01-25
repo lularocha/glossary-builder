@@ -85,6 +85,11 @@ Create a glossary with:
 - Prefer canonical/historical terms over informal names
 - Balance: 3-4 foundational (9-10), 4-5 core (7-8), 3-4 applied (5-7)
 
+## Formatting Rules
+- Abbreviations/acronyms MUST be written in ALL UPPERCASE (e.g., "API", "BASH", "HTML", "REST")
+- If the seed word is an abbreviation, keep it in uppercase as the term name
+- Regular terms use standard title case
+
 ## Definition Rules
 - For abbreviations/acronyms:
   * Sentence 1: State what it stands for (e.g., "API stands for Application Programming Interface.")
