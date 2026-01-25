@@ -1,9 +1,22 @@
+export interface Source {
+  name: string;
+  url?: string;
+  description?: string;
+}
+
+export interface ExpandedContent {
+  paragraphs: string[];
+  sources: Source[];
+  loadedAt: Date;
+}
+
 export interface Term {
   term: string;
   definition: string;
   importance: number;
   relatedTerms: string[];
   expanded?: boolean;
+  expandedContent?: ExpandedContent;
 }
 
 export interface Glossary {

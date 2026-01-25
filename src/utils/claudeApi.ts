@@ -1,4 +1,4 @@
-import type { Glossary } from '../types/glossary';
+import type { Glossary, ExpandedContent } from '../types/glossary';
 
 /**
  * Generates a new glossary based on a seed word.
@@ -32,5 +32,43 @@ export async function generateGlossary(
     ...data,
     createdAt: new Date(data.createdAt),
     updatedAt: new Date(data.updatedAt),
+  };
+}
+
+/**
+ * Fetches expanded content for a specific glossary term.
+ * Calls the serverless function at /api/expand.
+ *
+ * @param term - The term name to expand
+ * @param definition - The current definition for context
+ * @param glossaryTitle - Optional title for domain context
+ * @param seedWord - The original seed word for context
+ * @returns Promise<ExpandedContent> - Additional paragraphs and sources
+ */
+export async function expandTerm(
+  term: string,
+  definition: string,
+  glossaryTitle: string | undefined,
+  seedWord: string
+): Promise<ExpandedContent> {
+  const response = await fetch('/api/expand', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ term, definition, glossaryTitle, seedWord }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || `API error: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  return {
+    paragraphs: data.paragraphs,
+    sources: data.sources,
+    loadedAt: new Date(data.generatedAt),
   };
 }

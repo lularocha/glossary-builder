@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { GlossaryInput } from './components/GlossaryInput';
 import { GlossaryDisplay } from './components/GlossaryDisplay';
 import type { Glossary, GlossaryInput as GlossaryInputType } from './types/glossary';
-import { generateGlossary } from './utils/claudeApi';
+import { generateGlossary, expandTerm } from './utils/claudeApi';
 import { saveGlossary, loadGlossary, clearStorage } from './utils/storage';
 
 function App() {
@@ -12,6 +12,7 @@ function App() {
   const [loadingMessage, setLoadingMessage] = useState<string>('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [showReminder, setShowReminder] = useState(false);
+  const [expandingTermIndex, setExpandingTermIndex] = useState<number | null>(null);
 
   // Load saved data on component mount
   useEffect(() => {
@@ -105,6 +106,55 @@ function App() {
     setShowReminder(false);
     clearStorage();
     setMenuOpen(false);
+  };
+
+  const handleExpandTerm = async (termIndex: number) => {
+    if (!glossary) return;
+
+    const term = glossary.terms[termIndex];
+
+    // Toggle off if already expanded
+    if (term.expanded) {
+      const updatedTerms = [...glossary.terms];
+      updatedTerms[termIndex] = { ...term, expanded: false };
+      setGlossary({ ...glossary, terms: updatedTerms });
+      return;
+    }
+
+    // If content already cached, just toggle on
+    if (term.expandedContent) {
+      const updatedTerms = [...glossary.terms];
+      updatedTerms[termIndex] = { ...term, expanded: true };
+      setGlossary({ ...glossary, terms: updatedTerms });
+      return;
+    }
+
+    // Fetch new content
+    setExpandingTermIndex(termIndex);
+    setError('');
+
+    try {
+      const expandedContent = await expandTerm(
+        term.term,
+        term.definition,
+        glossary.title,
+        glossary.seedWord
+      );
+
+      const updatedTerms = [...glossary.terms];
+      updatedTerms[termIndex] = {
+        ...term,
+        expanded: true,
+        expandedContent,
+      };
+      setGlossary({ ...glossary, terms: updatedTerms });
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : `Failed to load more info for "${term.term}"`;
+      setError(errorMessage);
+      console.error('Error expanding term:', err);
+    } finally {
+      setExpandingTermIndex(null);
+    }
   };
 
   return (
@@ -342,7 +392,11 @@ function App() {
           {!glossary ? (
             <GlossaryInput onGenerate={handleGenerate} />
           ) : (
-            <GlossaryDisplay glossary={glossary} />
+            <GlossaryDisplay
+              glossary={glossary}
+              onExpandTerm={handleExpandTerm}
+              expandingTermIndex={expandingTermIndex}
+            />
           )}
         </main>
 

@@ -103,3 +103,76 @@ These settings in `api/generate.ts` support quality output:
 | `model` | claude-sonnet-4-20250514 | Balanced quality and speed |
 | `temperature` | 0.7 | Reduces variability while maintaining creativity |
 | `max_tokens` | 4096 | Sufficient for 12 detailed terms |
+
+---
+
+## Learn More / Term Expansion (`api/expand.ts`)
+
+The "Learn More" feature allows users to expand any term with additional context and source citations.
+
+### Endpoint
+
+`POST /api/expand`
+
+### Request Body
+
+```json
+{
+  "term": "API",
+  "definition": "API stands for Application Programming Interface...",
+  "glossaryTitle": "Working with APIs",
+  "seedWord": "API"
+}
+```
+
+### Response
+
+```json
+{
+  "paragraphs": [
+    "First paragraph of additional context...",
+    "Second paragraph with practical details..."
+  ],
+  "sources": [
+    {
+      "name": "MDN Web Docs - Web APIs",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API",
+      "description": "Comprehensive documentation on Web APIs"
+    },
+    {
+      "name": "OpenAPI Specification",
+      "description": "Industry standard for API documentation"
+    }
+  ],
+  "generatedAt": "2026-01-25T12:00:00.000Z"
+}
+```
+
+### Expansion Content Rules
+
+1. **Paragraphs**: 1-3 paragraphs, each 40-80 words
+   - Expand on practical applications or use cases
+   - Explain common patterns or best practices
+   - Clarify nuances or edge cases
+   - Do NOT repeat the original definition
+
+2. **Source Citations**: 1-3 sources from reliable categories only:
+   - Official documentation (language/framework docs)
+   - MDN Web Docs (for web technologies)
+   - W3C specifications
+   - RFCs and official standards
+   - Reputable publisher documentation (Oracle, Microsoft, Google)
+
+3. **URL Rules**:
+   - **NEVER** include Wikipedia links
+   - Only include URL if highly confident it exists and is stable
+   - If unsure about URL validity, provide source name without URL
+   - Prefer stable documentation paths over dated blog posts
+
+### API Configuration (expand.ts)
+
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| `model` | claude-sonnet-4-20250514 | Consistent with generate endpoint |
+| `temperature` | 0.7 | Balanced creativity |
+| `max_tokens` | 2048 | Sufficient for expanded content |

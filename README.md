@@ -9,6 +9,7 @@ Glossary Builder uses Claude AI to automatically generate complete glossaries ba
 ## Features
 
 - **Smart Generation** - AI generates 12 contextually relevant terms from any seed word
+- **Learn More** - Expand any term to see additional context paragraphs and cited sources from official documentation (MDN, W3C, official docs)
 - **Abbreviation Formatting** - Automatically detects abbreviations/acronyms, keeps them in uppercase (e.g., "API", "BASH"), and displays their full expansion
 - **Quality Rules** - Built-in rules ensure consistent term selection and clear definitions
 - **Importance Ratings** - Each term rated 1-10 for relevance and significance
@@ -22,8 +23,9 @@ Glossary Builder uses Claude AI to automatically generate complete glossaries ba
 2. **Generation** - Claude AI analyzes the seed word and generates 12 related terms with clear definitions, importance scores, and related terms
 3. **Smart Formatting** - Abbreviations and acronyms automatically show their full expansion on the first line
 4. **Review** - Browse through your generated glossary with clean, readable formatting
-5. **Export** - Download your complete glossary as a formatted markdown file
-6. **Persistence** - Your glossary is automatically saved to your browser's localStorage
+5. **Learn More** - Click "Learn More" on any term to expand it with additional context and source citations from official documentation
+6. **Export** - Download your complete glossary as a formatted markdown file
+7. **Persistence** - Your glossary is automatically saved to your browser's localStorage
 
 ## Getting Started
 
@@ -102,17 +104,18 @@ The API functions in `api/` are deployed as Vercel Serverless Functions.
 ```
 glossary-builder/
 ├── api/
-│   ├── generate.ts            # Vercel serverless function for Claude API (/api/generate)
+│   ├── generate.ts            # Vercel serverless function for glossary generation (/api/generate)
+│   ├── expand.ts              # Vercel serverless function for term expansion (/api/expand)
 │   └── GLOSSARY_RULES.md      # Documentation of generation quality rules
 ├── src/
 │   ├── components/            # React components
 │   │   ├── GlossaryInput.tsx     # Input form
-│   │   └── GlossaryDisplay.tsx   # Term display & interaction
+│   │   └── GlossaryDisplay.tsx   # Term display & Learn More expansion
 │   ├── utils/                 # Utilities
-│   │   ├── claudeApi.ts          # Frontend API wrapper
+│   │   ├── claudeApi.ts          # Frontend API wrapper (generateGlossary, expandTerm)
 │   │   └── storage.ts            # Local storage persistence
 │   ├── types/                 # TypeScript definitions
-│   │   └── glossary.ts
+│   │   └── glossary.ts           # Term, Glossary, Source, ExpandedContent types
 │   ├── App.tsx                # Main app component
 │   └── main.tsx               # Entry point
 ├── public/                    # Static assets

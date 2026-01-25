@@ -3,36 +3,31 @@
 ## 1. Running the Development Server
 
 ```bash
-npm run dev
+vercel dev
 ```
 
-- Opens at http://localhost:5173 (or similar)
+- Opens at http://localhost:3000
 - Hot reloads when you save file changes
 - Press Ctrl+C to stop the server
+- **Important**: Use `vercel dev` (not `npm run dev`) to run both frontend and API functions
 
-## 2. Reconnecting with Claude Code
+## 2. Using the App
 
-If you close this terminal window and want to resume:
+### Generate a Glossary
+1. Enter an optional title (e.g., "Working with APIs")
+2. Enter a seed word (e.g., "API")
+3. Click Generate - creates 12 terms with definitions
 
-### Option A: Same directory
+### Learn More
+- Click "Learn More" on any term to expand it
+- Shows additional context paragraphs
+- Displays source citations from official documentation (MDN, W3C, official docs)
+- Links open in new tabs
+- Click "Show Less" to collapse
 
-```bash
-# Just navigate to the project folder
-cd /Users/rocha/Documents/ClaudeCode/glossary-builder
-# Claude Code is already running if the original window is still open
-```
-
-### Option B: Fresh start
-
-```bash
-# Open a new terminal
-cd /Users/rocha/Documents/ClaudeCode/glossary-builder
-# Start Claude Code again (if you installed it globally)
-Claude
-```
-
-- Your conversation history is preserved
-- I'll remember the context of our project
+### Export
+- Click "Download" to save as a text file
+- Includes all terms, definitions, and importance ratings
 
 ## 3. Other Useful Commands
 
@@ -51,7 +46,7 @@ npm run build
 npm run preview
 ```
 
-- Test the production build locally
+- Test the production build locally (frontend only)
 
 ### Run linting
 
@@ -73,10 +68,23 @@ npx tsc --noEmit
 
 - `.env` - Your API key (never commit this!)
 - `package.json` - Dependencies and scripts
-- `src/utils/claudeApi.ts` - API configuration (model: claude-3-haiku-20240307)
+- `api/generate.ts` - Glossary generation endpoint
+- `api/expand.ts` - Term expansion endpoint (Learn More)
+- `src/utils/claudeApi.ts` - Frontend API wrapper
 
-## 5. Troubleshooting
+## 5. Environment Variables
+
+Create a `.env` file with:
+```
+ANTHROPIC_API_KEY=your_api_key_here
+```
+
+Note: Use `ANTHROPIC_API_KEY` (not `VITE_ANTHROPIC_API_KEY`) for Vercel serverless functions.
+
+## 6. Troubleshooting
 
 - **Page is blank?** Check browser console for errors
-- **API errors?** Verify `.env` file has `VITE_ANTHROPIC_API_KEY=sk-ant-...`
-- **CSS not loading?** Restart dev server with Ctrl+C then `npm run dev`
+- **API errors (404)?** Make sure you're using `vercel dev`, not `npm run dev`
+- **API errors (500)?** Verify `.env` file has valid `ANTHROPIC_API_KEY`
+- **CSS not loading?** Restart dev server with Ctrl+C then `vercel dev`
+- **Learn More not loading?** Check browser console for API errors
