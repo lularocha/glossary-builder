@@ -35,7 +35,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
               </h2>
 
               {/* Definition */}
-              <p className="text-black leading-relaxed mb-4">
+              <p className="text-black leading-relaxed mb-4 whitespace-pre-line">
                 {term.definition}
               </p>
 

@@ -86,11 +86,17 @@ Create a glossary with:
 - Balance: 3-4 foundational (9-10), 4-5 core (7-8), 3-4 applied (5-7)
 
 ## Definition Rules
-- Sentence 1: WHAT it is (category + key characteristic)
-- Sentence 2: WHY it matters or HOW it's used
+- For abbreviations/acronyms:
+  * Sentence 1: State what it stands for (e.g., "API stands for Application Programming Interface.")
+  * Add a line break after this sentence (use \\n for a single line break)
+  * Sentence 2: WHAT it is (category + key characteristic)
+  * Sentence 3: WHY it matters or HOW it's used
+- For regular terms:
+  * Sentence 1: WHAT it is (category + key characteristic)
+  * Sentence 2: WHY it matters or HOW it's used
 - Never use the term in its own definition
 - Be specific - avoid "various", "different", "many"
-- Maximum 50 words per definition
+- Maximum 50 words per definition (expansion sentence for abbreviations not counted)
 
 ## Importance Calibration
 - 10: The seed word itself
@@ -109,6 +115,14 @@ Example of a well-structured term:
   "definition": "An optimization algorithm that iteratively adjusts parameters by moving in the direction of steepest decrease of a loss function. It forms the foundation of how neural networks learn from training data.",
   "importance": 8,
   "relatedTerms": ["Loss Function", "Backpropagation", "Learning Rate"]
+}
+
+Example of an abbreviation/acronym term:
+{
+  "term": "API",
+  "definition": "API stands for Application Programming Interface.\\nA set of protocols and tools that defines how software components should interact. Essential for creating modular, interoperable systems that can communicate across different platforms.",
+  "importance": 8,
+  "relatedTerms": ["REST", "HTTP", "SDK"]
 }
 
 Return ONLY valid JSON in this exact format:
