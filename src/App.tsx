@@ -142,7 +142,7 @@ function App() {
 
       <div className="mx-auto px-4 pt-3 pb-8 md:pt-8">
         {/* Header */}
-        <header className="max-w-[900px] mx-auto mb-20 flex justify-between items-start">
+        <header className="max-w-[900px] mx-auto mb-20 flex justify-between items-center">
           <h1 className="tool-title text-4xl md:text-5xl font-bold text-black">
             Glossary Builder
           </h1>
