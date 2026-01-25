@@ -112,11 +112,11 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
 
               {/* Expanded Content */}
               {term.expanded && term.expandedContent && (
-                <div className="mt-4 pl-4 border-l-2 border-gray-200">
+                <div className="mt-4 pl-8 border-l-2 border-gray-200">
                   {/* Additional Paragraphs */}
                   <div className="space-y-3 mb-4">
                     {term.expandedContent.paragraphs.map((para, pIdx) => (
-                      <p key={pIdx} className="text-gray-700 leading-relaxed">
+                      <p key={pIdx} className="text-black leading-relaxed">
                         {para}
                       </p>
                     ))}
@@ -148,7 +148,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                         ))}
                       </ul>
                       {/* Disclaimer */}
-                      <p className="text-xs text-gray-400 mt-2 italic">
+                      <p className="text-xs text-gray-700 mt-2 italic">
                         Links verified at time of generation. External sites may change.
                       </p>
                     </div>
