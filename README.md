@@ -9,7 +9,7 @@ Glossary Builder uses Claude AI to automatically generate complete glossaries ba
 ## Features
 
 - **Smart Generation** - AI generates 12 contextually relevant terms from any seed word
-- **Abbreviation Formatting** - Automatically detects abbreviations/acronyms and displays their full expansion (e.g., "API stands for Application Programming Interface")
+- **Abbreviation Formatting** - Automatically detects abbreviations/acronyms, keeps them in uppercase (e.g., "API", "BASH"), and displays their full expansion
 - **Quality Rules** - Built-in rules ensure consistent term selection and clear definitions
 - **Importance Ratings** - Each term rated 1-10 for relevance and significance
 - **Related Terms** - Cross-referenced connections between glossary entries
@@ -126,6 +126,7 @@ The glossary generation follows explicit quality rules to ensure consistent, hig
 
 Key principles:
 - **Term Selection**: Seed word first, foundational terms before specialized variants
+- **Formatting**: Abbreviations/acronyms always in uppercase (API, BASH, HTML)
 - **Definition Structure**:
   - For abbreviations/acronyms: Expansion sentence, line break, then WHAT it is and WHY it matters
   - For regular terms: Two sentences - WHAT it is, then WHY it matters

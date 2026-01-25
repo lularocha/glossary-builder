@@ -23,6 +23,16 @@ Balance the 12 terms across difficulty levels:
 
 ---
 
+## Formatting Rules
+
+### Term Name Casing
+- **Abbreviations/acronyms**: Always written in ALL UPPERCASE (e.g., "API", "BASH", "HTML", "REST")
+- **Regular terms**: Use standard title case (e.g., "Gradient Descent", "Neural Network")
+
+If the seed word is entered as an abbreviation, it should remain uppercase as the term name in the generated glossary.
+
+---
+
 ## Definition Rules
 
 ### Standard Structure (Regular Terms)
