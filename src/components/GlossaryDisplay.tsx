@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Glossary } from '../types/glossary';
+import { ScrollToTopButton } from './ScrollToTopButton';
 
 interface GlossaryDisplayProps {
   glossary: Glossary;
@@ -178,6 +179,9 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
           </div>
         ))}
       </div>
+
+      {/* Scroll to Top Button */}
+      <ScrollToTopButton />
     </div>
   );
 };
