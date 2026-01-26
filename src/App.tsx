@@ -338,12 +338,12 @@ function App() {
               className={`absolute top-0 left-0 h-full w-64 shadow-lg transform transition-transform duration-300 ease-out ${
                 menuOpen ? 'translate-x-0' : '-translate-x-full'
               }`}
-              style={{ backgroundColor: '#fe0' }}
+              style={{ backgroundColor: 'var(--dark-gray)' }}
             >
               <div className="p-4">
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="mb-6 p-2 text-black"
+                  className="mb-6 p-2 text-white"
                 >
                   <svg
                     className="w-6 h-6"
