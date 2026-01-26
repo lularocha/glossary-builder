@@ -362,7 +362,7 @@ function App() {
                 <div className="flex flex-col gap-4">
                   <button
                     onClick={handleReset}
-                    className="bg-orange-400 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                    className="bg-orange-400 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <svg
                       className="w-5 h-5"
@@ -381,7 +381,7 @@ function App() {
                   </button>
                   <button
                     onClick={handleCopy}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <svg
                       className="w-5 h-5"
@@ -400,7 +400,7 @@ function App() {
                   </button>
                   <button
                     onClick={handleExport}
-                    className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <svg
                       className="w-5 h-5"
