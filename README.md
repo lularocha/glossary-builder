@@ -80,6 +80,25 @@ vercel --prod
 
 The API functions in `api/` are deployed as Vercel Serverless Functions.
 
+## Usage
+
+### Generate a Glossary
+1. Enter an optional title (e.g., "Working with APIs")
+2. Enter a seed word (e.g., "API")
+3. Click Generate - creates 12 terms with definitions
+
+### Learn More
+- Click "Learn More" on any term to expand it
+- Shows additional context paragraphs
+- Displays source citations from official documentation (MDN, W3C, official docs)
+- Links open in new tabs
+- Click "Show Less" to collapse
+
+### Export
+- Click "Copy" to copy as markdown to clipboard
+- Click "Download" to save as a markdown file
+- Includes all terms, definitions, and importance ratings
+
 ## Tech Stack
 
 ### Core
@@ -146,3 +165,11 @@ This project is configured for Vercel:
 3. Deploy - Vercel automatically detects and deploys the API functions
 
 The `api/` directory contains Vercel Serverless Functions that handle Claude API calls server-side, keeping your API key secure.
+
+## Troubleshooting
+
+- **Page is blank?** Check browser console for errors
+- **API errors (404)?** Make sure you're using `vercel dev`, not `npm run dev`
+- **API errors (500)?** Verify `.env` file has valid `ANTHROPIC_API_KEY`
+- **CSS not loading?** Restart dev server with Ctrl+C then `vercel dev`
+- **Learn More not loading?** Check browser console for API errors
