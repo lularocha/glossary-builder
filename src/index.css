@@ -10,7 +10,11 @@ body {
 }
 
 .mb-20 {
-  margin-bottom: calc(var(--spacing) * 10);
+  margin-bottom: calc(var(--spacing) * 5);
+}
+
+.mb-12 {
+  margin-bottom: calc(var(--spacing) * 8);
 }
 
 .-mt-1 {
