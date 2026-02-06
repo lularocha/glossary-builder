@@ -148,13 +148,14 @@ function App() {
 
     const children: Paragraph[] = [];
 
-    // Title (H1) - Black, 24pt, bold
+    // Title (H1) - Arial, Black, 24pt, bold
     children.push(
       new Paragraph({
         heading: HeadingLevel.HEADING_1,
         children: [
           new TextRun({
             text: glossary.title || glossary.seedWord,
+            font: 'Arial',
             bold: true,
             size: TITLE_SIZE,
             color: '000000',
@@ -220,13 +221,14 @@ function App() {
 
     // Add all terms
     glossary.terms.forEach((term, index) => {
-      // Term heading (H2) - Black, 16pt, bold
+      // Term heading (H2) - Arial, Black, 16pt, bold
       children.push(
         new Paragraph({
           heading: HeadingLevel.HEADING_2,
           children: [
             new TextRun({
               text: `${index + 1}. ${term.term}`,
+              font: 'Arial',
               bold: true,
               size: HEADING_SIZE,
               color: '000000',
