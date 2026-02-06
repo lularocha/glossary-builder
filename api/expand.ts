@@ -12,6 +12,7 @@ interface ExpandRequest {
   definition: string;
   glossaryTitle?: string;
   seedWord: string;
+  detectedLanguage?: string;
 }
 
 interface ExpandResponse {
@@ -52,7 +53,7 @@ export default async function handler(
     return response.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { term, definition, glossaryTitle, seedWord } = request.body as ExpandRequest;
+  const { term, definition, glossaryTitle, seedWord, detectedLanguage } = request.body as ExpandRequest;
 
   if (!term || typeof term !== 'string') {
     return response.status(400).json({ error: 'term is required' });
@@ -75,14 +76,18 @@ export default async function handler(
       ? `This term is part of a "${glossaryTitle}" glossary about "${seedWord}".`
       : `This term is part of a technical glossary about "${seedWord}".`;
 
-    const prompt = `You are a technical documentation expert. Provide expanded information for the following term.
+    const languageInstruction = detectedLanguage && detectedLanguage !== 'English'
+      ? `\n## Language Requirement\nGenerate all paragraphs and source descriptions in ${detectedLanguage}. Source names (like "Python Documentation") may remain in their original language if they are proper nouns.\n`
+      : '';
 
+    const prompt = `You are a technical documentation expert. Provide expanded information for the following term.
+${languageInstruction}
 TERM: "${term}"
 CURRENT DEFINITION: "${definition}"
 DOMAIN CONTEXT: ${domainContext}
 
 ## Your Task
-Generate additional context and cite reliable sources for this term.
+Generate additional context and cite reliable sources for this term.${detectedLanguage && detectedLanguage !== 'English' ? ` Write all content in ${detectedLanguage}.` : ''}
 
 ## Content Requirements
 1. Write 1-3 paragraphs (each 40-80 words) that:

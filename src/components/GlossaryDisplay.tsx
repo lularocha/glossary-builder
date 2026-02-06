@@ -1,23 +1,27 @@
 import React from 'react';
-import type { Glossary } from '../types/glossary';
+import type { Glossary, Translations } from '../types/glossary';
+import { DEFAULT_TRANSLATIONS } from '../types/glossary';
 import { ScrollToTopButton } from './ScrollToTopButton';
 
 interface GlossaryDisplayProps {
   glossary: Glossary;
   onExpandTerm: (termIndex: number) => Promise<void>;
   expandingTermIndex: number | null;
+  translations?: Translations;
 }
 
 export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
   glossary,
   onExpandTerm,
   expandingTermIndex,
+  translations = DEFAULT_TRANSLATIONS,
 }) => {
+  const t = translations;
   return (
     <div className="w-full">
       {/* Header Section */}
       <div className="max-w-[900px] mx-auto pb-8 border-b border-gray-300">
-        <p className="text-sm uppercase font-semibold mb-2" style={{ color: 'var(--color-orange-400)' }}>Generated glossary</p>
+        <p className="text-sm uppercase font-semibold mb-2" style={{ color: 'var(--color-orange-400)' }}>{t.generatedGlossary}</p>
         <h1 className="glossary-title text-[2.5rem] font-bold mb-3 text-black">
           {glossary.title || glossary.seedWord}
         </h1>
@@ -89,7 +93,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                         d="M5 15l7-7 7 7"
                       />
                     </svg>
-                    Show Less
+                    {t.showLess}
                   </>
                 ) : (
                   <>
@@ -106,7 +110,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                         d="M19 9l-7 7-7-7"
                       />
                     </svg>
-                    Learn More
+                    {t.learnMore}
                   </>
                 )}
               </button>
@@ -126,7 +130,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                   {/* Sources Section */}
                   {term.expandedContent.sources.length > 0 && (
                     <div className="mt-4">
-                      <h4 className="text-sm font-semibold text-gray-600 mb-2">Sources</h4>
+                      <h4 className="text-sm font-semibold text-gray-600 mb-2">{t.sources}</h4>
                       <ul className="space-y-1">
                         {term.expandedContent.sources.map((source, sIdx) => (
                           <li key={sIdx} className="text-sm">
@@ -150,7 +154,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                       </ul>
                       {/* Disclaimer */}
                       <p className="text-xs text-gray-700 mt-2 italic">
-                        Links verified at time of generation. External sites may change.
+                        {t.linksDisclaimer}
                       </p>
                     </div>
                   )}
@@ -161,7 +165,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
               {term.relatedTerms.length > 0 && (
                 <div className="related-terms hidden">
                   <h3 className="text-sm font-medium text-black mb-2">
-                    Related Terms:
+                    {t.relatedTerms}
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {term.relatedTerms.map((relatedTerm, idx) => (

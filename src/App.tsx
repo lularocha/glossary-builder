@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { GlossaryInput } from './components/GlossaryInput';
 import { GlossaryDisplay } from './components/GlossaryDisplay';
 import type { Glossary, GlossaryInput as GlossaryInputType } from './types/glossary';
+import { DEFAULT_TRANSLATIONS } from './types/glossary';
 import { generateGlossary, expandTerm } from './utils/claudeApi';
 import { saveGlossary, loadGlossary, clearStorage } from './utils/storage';
 import { Document, Packer, Paragraph, TextRun, ExternalHyperlink, Header, Footer, PageNumber, AlignmentType, HeadingLevel } from 'docx';
@@ -61,14 +62,16 @@ function App() {
   const getFormattedContent = () => {
     if (!glossary) return '';
 
+    const t = glossary.translations || DEFAULT_TRANSLATIONS;
+
     let content = `# ${glossary.title || glossary.seedWord}\n\n`;
 
     if (glossary.description) {
       content += `${glossary.description}\n\n`;
     }
 
-    content += `Seed Word: ${glossary.seedWord}\n\n`;
-    content += `Total Terms: ${glossary.terms.length}\n\n`;
+    content += `${t.seedWord} ${glossary.seedWord}\n\n`;
+    content += `${t.totalTerms} ${glossary.terms.length}\n\n`;
     content += `---\n\n`;
 
     // Add all terms
@@ -84,7 +87,7 @@ function App() {
 
         // Include sources
         if (term.expandedContent.sources.length > 0) {
-          content += `**Sources:**\n`;
+          content += `**${t.sources}:**\n`;
           term.expandedContent.sources.forEach((source) => {
             if (source.url) {
               content += `- [${source.name}](${source.url})`;
@@ -96,7 +99,7 @@ function App() {
             }
             content += `\n`;
           });
-          content += `\n*Links verified at time of generation. External sites may change.*\n\n`;
+          content += `\n*${t.linksDisclaimer}*\n\n`;
         }
       }
 
@@ -140,6 +143,8 @@ function App() {
 
   const handleExportDocx = async () => {
     if (!glossary) return;
+
+    const t = glossary.translations || DEFAULT_TRANSLATIONS;
 
     // Font sizes in half-points: 24pt=48, 16pt=32, 13pt=26
     const TITLE_SIZE = 48;    // 24pt
@@ -185,7 +190,7 @@ function App() {
       new Paragraph({
         children: [
           new TextRun({
-            text: `Seed Word: ${glossary.seedWord}`,
+            text: `${t.seedWord} ${glossary.seedWord}`,
             size: BODY_SIZE,
           }),
         ],
@@ -198,7 +203,7 @@ function App() {
       new Paragraph({
         children: [
           new TextRun({
-            text: `Total Terms: ${glossary.terms.length}`,
+            text: `${t.totalTerms} ${glossary.terms.length}`,
             size: BODY_SIZE,
           }),
         ],
@@ -273,7 +278,7 @@ function App() {
             new Paragraph({
               children: [
                 new TextRun({
-                  text: 'Sources:',
+                  text: `${t.sources}:`,
                   bold: true,
                   size: BODY_SIZE,
                 }),
@@ -320,7 +325,7 @@ function App() {
             new Paragraph({
               children: [
                 new TextRun({
-                  text: 'Links verified at time of generation. External sites may change.',
+                  text: t.linksDisclaimer,
                   italics: true,
                   size: BODY_SIZE,
                 }),
@@ -421,7 +426,8 @@ function App() {
         term.term,
         term.definition,
         glossary.title,
-        glossary.seedWord
+        glossary.seedWord,
+        glossary.detectedLanguage
       );
 
       const updatedTerms = [...glossary.terms];
@@ -447,8 +453,7 @@ function App() {
         <div className="w-full bg-yellow-100/70 mb-4">
           <div className="max-w-[900px] mx-auto px-4 py-3 flex items-center justify-between gap-4">
             <p className="text-black text-sm md:text-base flex-1">
-              Don't forget to download your glossary!<br />
-              Your generated glossary will be lost if you hit the "Start New" button or exit this page.
+              {glossary.translations?.downloadReminder || DEFAULT_TRANSLATIONS.downloadReminder}
             </p>
             <button
               onClick={() => setShowReminder(false)}
@@ -729,6 +734,7 @@ function App() {
               glossary={glossary}
               onExpandTerm={handleExpandTerm}
               expandingTermIndex={expandingTermIndex}
+              translations={glossary.translations || DEFAULT_TRANSLATIONS}
             />
           )}
         </main>

@@ -8,6 +8,30 @@ interface Term {
   relatedTerms: string[];
 }
 
+interface Translations {
+  generatedGlossary: string;
+  learnMore: string;
+  showLess: string;
+  sources: string;
+  linksDisclaimer: string;
+  relatedTerms: string;
+  seedWord: string;
+  totalTerms: string;
+  downloadReminder: string;
+}
+
+const DEFAULT_TRANSLATIONS: Translations = {
+  generatedGlossary: 'Generated glossary',
+  learnMore: 'Learn more',
+  showLess: 'Show less',
+  sources: 'Sources',
+  linksDisclaimer: 'Links verified at time of generation. External sites may change.',
+  relatedTerms: 'Related Terms:',
+  seedWord: 'Seed Word:',
+  totalTerms: 'Total Terms:',
+  downloadReminder: "Don't forget to download your glossary! Your generated glossary will be lost if you hit the \"Start New\" button or exit this page.",
+};
+
 interface GenerateRequest {
   title?: string;
   seedWord: string;
@@ -18,6 +42,8 @@ interface GenerateResponse {
   title?: string;
   description: string;
   seedWord: string;
+  detectedLanguage: string;
+  translations: Translations;
   terms: Term[];
   createdAt: string;
   updatedAt: string;
@@ -71,6 +97,22 @@ export default async function handler(
       : 'Focus on technical and development-related terms.';
 
     const prompt = `You are a technical glossary expert. Generate a comprehensive glossary based on the seed word: "${seedWord}".
+
+## Language Detection
+Detect the language of the seed word "${seedWord}". Generate ALL content (description and definitions) in this detected language.
+Include the detected language name in English (e.g., "Portuguese", "Spanish", "German") in your response.
+
+If the detected language is NOT English, provide translated UI labels in the "translations" object.
+If English, use these exact default labels:
+- generatedGlossary: "Generated glossary"
+- learnMore: "Learn more"
+- showLess: "Show less"
+- sources: "Sources"
+- linksDisclaimer: "Links verified at time of generation. External sites may change."
+- relatedTerms: "Related Terms:"
+- seedWord: "Seed Word:"
+- totalTerms: "Total Terms:"
+- downloadReminder: "Don't forget to download your glossary! Your generated glossary will be lost if you hit the \\"Start New\\" button or exit this page."
 
 ${domainContext}
 
@@ -132,11 +174,23 @@ Example of an abbreviation/acronym term:
 
 Return ONLY valid JSON in this exact format:
 {
-  "description": "Brief description of the glossary",
+  "detectedLanguage": "English",
+  "translations": {
+    "generatedGlossary": "Generated glossary",
+    "learnMore": "Learn more",
+    "showLess": "Show less",
+    "sources": "Sources",
+    "linksDisclaimer": "Links verified at time of generation. External sites may change.",
+    "relatedTerms": "Related Terms:",
+    "seedWord": "Seed Word:",
+    "totalTerms": "Total Terms:",
+    "downloadReminder": "Don't forget to download your glossary! Your generated glossary will be lost if you hit the \\"Start New\\" button or exit this page."
+  },
+  "description": "Brief description of the glossary IN THE DETECTED LANGUAGE",
   "terms": [
     {
       "term": "Term Name",
-      "definition": "Clear definition following the rules above",
+      "definition": "Clear definition following the rules above IN THE DETECTED LANGUAGE",
       "importance": 8,
       "relatedTerms": ["Related Term 1", "Related Term 2"]
     }
@@ -183,6 +237,8 @@ Return ONLY valid JSON in this exact format:
       title: title,
       description: parsed.description,
       seedWord: seedWord,
+      detectedLanguage: parsed.detectedLanguage || 'English',
+      translations: parsed.translations || DEFAULT_TRANSLATIONS,
       terms: parsed.terms,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

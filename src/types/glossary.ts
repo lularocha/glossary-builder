@@ -4,6 +4,30 @@ export interface Source {
   description?: string;
 }
 
+export interface Translations {
+  generatedGlossary: string;
+  learnMore: string;
+  showLess: string;
+  sources: string;
+  linksDisclaimer: string;
+  relatedTerms: string;
+  seedWord: string;
+  totalTerms: string;
+  downloadReminder: string;
+}
+
+export const DEFAULT_TRANSLATIONS: Translations = {
+  generatedGlossary: 'Generated glossary',
+  learnMore: 'Learn more',
+  showLess: 'Show less',
+  sources: 'Sources',
+  linksDisclaimer: 'Links verified at time of generation. External sites may change.',
+  relatedTerms: 'Related Terms:',
+  seedWord: 'Seed Word:',
+  totalTerms: 'Total Terms:',
+  downloadReminder: "Don't forget to download your glossary! Your generated glossary will be lost if you hit the \"Start New\" button or exit this page.",
+};
+
 export interface ExpandedContent {
   paragraphs: string[];
   sources: Source[];
@@ -24,6 +48,8 @@ export interface Glossary {
   title?: string;
   description: string;
   seedWord: string;
+  detectedLanguage?: string;
+  translations?: Translations;
   terms: Term[];
   createdAt: Date;
   updatedAt: Date;

@@ -43,20 +43,22 @@ export async function generateGlossary(
  * @param definition - The current definition for context
  * @param glossaryTitle - Optional title for domain context
  * @param seedWord - The original seed word for context
+ * @param detectedLanguage - Optional detected language for i18n
  * @returns Promise<ExpandedContent> - Additional paragraphs and sources
  */
 export async function expandTerm(
   term: string,
   definition: string,
   glossaryTitle: string | undefined,
-  seedWord: string
+  seedWord: string,
+  detectedLanguage?: string
 ): Promise<ExpandedContent> {
   const response = await fetch('/api/expand', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ term, definition, glossaryTitle, seedWord }),
+    body: JSON.stringify({ term, definition, glossaryTitle, seedWord, detectedLanguage }),
   });
 
   if (!response.ok) {
