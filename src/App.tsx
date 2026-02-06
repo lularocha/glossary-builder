@@ -146,10 +146,11 @@ function App() {
 
     const t = glossary.translations || DEFAULT_TRANSLATIONS;
 
-    // Font sizes in half-points: 24pt=48, 16pt=32, 13pt=26
+    // Font sizes in half-points: 24pt=48, 14pt=28, 13pt=26, 12pt=24
     const TITLE_SIZE = 48;    // 24pt
-    const HEADING_SIZE = 32;  // 16pt
+    const HEADING_SIZE = 28;  // 14pt
     const BODY_SIZE = 26;     // 13pt
+    const SMALL_SIZE = 24;    // 12pt
 
     const children: Paragraph[] = [];
 
@@ -327,7 +328,7 @@ function App() {
                 new TextRun({
                   text: t.linksDisclaimer,
                   italics: true,
-                  size: BODY_SIZE,
+                  size: SMALL_SIZE,
                 }),
               ],
               spacing: { after: 200 },
