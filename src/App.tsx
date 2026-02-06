@@ -4,7 +4,7 @@ import { GlossaryDisplay } from './components/GlossaryDisplay';
 import type { Glossary, GlossaryInput as GlossaryInputType } from './types/glossary';
 import { generateGlossary, expandTerm } from './utils/claudeApi';
 import { saveGlossary, loadGlossary, clearStorage } from './utils/storage';
-import { Document, Packer, Paragraph, TextRun, ExternalHyperlink, Header, Footer, PageNumber, AlignmentType } from 'docx';
+import { Document, Packer, Paragraph, TextRun, ExternalHyperlink, Header, Footer, PageNumber, AlignmentType, HeadingLevel } from 'docx';
 import { saveAs } from 'file-saver';
 
 function App() {
@@ -151,6 +151,7 @@ function App() {
     // Title (H1) - Black, 24pt, bold
     children.push(
       new Paragraph({
+        heading: HeadingLevel.HEADING_1,
         children: [
           new TextRun({
             text: glossary.title || glossary.seedWord,
@@ -222,6 +223,7 @@ function App() {
       // Term heading (H2) - Black, 16pt, bold
       children.push(
         new Paragraph({
+          heading: HeadingLevel.HEADING_2,
           children: [
             new TextRun({
               text: `${index + 1}. ${term.term}`,
@@ -327,18 +329,6 @@ function App() {
         }
       }
 
-      // Separator line
-      children.push(
-        new Paragraph({
-          children: [
-            new TextRun({
-              text: '_______________________________________________',
-              size: BODY_SIZE,
-            }),
-          ],
-          spacing: { after: 200 },
-        })
-      );
     });
 
     // Header text: "GLOSSARY BUILDER: TITLE" in all caps
