@@ -4,6 +4,8 @@ import { GlossaryDisplay } from './components/GlossaryDisplay';
 import type { Glossary, GlossaryInput as GlossaryInputType } from './types/glossary';
 import { generateGlossary, expandTerm } from './utils/claudeApi';
 import { saveGlossary, loadGlossary, clearStorage } from './utils/storage';
+import { Document, Packer, Paragraph, TextRun, ExternalHyperlink, Header, Footer, PageNumber, AlignmentType } from 'docx';
+import { saveAs } from 'file-saver';
 
 function App() {
   const [glossary, setGlossary] = useState<Glossary | null>(null);
@@ -133,6 +135,259 @@ function App() {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+    setMenuOpen(false);
+  };
+
+  const handleExportDocx = async () => {
+    if (!glossary) return;
+
+    // Font sizes in half-points: 24pt=48, 16pt=32, 13pt=26
+    const TITLE_SIZE = 48;    // 24pt
+    const HEADING_SIZE = 32;  // 16pt
+    const BODY_SIZE = 26;     // 13pt
+
+    const children: Paragraph[] = [];
+
+    // Title (H1) - Black, 24pt, bold
+    children.push(
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: glossary.title || glossary.seedWord,
+            bold: true,
+            size: TITLE_SIZE,
+            color: '000000',
+          }),
+        ],
+        spacing: { after: 200 },
+      })
+    );
+
+    // Description
+    if (glossary.description) {
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: glossary.description,
+              size: BODY_SIZE,
+            }),
+          ],
+          spacing: { after: 200 },
+        })
+      );
+    }
+
+    // Seed Word
+    children.push(
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `Seed Word: ${glossary.seedWord}`,
+            size: BODY_SIZE,
+          }),
+        ],
+        spacing: { after: 100 },
+      })
+    );
+
+    // Total Terms
+    children.push(
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: `Total Terms: ${glossary.terms.length}`,
+            size: BODY_SIZE,
+          }),
+        ],
+        spacing: { after: 200 },
+      })
+    );
+
+    // Horizontal line (simulated with underscores)
+    children.push(
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: '_______________________________________________',
+            size: BODY_SIZE,
+          }),
+        ],
+        spacing: { after: 200 },
+      })
+    );
+
+    // Add all terms
+    glossary.terms.forEach((term, index) => {
+      // Term heading (H2) - Black, 16pt, bold
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: `${index + 1}. ${term.term}`,
+              bold: true,
+              size: HEADING_SIZE,
+              color: '000000',
+            }),
+          ],
+          spacing: { before: 300, after: 100 },
+        })
+      );
+
+      // Definition
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: term.definition,
+              size: BODY_SIZE,
+            }),
+          ],
+          spacing: { after: 200 },
+        })
+      );
+
+      // Expanded content if available
+      if (term.expandedContent) {
+        term.expandedContent.paragraphs.forEach((paragraph) => {
+          children.push(
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: paragraph,
+                  size: BODY_SIZE,
+                }),
+              ],
+              spacing: { after: 200 },
+            })
+          );
+        });
+
+        // Sources with hyperlinks
+        if (term.expandedContent.sources.length > 0) {
+          children.push(
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: 'Sources:',
+                  bold: true,
+                  size: BODY_SIZE,
+                }),
+              ],
+              spacing: { before: 100, after: 100 },
+            })
+          );
+
+          term.expandedContent.sources.forEach((source) => {
+            const bulletChildren: (TextRun | ExternalHyperlink)[] = [
+              new TextRun({ text: '• ', size: BODY_SIZE }),
+            ];
+
+            if (source.url) {
+              bulletChildren.push(
+                new ExternalHyperlink({
+                  children: [
+                    new TextRun({
+                      text: source.name,
+                      style: 'Hyperlink',
+                      size: BODY_SIZE,
+                    }),
+                  ],
+                  link: source.url,
+                })
+              );
+            } else {
+              bulletChildren.push(new TextRun({ text: source.name, size: BODY_SIZE }));
+            }
+
+            if (source.description) {
+              bulletChildren.push(new TextRun({ text: ` - ${source.description}`, size: BODY_SIZE }));
+            }
+
+            children.push(
+              new Paragraph({
+                children: bulletChildren,
+                spacing: { after: 50 },
+              })
+            );
+          });
+
+          children.push(
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: 'Links verified at time of generation. External sites may change.',
+                  italics: true,
+                  size: BODY_SIZE,
+                }),
+              ],
+              spacing: { after: 200 },
+            })
+          );
+        }
+      }
+
+      // Separator line
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: '_______________________________________________',
+              size: BODY_SIZE,
+            }),
+          ],
+          spacing: { after: 200 },
+        })
+      );
+    });
+
+    // Header text: "GLOSSARY BUILDER: TITLE" in all caps
+    const headerText = `GLOSSARY BUILDER: ${(glossary.title || glossary.seedWord).toUpperCase()}`;
+
+    const doc = new Document({
+      sections: [
+        {
+          properties: {},
+          headers: {
+            default: new Header({
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun({
+                      text: headerText,
+                      size: 18, // 9pt
+                      color: '000000',
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          },
+          footers: {
+            default: new Footer({
+              children: [
+                new Paragraph({
+                  alignment: AlignmentType.RIGHT,
+                  children: [
+                    new TextRun({
+                      children: [PageNumber.CURRENT],
+                      size: 20, // 10pt
+                      color: '000000',
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          },
+          children: children,
+        },
+      ],
+    });
+
+    const blob = await Packer.toBlob(doc);
+    const baseTitle = glossary.title || glossary.seedWord;
+    const formattedTitle = toTitleCase(baseTitle);
+    saveAs(blob, `${formattedTitle} Glossary.docx`);
     setMenuOpen(false);
   };
 
@@ -293,7 +548,26 @@ function App() {
                       d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                     />
                   </svg>
-                  Download
+                  MD File
+                </button>
+                <button
+                  onClick={handleExportDocx}
+                  className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  DOCX File
                 </button>
               </div>
 
@@ -416,7 +690,26 @@ function App() {
                         d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                       />
                     </svg>
-                    Download
+                    MD File
+                  </button>
+                  <button
+                    onClick={handleExportDocx}
+                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                    DOCX File
                   </button>
                 </div>
               </div>
