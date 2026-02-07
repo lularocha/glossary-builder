@@ -117,7 +117,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
 
               {/* Expanded Content */}
               {term.expanded && term.expandedContent && (
-                <div className="mt-4 pl-8 border-l-2 border-gray-200">
+                <div className="mt-4 pl-6 border-l-2 border-gray-200">
                   {/* Additional Paragraphs */}
                   <div className="space-y-3 mb-4">
                     {term.expandedContent.paragraphs.map((para, pIdx) => (
