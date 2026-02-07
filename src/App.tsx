@@ -647,7 +647,7 @@ function App() {
 
         <footer className="max-w-[760px] mx-auto py-4 text-sm text-left text-black">
           Created by Lula Rocha + Claude<br />
-          <span className="text-[#f90]">Latest update: January 25, 2026</span>
+          <span className="text-[#f90]">Last update: February 7, 2026</span>
         </footer>
       </div>
     </div>

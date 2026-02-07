@@ -46,7 +46,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
             required
           />
           <p className="mt-1 text-sm text-black">
-            Enter a technical term or concept to build your glossary around
+            Enter a term or concept to build your glossary around
           </p>
         </div>
 
