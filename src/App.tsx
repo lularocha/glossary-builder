@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { GlossaryInput } from './components/GlossaryInput';
 import { GlossaryDisplay } from './components/GlossaryDisplay';
+import { LanguageToggle } from './components/LanguageToggle';
 import type { Glossary, GlossaryInput as GlossaryInputType } from './types/glossary';
 import { DEFAULT_TRANSLATIONS } from './types/glossary';
 import { generateGlossary, expandTerm } from './utils/claudeApi';
@@ -8,8 +9,10 @@ import { saveGlossary, loadGlossary, clearStorage } from './utils/storage';
 import { Document, Packer, Paragraph, TextRun, ExternalHyperlink, Header, Footer, PageNumber, AlignmentType, HeadingLevel } from 'docx';
 import { saveAs } from 'file-saver';
 import { ArrowLeft, Copy, Download } from 'lucide-react';
+import { useLanguage } from './i18n';
 
 function App() {
+  const { t: ui } = useLanguage();
   const [glossary, setGlossary] = useState<Glossary | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -34,7 +37,7 @@ function App() {
 
   const handleGenerate = async (input: GlossaryInputType) => {
     setLoading(true);
-    setLoadingMessage('Generating glossary with 12 terms...');
+    setLoadingMessage(ui.generatingGlossary);
     setError('');
 
     try {
@@ -133,7 +136,7 @@ function App() {
     // Format filename as "Title Glossary.md" with proper capitalization and spaces
     const baseTitle = glossary.title || glossary.seedWord;
     const formattedTitle = toTitleCase(baseTitle);
-    link.download = `${formattedTitle} Glossary.md`;
+    link.download = `${formattedTitle} ${ui.glossary}.md`;
 
     document.body.appendChild(link);
     link.click();
@@ -342,8 +345,8 @@ function App() {
 
     // Header text: "GLOSSARY BUILDER: SEEDWORD" if no title, or "GLOSSARY BUILDER: SEEDWORD : TITLE" if title provided
     const headerText = glossary.title
-      ? `GLOSSARY BUILDER: ${glossary.seedWord.toUpperCase()} : ${glossary.title.toUpperCase()}`
-      : `GLOSSARY BUILDER: ${glossary.seedWord.toUpperCase()}`;
+      ? `${ui.glossaryBuilder}: ${glossary.seedWord.toUpperCase()} : ${glossary.title.toUpperCase()}`
+      : `${ui.glossaryBuilder}: ${glossary.seedWord.toUpperCase()}`;
 
     const doc = new Document({
       sections: [
@@ -388,7 +391,7 @@ function App() {
     const blob = await Packer.toBlob(doc);
     const baseTitle = glossary.title || glossary.seedWord;
     const formattedTitle = toTitleCase(baseTitle);
-    saveAs(blob, `${formattedTitle} Glossary.docx`);
+    saveAs(blob, `${formattedTitle} ${ui.glossary}.docx`);
     setMenuOpen(false);
   };
 
@@ -464,7 +467,7 @@ function App() {
             <button
               onClick={() => setShowReminder(false)}
               className="text-black hover:text-gray-700 transition-colors flex-shrink-0"
-              aria-label="Close reminder"
+              aria-label={ui.closeReminder}
             >
               <svg
                 className="w-5 h-5"
@@ -488,8 +491,11 @@ function App() {
         {/* Header */}
         <header className={`max-w-[760px] mx-auto ${glossary ? 'mb-20' : 'mb-5'} flex justify-between items-center`}>
           <h1 className={`tool-title font-bold text-black ${glossary ? 'text-3xl' : 'text-4xl md:text-5xl'}`}>
-            Glossary Builder
+            {ui.appTitle}
           </h1>
+
+          {/* Language Toggle - Only on input page */}
+          {!glossary && <LanguageToggle />}
 
           {/* Action Buttons - only show when glossary exists */}
           {glossary && (
@@ -501,28 +507,28 @@ function App() {
                   className="bg-orange-400 hover:bg-orange-600 text-white font-medium text-sm py-1.5 px-3 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
                   <ArrowLeft size={18} />
-                  New
+                  {ui.new}
                 </button>
                 <button
                   onClick={handleCopy}
                   className="bg-blue-500 hover:bg-blue-600 text-white font-medium text-sm py-1.5 px-3 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
                   <Copy size={18} />
-                  {copied ? 'Copied!' : 'Copy'}
+                  {copied ? ui.copied : ui.copy}
                 </button>
                 <button
                   onClick={handleExport}
                   className="bg-green-600 hover:bg-green-700 text-white font-medium text-sm py-1.5 px-3 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
                   <Download size={18} />
-                  MD File
+                  {ui.mdFile}
                 </button>
                 <button
                   onClick={handleExportDocx}
                   className="bg-green-600 hover:bg-green-700 text-white font-medium text-sm py-1.5 px-3 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
                   <Download size={18} />
-                  DOCX File
+                  {ui.docxFile}
                 </button>
               </div>
 
@@ -595,28 +601,28 @@ function App() {
                     className="bg-orange-400 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <ArrowLeft size={20} />
-                    New
+                    {ui.new}
                   </button>
                   <button
                     onClick={handleCopy}
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <Copy size={20} />
-                    {copied ? 'Copied!' : 'Copy'}
+                    {copied ? ui.copied : ui.copy}
                   </button>
                   <button
                     onClick={handleExport}
                     className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <Download size={20} />
-                    MD File
+                    {ui.mdFile}
                   </button>
                   <button
                     onClick={handleExportDocx}
                     className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <Download size={20} />
-                    DOCX File
+                    {ui.docxFile}
                   </button>
                 </div>
               </div>
@@ -650,8 +656,8 @@ function App() {
         </main>
 
         <footer className="max-w-[760px] mx-auto py-4 text-sm text-left text-black">
-          Created by Lula Rocha + Claude<br />
-          <span className="text-[#f90]">Last update: February 7, 2026</span>
+          {ui.createdBy}<br />
+          <span className="text-[#f90]">{ui.lastUpdate}</span>
         </footer>
       </div>
     </div>

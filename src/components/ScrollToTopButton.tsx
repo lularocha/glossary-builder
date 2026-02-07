@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../i18n';
 
 export const ScrollToTopButton: React.FC = () => {
+  const { t: ui } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export const ScrollToTopButton: React.FC = () => {
       onMouseLeave={(e) => {
         e.currentTarget.style.backgroundColor = '#ff8800';
       }}
-      aria-label="Scroll to top"
+      aria-label={ui.scrollToTop}
     >
       {/* Material Design arrow_upward icon */}
       <svg

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { GlossaryInput as GlossaryInputData } from '../types/glossary';
+import { useLanguage } from '../i18n';
 
 interface GlossaryInputProps {
   onGenerate: (data: GlossaryInputData) => void;
@@ -8,6 +9,7 @@ interface GlossaryInputProps {
 }
 
 export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loading, loadingMessage }) => {
+  const { t: ui } = useLanguage();
   const [title, setTitle] = useState('');
   const [seedWord, setSeedWord] = useState('');
 
@@ -23,10 +25,10 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
 
   return (
     <div className="max-w-[760px] mx-auto">
-      <p className="text-xl text-black mb-12">
-        Build glossaries powered by Claude AI.<br />
-        Just enter a single term (Seed Word) and automatically generate 12 related terms with clear definitions. Output is optimized for technical, scientific, and educational contexts in any language.
-      </p>
+      <p
+        className="text-xl text-black mb-12"
+        dangerouslySetInnerHTML={{ __html: ui.introParagraph }}
+      />
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="mb-8">
@@ -34,7 +36,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
             htmlFor="seedWord"
             className="block text-lg font-bold text-black mb-2"
           >
-            Seed Word
+            {ui.seedWordLabel}
           </label>
           <input
             type="text"
@@ -42,11 +44,11 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
             value={seedWord}
             onChange={(e) => setSeedWord(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
-            placeholder="e.g., Neural Network"
+            placeholder={ui.seedWordPlaceholder}
             required
           />
           <p className="mt-1 text-sm text-black">
-            Enter a term or concept to build your glossary around
+            {ui.seedWordHelp}
           </p>
         </div>
 
@@ -55,7 +57,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
             htmlFor="title"
             className="block text-lg font-bold text-black mb-2"
           >
-            Glossary Title <span className="text-gray-400 font-semibold">(optional)</span>
+            {ui.glossaryTitleLabel} <span className="text-gray-400 font-semibold">{ui.optional}</span>
           </label>
           <input
             type="text"
@@ -63,10 +65,10 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
-            placeholder="e.g., Machine Learning"
+            placeholder={ui.titlePlaceholder}
           />
           <p className="mt-1 text-sm text-black">
-            Give your glossary a descriptive title. This helps Claude understand the context of the Seed Word.
+            {ui.titleHelp}
           </p>
         </div>
 
@@ -95,7 +97,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
                 />
               </svg>
               <p className="text-black font-medium">
-                {loadingMessage || 'Processing...'}
+                {loadingMessage || ui.processing}
               </p>
             </div>
           </div>
@@ -106,7 +108,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
           disabled={!seedWord.trim()}
           className="w-full bg-black hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-3 px-6 rounded-md transition duration-200 ease-in-out transform hover:scale-[1.02] active:scale-[0.98] mt-8 mb-8"
         >
-          Generate Glossary
+          {ui.generateGlossary}
         </button>
       </form>
     </div>
