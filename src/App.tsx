@@ -340,8 +340,10 @@ function App() {
 
     });
 
-    // Header text: "GLOSSARY BUILDER: TITLE" in all caps
-    const headerText = `GLOSSARY BUILDER: ${(glossary.title || glossary.seedWord).toUpperCase()}`;
+    // Header text: "GLOSSARY BUILDER: SEEDWORD" if no title, or "GLOSSARY BUILDER: SEEDWORD : TITLE" if title provided
+    const headerText = glossary.title
+      ? `GLOSSARY BUILDER: ${glossary.seedWord.toUpperCase()} : ${glossary.title.toUpperCase()}`
+      : `GLOSSARY BUILDER: ${glossary.seedWord.toUpperCase()}`;
 
     const doc = new Document({
       sections: [
