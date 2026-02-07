@@ -20,7 +20,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
   return (
     <div className="w-full">
       {/* Header Section */}
-      <div className="max-w-[900px] mx-auto pb-8 border-b border-gray-300">
+      <div className="max-w-[760px] mx-auto pb-8 border-b border-gray-300">
         <p className="text-sm uppercase font-semibold mb-2" style={{ color: 'var(--color-orange-400)' }}>{t.generatedGlossary}</p>
         <h1 className="glossary-title text-[2.5rem] font-bold mb-3 text-black">
           {glossary.title || glossary.seedWord}
@@ -31,7 +31,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
       </div>
 
       {/* Terms List */}
-      <div className="max-w-[900px] mx-auto">
+      <div className="max-w-[760px] mx-auto">
         {glossary.terms.map((term, index) => (
           <div
             key={`${term.term}-${index}`}

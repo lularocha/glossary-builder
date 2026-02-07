@@ -453,7 +453,7 @@ function App() {
       {/* Reminder Banner */}
       {glossary && showReminder && (
         <div className="w-full bg-yellow-100/70 mb-4">
-          <div className="max-w-[900px] mx-auto px-4 py-3 flex items-center justify-between gap-4">
+          <div className="max-w-[760px] mx-auto px-4 py-3 flex items-center justify-between gap-4">
             <p className="text-black text-sm md:text-base flex-1">
               {glossary.translations?.downloadReminder || DEFAULT_TRANSLATIONS.downloadReminder}
             </p>
@@ -482,8 +482,8 @@ function App() {
 
       <div className="mx-auto px-4 pt-3 pb-8 md:pt-8">
         {/* Header */}
-        <header className={`max-w-[900px] mx-auto ${glossary ? 'mb-20' : 'mb-5'} flex justify-between items-center`}>
-          <h1 className={`tool-title font-bold text-black ${glossary ? 'text-4xl' : 'text-4xl md:text-5xl'}`}>
+        <header className={`max-w-[760px] mx-auto ${glossary ? 'mb-20' : 'mb-5'} flex justify-between items-center`}>
+          <h1 className={`tool-title font-bold text-black ${glossary ? 'text-3xl' : 'text-4xl md:text-5xl'}`}>
             Glossary Builder
           </h1>
 
@@ -494,30 +494,30 @@ function App() {
               <div className="hidden md:flex gap-3">
                 <button
                   onClick={handleReset}
-                  className="bg-orange-400 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
+                  className="bg-orange-400 hover:bg-orange-600 text-white font-medium text-sm py-1.5 px-3 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
-                  <ArrowLeft size={20} />
+                  <ArrowLeft size={18} />
                   Start New
                 </button>
                 <button
                   onClick={handleCopy}
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-medium text-sm py-1.5 px-3 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
-                  <Copy size={20} />
+                  <Copy size={18} />
                   {copied ? 'Copied!' : 'Copy'}
                 </button>
                 <button
                   onClick={handleExport}
-                  className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
+                  className="bg-green-600 hover:bg-green-700 text-white font-medium text-sm py-1.5 px-3 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
-                  <Download size={20} />
+                  <Download size={18} />
                   MD File
                 </button>
                 <button
                   onClick={handleExportDocx}
-                  className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
+                  className="bg-green-600 hover:bg-green-700 text-white font-medium text-sm py-1.5 px-3 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
-                  <Download size={20} />
+                  <Download size={18} />
                   DOCX File
                 </button>
               </div>
@@ -622,7 +622,7 @@ function App() {
 
         {/* Error Message */}
         {error && (
-          <div className="max-w-[900px] mx-auto mb-6 border-l-4 border-black pl-4">
+          <div className="max-w-[760px] mx-auto mb-6 border-l-4 border-black pl-4">
             <p className="text-black font-medium">{error}</p>
           </div>
         )}
@@ -645,7 +645,7 @@ function App() {
           )}
         </main>
 
-        <footer className="max-w-[900px] mx-auto py-4 text-sm text-left text-black">
+        <footer className="max-w-[760px] mx-auto py-4 text-sm text-left text-black">
           Created by Lula Rocha + Claude<br />
           <span className="text-[#f90]">Latest update: January 25, 2026</span>
         </footer>
