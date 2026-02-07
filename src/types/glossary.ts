@@ -14,6 +14,7 @@ export interface Translations {
   seedWord: string;
   totalTerms: string;
   downloadReminder: string;
+  downloadReminderLoss: string;
 }
 
 export const DEFAULT_TRANSLATIONS: Translations = {
@@ -25,7 +26,8 @@ export const DEFAULT_TRANSLATIONS: Translations = {
   relatedTerms: 'Related Terms:',
   seedWord: 'Seed Word:',
   totalTerms: 'Total Terms:',
-  downloadReminder: "Don't forget to download your glossary! Your generated glossary will be lost if you hit the \"Start New\" button or exit this page.",
+  downloadReminder: "Don't forget to download your glossary!",
+  downloadReminderLoss: "Your glossary will be lost if you hit the \"Start New\" button or exit this page.",
 };
 
 export interface ExpandedContent {

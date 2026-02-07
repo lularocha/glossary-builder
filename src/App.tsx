@@ -458,6 +458,8 @@ function App() {
           <div className="max-w-[760px] mx-auto px-4 py-3 flex items-center justify-between gap-4">
             <p className="text-black text-sm md:text-base flex-1">
               {glossary.translations?.downloadReminder || DEFAULT_TRANSLATIONS.downloadReminder}
+              <br />
+              {glossary.translations?.downloadReminderLoss || DEFAULT_TRANSLATIONS.downloadReminderLoss}
             </p>
             <button
               onClick={() => setShowReminder(false)}

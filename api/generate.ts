@@ -18,6 +18,7 @@ interface Translations {
   seedWord: string;
   totalTerms: string;
   downloadReminder: string;
+  downloadReminderLoss: string;
 }
 
 const DEFAULT_TRANSLATIONS: Translations = {
@@ -29,7 +30,8 @@ const DEFAULT_TRANSLATIONS: Translations = {
   relatedTerms: 'Related Terms:',
   seedWord: 'Seed Word:',
   totalTerms: 'Total Terms:',
-  downloadReminder: "Don't forget to download your glossary! Your generated glossary will be lost if you hit the \"Start New\" button or exit this page.",
+  downloadReminder: "Don't forget to download your glossary!",
+  downloadReminderLoss: "Your glossary will be lost if you hit the \"Start New\" button or exit this page.",
 };
 
 interface GenerateRequest {
@@ -112,7 +114,8 @@ If English, use these exact default labels:
 - relatedTerms: "Related Terms:"
 - seedWord: "Seed Word:"
 - totalTerms: "Total Terms:"
-- downloadReminder: "Don't forget to download your glossary! Your generated glossary will be lost if you hit the \\"Start New\\" button or exit this page."
+- downloadReminder: "Don't forget to download your glossary!"
+- downloadReminderLoss: "Your glossary will be lost if you hit the \\"Start New\\" button or exit this page."
 
 ${domainContext}
 
@@ -184,7 +187,8 @@ Return ONLY valid JSON in this exact format:
     "relatedTerms": "Related Terms:",
     "seedWord": "Seed Word:",
     "totalTerms": "Total Terms:",
-    "downloadReminder": "Don't forget to download your glossary! Your generated glossary will be lost if you hit the \\"Start New\\" button or exit this page."
+    "downloadReminder": "Don't forget to download your glossary!",
+    "downloadReminderLoss": "Your glossary will be lost if you hit the \\"Start New\\" button or exit this page."
   },
   "description": "Brief description of the glossary IN THE DETECTED LANGUAGE",
   "terms": [
