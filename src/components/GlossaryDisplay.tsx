@@ -154,7 +154,9 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                       </ul>
                       {/* Disclaimer */}
                       <p className="text-xs text-black mt-2 italic">
-                        {t.linksDisclaimer}
+                        {t.linksDisclaimer.split('. ')[0]}.
+                        <br className="md:hidden" />
+                        {' '}{t.linksDisclaimer.split('. ')[1]}
                       </p>
                     </div>
                   )}
