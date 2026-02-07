@@ -455,7 +455,7 @@ function App() {
       {/* Reminder Banner */}
       {glossary && showReminder && (
         <div className="w-full bg-yellow-100/70 mb-4">
-          <div className="max-w-[760px] mx-auto px-4 py-3 flex items-center justify-between gap-4">
+          <div className="max-w-[760px] mx-auto px-4 lg:px-0 py-3 flex items-center justify-between gap-4">
             <p className="text-black text-sm md:text-base flex-1">
               {glossary.translations?.downloadReminder || DEFAULT_TRANSLATIONS.downloadReminder}
               <br />
