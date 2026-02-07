@@ -127,6 +127,14 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                     ))}
                   </div>
 
+                  {/* Related Terms */}
+                  {term.relatedTerms.length > 0 && (
+                    <p className="text-black mb-4">
+                      <span className="font-semibold">{t.relatedTerms}</span>{' '}
+                      {term.relatedTerms.join(', ')}
+                    </p>
+                  )}
+
                   {/* Sources Section */}
                   {term.expandedContent.sources.length > 0 && (
                     <div className="mt-4">
@@ -160,25 +168,6 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                       </p>
                     </div>
                   )}
-                </div>
-              )}
-
-              {/* Related Terms */}
-              {term.relatedTerms.length > 0 && (
-                <div className="related-terms hidden">
-                  <h3 className="text-sm font-medium text-black mb-2">
-                    {t.relatedTerms}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {term.relatedTerms.map((relatedTerm, idx) => (
-                      <span
-                        key={idx}
-                        className="text-black text-sm"
-                      >
-                        {relatedTerm}{idx < term.relatedTerms.length - 1 ? ', ' : ''}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               )}
             </div>
