@@ -501,7 +501,7 @@ function App() {
                   className="bg-orange-400 hover:bg-orange-600 text-white font-medium text-sm py-1.5 px-3 rounded-md transition duration-200 flex items-center gap-2 whitespace-nowrap"
                 >
                   <ArrowLeft size={18} />
-                  Start New
+                  New
                 </button>
                 <button
                   onClick={handleCopy}
@@ -595,7 +595,7 @@ function App() {
                     className="bg-orange-400 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <ArrowLeft size={20} />
-                    Start New
+                    New
                   </button>
                   <button
                     onClick={handleCopy}
