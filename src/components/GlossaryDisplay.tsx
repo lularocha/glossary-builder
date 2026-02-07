@@ -130,7 +130,7 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                   {/* Sources Section */}
                   {term.expandedContent.sources.length > 0 && (
                     <div className="mt-4">
-                      <h4 className="text-sm font-semibold text-gray-600 mb-2">{t.sources}</h4>
+                      <h4 className="text-sm font-semibold text-black mb-2">{t.sources}</h4>
                       <ul className="space-y-1">
                         {term.expandedContent.sources.map((source, sIdx) => (
                           <li key={sIdx} className="text-sm">
@@ -139,21 +139,21 @@ export const GlossaryDisplay: React.FC<GlossaryDisplayProps> = ({
                                 href={source.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-600 hover:underline"
+                                className="text-blue-600 hover:underline font-semibold"
                               >
                                 {source.name}
                               </a>
                             ) : (
-                              <span className="text-gray-600">{source.name}</span>
+                              <span className="text-black font-semibold">{source.name}</span>
                             )}
                             {source.description && (
-                              <span className="text-gray-500"> - {source.description}</span>
+                              <span className="text-black"> - {source.description}</span>
                             )}
                           </li>
                         ))}
                       </ul>
                       {/* Disclaimer */}
-                      <p className="text-xs text-gray-700 mt-2 italic">
+                      <p className="text-xs text-black mt-2 italic">
                         {t.linksDisclaimer}
                       </p>
                     </div>
