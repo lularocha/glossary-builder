@@ -65,7 +65,7 @@ function App() {
 
     const t = glossary.translations || DEFAULT_TRANSLATIONS;
 
-    let content = `# ${glossary.title || glossary.seedWord}\n\n`;
+    let content = `# ${glossary.title ? `${glossary.seedWord}: ${glossary.title}` : glossary.seedWord}\n\n`;
 
     if (glossary.description) {
       content += `${glossary.description}\n\n`;
@@ -161,7 +161,7 @@ function App() {
         heading: HeadingLevel.HEADING_1,
         children: [
           new TextRun({
-            text: glossary.title || glossary.seedWord,
+            text: glossary.title ? `${glossary.seedWord}: ${glossary.title}` : glossary.seedWord,
             font: 'Arial',
             bold: true,
             size: TITLE_SIZE,
