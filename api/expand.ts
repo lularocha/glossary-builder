@@ -103,12 +103,11 @@ Generate additional context and cite reliable sources for this term.${detectedLa
    - RFCs and official standards
    - Reputable publisher documentation (e.g., Oracle, Microsoft, Google)
 
-## CRITICAL URL Rules
+## URL Guidelines
+- ALWAYS include URLs for official documentation (Python docs, MDN, W3C, Oracle, Microsoft, Google, etc.)
+- Use stable base URLs for official docs (e.g., "https://docs.python.org/3/", "https://developer.mozilla.org/")
 - NEVER include Wikipedia links
-- Only include a URL if you are HIGHLY confident it exists and is stable
-- If unsure about a URL, provide ONLY the source name without a URL
-- Prefer documentation paths that are unlikely to change (e.g., "/docs/concepts/" over dated blog posts)
-- When citing official docs, use the most stable/canonical URL format
+- If referencing a less-known or potentially unstable source, you may omit the URL
 
 ## Response Format
 Return ONLY valid JSON:
@@ -124,13 +123,14 @@ Return ONLY valid JSON:
       "description": "Official tutorial on defining and using functions"
     },
     {
-      "name": "Real Python Advanced Guide",
-      "description": "Covers advanced function patterns and decorators"
+      "name": "MDN Web Docs - JavaScript Reference",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+      "description": "Comprehensive documentation for JavaScript"
     }
   ]
 }
 
-Note: The second source example shows a citation WITHOUT a URL - use this format when you cannot guarantee URL validity.`;
+IMPORTANT: Always include URLs for official documentation sources. URLs make sources actionable and useful.`;
 
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
