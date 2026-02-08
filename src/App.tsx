@@ -489,13 +489,13 @@ function App() {
 
       <div className="mx-auto px-4 pt-3 pb-8 md:pt-8">
         {/* Header */}
-        <header className={`max-w-[760px] mx-auto ${glossary ? 'mb-20' : 'mb-5'} flex justify-between items-center`}>
-          <h1 className={`tool-title font-bold text-black ${glossary ? 'text-3xl' : 'text-3xl md:text-5xl'}`}>
+        <header className={`max-w-[760px] mx-auto ${glossary ? 'mb-20' : 'mb-5'} flex justify-between items-start md:items-center`}>
+          <h1 className={`tool-title font-bold text-black ${glossary ? 'text-xl' : 'text-3xl md:text-5xl'}`}>
             {ui.appTitle}
           </h1>
 
           {/* Language Toggle - Only on input page */}
-          {!glossary && <LanguageToggle />}
+          {!glossary && <LanguageToggle className="mt-[6px] md:mt-0" />}
 
           {/* Action Buttons - only show when glossary exists */}
           {glossary && (
