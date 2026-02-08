@@ -54,14 +54,6 @@ function App() {
     }
   };
 
-  // Helper function to convert text to Title Case
-  const toTitleCase = (str: string) => {
-    return str
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  };
-
   // Generate markdown formatted content
   const getFormattedContent = () => {
     if (!glossary) return '';
@@ -79,7 +71,7 @@ function App() {
     content += `---\n\n`;
 
     // Add all terms
-    glossary.terms.forEach((term, index) => {
+    glossary.terms.forEach((term) => {
       content += `## ${term.term}\n\n`;
       content += `${term.definition}\n\n`;
 
@@ -231,7 +223,7 @@ function App() {
     );
 
     // Add all terms
-    glossary.terms.forEach((term, index) => {
+    glossary.terms.forEach((term) => {
       // Term heading (H2) - Arial, Black, 16pt, bold
       children.push(
         new Paragraph({
