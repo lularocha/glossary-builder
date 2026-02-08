@@ -80,7 +80,7 @@ function App() {
 
     // Add all terms
     glossary.terms.forEach((term, index) => {
-      content += `## ${index + 1}. ${term.term}\n\n`;
+      content += `## ${term.term}\n\n`;
       content += `${term.definition}\n\n`;
 
       // Include expanded content if available
@@ -133,10 +133,11 @@ function App() {
     const link = document.createElement('a');
     link.href = url;
 
-    // Format filename as "Title Glossary.md" with proper capitalization and spaces
-    const baseTitle = glossary.title || glossary.seedWord;
-    const formattedTitle = toTitleCase(baseTitle);
-    link.download = `${formattedTitle} ${ui.glossary}.md`;
+    // Format filename: "SeedWord.md" or "SeedWord_Title.md"
+    const filename = glossary.title
+      ? `${glossary.seedWord}_${glossary.title}.md`
+      : `${glossary.seedWord}.md`;
+    link.download = filename;
 
     document.body.appendChild(link);
     link.click();
@@ -237,7 +238,7 @@ function App() {
           heading: HeadingLevel.HEADING_2,
           children: [
             new TextRun({
-              text: `${index + 1}. ${term.term}`,
+              text: term.term,
               font: 'Arial',
               bold: true,
               size: HEADING_SIZE,
@@ -343,9 +344,9 @@ function App() {
 
     });
 
-    // Header text: "GLOSSARY BUILDER: SEEDWORD" if no title, or "GLOSSARY BUILDER: SEEDWORD : TITLE" if title provided
+    // Header text: "GLOSSARY BUILDER: SEEDWORD" if no title, or "GLOSSARY BUILDER: SEEDWORD: TITLE" if title provided
     const headerText = glossary.title
-      ? `${ui.glossaryBuilder}: ${glossary.seedWord.toUpperCase()} : ${glossary.title.toUpperCase()}`
+      ? `${ui.glossaryBuilder}: ${glossary.seedWord.toUpperCase()}: ${glossary.title.toUpperCase()}`
       : `${ui.glossaryBuilder}: ${glossary.seedWord.toUpperCase()}`;
 
     const doc = new Document({
@@ -389,9 +390,11 @@ function App() {
     });
 
     const blob = await Packer.toBlob(doc);
-    const baseTitle = glossary.title || glossary.seedWord;
-    const formattedTitle = toTitleCase(baseTitle);
-    saveAs(blob, `${formattedTitle} ${ui.glossary}.docx`);
+    // Format filename: "SeedWord.docx" or "SeedWord_Title.docx"
+    const filename = glossary.title
+      ? `${glossary.seedWord}_${glossary.title}.docx`
+      : `${glossary.seedWord}.docx`;
+    saveAs(blob, filename);
     setMenuOpen(false);
   };
 
