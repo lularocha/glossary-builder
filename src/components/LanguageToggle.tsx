@@ -9,7 +9,7 @@ interface LanguageToggleProps {
 export const LanguageToggle: React.FC<LanguageToggleProps> = ({ className = '' }) => {
   const { language, setLanguage } = useLanguage();
 
-  const buttonBase = 'px-2 py-0.5 text-xs font-medium rounded transition-colors text-white';
+  const buttonBase = 'px-2 py-0.5 text-sm font-medium rounded transition-colors text-white';
 
   const getButtonClasses = (lang: Language) => {
     const isActive = language === lang;
