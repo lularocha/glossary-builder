@@ -29,10 +29,10 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({
 
   return (
     <div className="max-w-[760px] mx-auto">
-      <p
-        className="text-base md:text-xl text-black mb-12"
-        dangerouslySetInnerHTML={{ __html: ui.introParagraph }}
-      />
+      <div className="text-base md:text-xl text-black mb-12">
+        <p>{ui.introParagraph1}</p>
+        <p>{ui.introParagraph2}</p>
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="mb-8">

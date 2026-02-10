@@ -34,8 +34,9 @@ export interface UIStrings {
   generatingGlossary: string;
   loading: string;
 
-  // Intro paragraph (supports HTML - use <br /> for line breaks)
-  introParagraph: string;
+  // Intro paragraphs
+  introParagraph1: string;
+  introParagraph2: string;
 
   // Footer
   createdBy: string;
@@ -82,9 +83,10 @@ export const strings: Record<Language, UIStrings> = {
     generatingGlossary: "Generating glossary with 12 terms...",
     loading: "Loading...",
 
-    // Intro paragraph
-    introParagraph:
-      "Build glossaries powered by Claude AI.<br />Just enter a single term (Seed Word) and automatically generate 12 related terms with clear definitions. Output is optimized for technical, scientific, and educational contexts in any language.",
+    // Intro paragraphs
+    introParagraph1: "Build glossaries powered by Claude AI.",
+    introParagraph2:
+      "Just enter a single term (Seed Word) and automatically generate 12 related terms with clear definitions. Output is optimized for technical, scientific, and educational contexts in any language.",
 
     // Footer
     createdBy: "Created by Lula Rocha + Claude",
@@ -130,9 +132,10 @@ export const strings: Record<Language, UIStrings> = {
     generatingGlossary: "Gerando glossário com 12 termos...",
     loading: "Carregando...",
 
-    // Intro paragraph
-    introParagraph:
-      "Crie glossários com Claude AI.<br />Basta inserir um único termo (Palavra Semente) e gerar automaticamente 12 termos relacionados com definições claras. O resultado é otimizado para contextos técnicos, científicos e educacionais em qualquer idioma.",
+    // Intro paragraphs
+    introParagraph1: "Crie glossários com Claude AI.",
+    introParagraph2:
+      "Basta inserir um único termo (Palavra Semente) e gerar automaticamente 12 termos relacionados com definições claras. O resultado é otimizado para contextos técnicos, científicos e educacionais em qualquer idioma.",
 
     // Footer
     createdBy: "Criado por Lula Rocha + Claude",
