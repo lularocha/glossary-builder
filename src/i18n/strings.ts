@@ -90,7 +90,7 @@ export const strings: Record<Language, UIStrings> = {
 
     // Footer
     createdBy: "Created by Lula Rocha + Claude",
-    lastUpdate: "Last update: February 7, 2026",
+    lastUpdate: "Last update: February 10, 2026",
 
     // File/Document exports
     glossary: "Glossary",
@@ -139,7 +139,7 @@ export const strings: Record<Language, UIStrings> = {
 
     // Footer
     createdBy: "Criado por Lula Rocha + Claude",
-    lastUpdate: "Última atualização: 7 de fevereiro de 2026",
+    lastUpdate: "Última atualização: 10 de fevereiro de 2026",
 
     // File/Document exports
     glossary: "Glossário",
