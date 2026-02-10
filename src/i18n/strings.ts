@@ -121,7 +121,7 @@ export const strings: Record<Language, UIStrings> = {
     titlePlaceholder: "ex., Aprendizado de Máquina",
 
     // Form Help Text
-    seedWordHelp: "Digite um termo ou conceito para construir seu glossário",
+    seedWordHelp: "Digite um termo ou conceito para construir seu glossário.",
     titleHelp:
       "Dê um título descritivo ao seu glossário. Isso ajuda o Claude a entender o contexto da Palavra Semente.",
 
