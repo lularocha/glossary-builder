@@ -1,6 +1,12 @@
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import type { Language, UIStrings } from './strings';
-import { strings } from './strings';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
+import type { Language, UIStrings } from "./strings";
+import { strings } from "./strings";
 
 interface LanguageContextType {
   language: Language;
@@ -8,15 +14,19 @@ interface LanguageContextType {
   t: UIStrings;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined,
+);
 
-const STORAGE_KEY = 'glossary-builder-language';
+const STORAGE_KEY = "glossary-builder-language";
 
-export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const LanguageProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [language, setLanguageState] = useState<Language>(() => {
     // Load from localStorage on initial render
     const saved = localStorage.getItem(STORAGE_KEY);
-    return (saved === 'pt' ? 'pt' : 'en') as Language;
+    return (saved === "pt" ? "pt" : "en") as Language;
   });
 
   const setLanguage = (lang: Language) => {
@@ -42,10 +52,11 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useLanguage = (): LanguageContextType => {
   const context = useContext(LanguageContext);
   if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    throw new Error("useLanguage must be used within a LanguageProvider");
   }
   return context;
 };
