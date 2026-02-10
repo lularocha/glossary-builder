@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import type { GlossaryInput as GlossaryInputData } from '../types/glossary';
-import { useLanguage } from '../i18n';
+import React, { useState } from "react";
+import type { GlossaryInput as GlossaryInputData } from "../types/glossary";
+import { useLanguage } from "../i18n";
 
 interface GlossaryInputProps {
   onGenerate: (data: GlossaryInputData) => void;
@@ -8,10 +8,14 @@ interface GlossaryInputProps {
   loadingMessage?: string;
 }
 
-export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loading, loadingMessage }) => {
+export const GlossaryInput: React.FC<GlossaryInputProps> = ({
+  onGenerate,
+  loading,
+  loadingMessage,
+}) => {
   const { t: ui } = useLanguage();
-  const [title, setTitle] = useState('');
-  const [seedWord, setSeedWord] = useState('');
+  const [title, setTitle] = useState("");
+  const [seedWord, setSeedWord] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +30,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
   return (
     <div className="max-w-[760px] mx-auto">
       <p
-        className="text-xl text-black mb-12"
+        className="text-base md:text-xl text-black mb-12"
         dangerouslySetInnerHTML={{ __html: ui.introParagraph }}
       />
 
@@ -47,9 +51,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
             placeholder={ui.seedWordPlaceholder}
             required
           />
-          <p className="mt-1 text-sm text-black">
-            {ui.seedWordHelp}
-          </p>
+          <p className="mt-1 text-sm text-black">{ui.seedWordHelp}</p>
         </div>
 
         <div className="mb-8">
@@ -57,7 +59,8 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
             htmlFor="title"
             className="block text-lg font-bold text-black mb-2"
           >
-            {ui.glossaryTitleLabel} <span className="text-gray-400 font-normal">{ui.optional}</span>
+            {ui.glossaryTitleLabel}{" "}
+            <span className="text-gray-400 font-normal">{ui.optional}</span>
           </label>
           <input
             type="text"
@@ -67,9 +70,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({ onGenerate, loadin
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
             placeholder={ui.titlePlaceholder}
           />
-          <p className="mt-1 text-sm text-black">
-            {ui.titleHelp}
-          </p>
+          <p className="mt-1 text-sm text-black">{ui.titleHelp}</p>
         </div>
 
         {/* Loading Indicator */}
