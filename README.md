@@ -41,14 +41,7 @@ Glossary Builder uses Claude AI to automatically generate complete glossaries ba
 
 ## How It Works
 
-1. **Select Language** - Choose English or Portuguese for the interface
-2. **Input** - Enter a seed word (e.g., "API") and optional title (e.g., "Working with APIs")
-3. **Generation** - Claude AI analyzes the seed word and generates 12 related terms with clear definitions
-4. **Smart Formatting** - Abbreviations and acronyms automatically show their full expansion
-5. **Review** - Browse through your generated glossary with clean, readable formatting
-6. **Learn More** - Click "Learn More" on any term to expand it with additional context, related terms, and source citations
-7. **Export** - Copy to clipboard, download as markdown (.md), or export as Word document (.docx)
-8. **Auto-save** - Your glossary is automatically saved to browser localStorage
+Glossary Builder uses a simple workflow: choose your UI language, enter a seed word (with optional title for context), and Claude AI generates 12 related terms with clear definitions. Each term can be expanded for deeper context with sources from official documentation. Export your glossary as markdown or Word document, and everything auto-saves to your browser.
 
 ## Getting Started
 
@@ -104,34 +97,68 @@ The API functions in `api/` are deployed as Vercel Serverless Functions.
 
 ## Usage
 
-### Generate a Glossary
-1. Toggle between English or Portuguese UI (top right)
-2. Enter a seed word (required) - e.g., "Neural Network"
-3. Enter an optional title for context - e.g., "Machine Learning"
-4. Click "Generate Glossary" - creates 12 terms with definitions
+### Step 1: Choose Your Interface Language
+Toggle between English or Portuguese UI using the language switcher in the top right corner. This only affects the interface—glossaries are generated in the language of your seed word.
 
-### Learn More
-- Click "Learn More" on any term to expand it
-- Shows 2-3 detailed context paragraphs
-- Displays related terms from your glossary
-- Shows source citations from official documentation
-- Links open in new tabs
-- Click "Show Less" to collapse
+### Step 2: Generate a Glossary
+1. Enter a **seed word** (required) - the core concept for your glossary
+   - Example: "API", "Neural Network", "Photosynthesis"
+2. Enter an optional **title** to provide context
+   - Example: If seed word is "API", title could be "Web Development" or "REST Architecture"
+   - Helps Claude understand the specific domain
+3. Click **"Generate Glossary"**
+   - Claude AI analyzes your input
+   - Generates 12 contextually relevant terms
+   - Automatically detects language and formats abbreviations
+   - Takes ~15-30 seconds
 
-### Export Your Glossary
-Three export options available:
-- **Copy** - Copy entire glossary as markdown to clipboard
-- **MD File** - Download as markdown file (.md)
-- **DOCX File** - Download as formatted Word document (.docx)
+### Step 3: Review Your Glossary
+- Browse through your 12 generated terms
+- Each term includes a clear, concise definition
+- Abbreviations show their full expansion automatically
+- Glossary auto-saves to browser localStorage
 
-All exports include:
-- Glossary title and description
-- All 12 terms with definitions
-- Expanded content (if you used "Learn More")
-- Source citations with clickable links
+### Step 4: Expand Terms (Optional)
+Click **"Learn More"** on any term to get deeper insights:
+- **Additional Context** - 2-3 detailed paragraphs explaining the concept
+- **Related Terms** - See connections to other terms in your glossary
+- **Official Sources** - Citations from authoritative documentation (MDN, W3C, official docs)
+- **Clickable Links** - Sources open in new tabs
+- **Smart Caching** - Expanded content saves locally for instant re-opening
 
-### Start a New Glossary
-Click the orange "New" button to clear your current glossary and start fresh.
+Click **"Show Less"** to collapse expanded content.
+
+### Step 5: Export Your Glossary
+Choose from three export options (top buttons on desktop, hamburger menu on mobile):
+
+**Copy to Clipboard**
+- One-click copy of entire glossary in markdown format
+- Visual "Copied!" confirmation
+- Ready to paste into any editor
+
+**MD File**
+- Download as formatted markdown (.md)
+- Clean heading hierarchy
+- Includes all terms, definitions, expanded content, and sources
+- Filename: `SeedWord.md` or `SeedWord_Title.md`
+
+**DOCX File**
+- Download as professional Word document (.docx)
+- Custom header: "GLOSSARY BUILDER: SEEDWORD: TITLE"
+- Page numbers in footer
+- Proper styles: H1 (24pt), H2 (14pt), body (13pt)
+- Clickable hyperlinks for sources
+- Filename: `SeedWord.docx` or `SeedWord_Title.docx`
+
+All exports include expanded content if you used "Learn More."
+
+### Step 6: Start a New Glossary (Optional)
+Click the orange **"New"** button to:
+- Clear your current glossary
+- Return to the input page
+- Start fresh with a new seed word
+
+Your previous glossary is cleared from localStorage, so make sure to export it first!
 
 ## Tech Stack
 
