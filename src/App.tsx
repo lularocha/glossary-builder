@@ -604,7 +604,7 @@ function App() {
               className={`absolute top-0 left-0 h-full w-64 shadow-lg transform transition-transform duration-300 ease-out ${
                 menuOpen ? "translate-x-0" : "-translate-x-full"
               }`}
-              style={{ backgroundColor: "rgba(48, 48, 48, 0.85)" }}
+              style={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
             >
               <div className="p-4">
                 <button
