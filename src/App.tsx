@@ -1,25 +1,41 @@
-import { useState, useEffect } from 'react';
-import { GlossaryInput } from './components/GlossaryInput';
-import { GlossaryDisplay } from './components/GlossaryDisplay';
-import { LanguageToggle } from './components/LanguageToggle';
-import type { Glossary, GlossaryInput as GlossaryInputType } from './types/glossary';
-import { DEFAULT_TRANSLATIONS } from './types/glossary';
-import { generateGlossary, expandTerm } from './utils/claudeApi';
-import { saveGlossary, loadGlossary, clearStorage } from './utils/storage';
-import { Document, Packer, Paragraph, TextRun, ExternalHyperlink, Header, Footer, PageNumber, AlignmentType, HeadingLevel } from 'docx';
-import { saveAs } from 'file-saver';
-import { ArrowLeft, Copy, Download } from 'lucide-react';
-import { useLanguage } from './i18n';
+import { useState, useEffect } from "react";
+import { GlossaryInput } from "./components/GlossaryInput";
+import { GlossaryDisplay } from "./components/GlossaryDisplay";
+import { LanguageToggle } from "./components/LanguageToggle";
+import type {
+  Glossary,
+  GlossaryInput as GlossaryInputType,
+} from "./types/glossary";
+import { DEFAULT_TRANSLATIONS } from "./types/glossary";
+import { generateGlossary, expandTerm } from "./utils/claudeApi";
+import { saveGlossary, loadGlossary, clearStorage } from "./utils/storage";
+import {
+  Document,
+  Packer,
+  Paragraph,
+  TextRun,
+  ExternalHyperlink,
+  Header,
+  Footer,
+  PageNumber,
+  AlignmentType,
+  HeadingLevel,
+} from "docx";
+import { saveAs } from "file-saver";
+import { ArrowLeft, Copy, Download } from "lucide-react";
+import { useLanguage } from "./i18n";
 
 function App() {
   const { t: ui } = useLanguage();
   const [glossary, setGlossary] = useState<Glossary | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
-  const [loadingMessage, setLoadingMessage] = useState<string>('');
+  const [error, setError] = useState<string>("");
+  const [loadingMessage, setLoadingMessage] = useState<string>("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [showReminder, setShowReminder] = useState(false);
-  const [expandingTermIndex, setExpandingTermIndex] = useState<number | null>(null);
+  const [expandingTermIndex, setExpandingTermIndex] = useState<number | null>(
+    null,
+  );
   const [copied, setCopied] = useState(false);
 
   // Load saved data on component mount
@@ -38,25 +54,26 @@ function App() {
   const handleGenerate = async (input: GlossaryInputType) => {
     setLoading(true);
     setLoadingMessage(ui.generatingGlossary);
-    setError('');
+    setError("");
 
     try {
       const newGlossary = await generateGlossary(input.title, input.seedWord);
       setGlossary(newGlossary);
       setShowReminder(true);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to generate glossary';
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to generate glossary";
       setError(errorMessage);
-      console.error('Error generating glossary:', err);
+      console.error("Error generating glossary:", err);
     } finally {
       setLoading(false);
-      setLoadingMessage('');
+      setLoadingMessage("");
     }
   };
 
   // Generate markdown formatted content
   const getFormattedContent = () => {
-    if (!glossary) return '';
+    if (!glossary) return "";
 
     const t = glossary.translations || DEFAULT_TRANSLATIONS;
 
@@ -120,9 +137,9 @@ function App() {
     const content = getFormattedContent();
 
     // Create download link with .md format
-    const blob = new Blob([content], { type: 'text/markdown' });
+    const blob = new Blob([content], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
 
     // Format filename: "SeedWord.md" or "SeedWord_Title.md"
@@ -144,10 +161,10 @@ function App() {
     const t = glossary.translations || DEFAULT_TRANSLATIONS;
 
     // Font sizes in half-points: 24pt=48, 14pt=28, 13pt=26, 12pt=24
-    const TITLE_SIZE = 48;    // 24pt
-    const HEADING_SIZE = 28;  // 14pt
-    const BODY_SIZE = 26;     // 13pt
-    const SMALL_SIZE = 24;    // 12pt
+    const TITLE_SIZE = 48; // 24pt
+    const HEADING_SIZE = 28; // 14pt
+    const BODY_SIZE = 26; // 13pt
+    const SMALL_SIZE = 24; // 12pt
 
     const children: Paragraph[] = [];
 
@@ -157,15 +174,17 @@ function App() {
         heading: HeadingLevel.HEADING_1,
         children: [
           new TextRun({
-            text: glossary.title ? `${glossary.seedWord}: ${glossary.title}` : glossary.seedWord,
-            font: 'Arial',
+            text: glossary.title
+              ? `${glossary.seedWord}: ${glossary.title}`
+              : glossary.seedWord,
+            font: "Arial",
             bold: true,
             size: TITLE_SIZE,
-            color: '000000',
+            color: "000000",
           }),
         ],
         spacing: { after: 200 },
-      })
+      }),
     );
 
     // Description
@@ -179,7 +198,7 @@ function App() {
             }),
           ],
           spacing: { after: 200 },
-        })
+        }),
       );
     }
 
@@ -193,7 +212,7 @@ function App() {
           }),
         ],
         spacing: { after: 100 },
-      })
+      }),
     );
 
     // Total Terms
@@ -206,7 +225,7 @@ function App() {
           }),
         ],
         spacing: { after: 200 },
-      })
+      }),
     );
 
     // Horizontal line (simulated with underscores)
@@ -214,12 +233,12 @@ function App() {
       new Paragraph({
         children: [
           new TextRun({
-            text: '_______________________________________________',
+            text: "_______________________________________________",
             size: BODY_SIZE,
           }),
         ],
         spacing: { after: 200 },
-      })
+      }),
     );
 
     // Add all terms
@@ -231,14 +250,14 @@ function App() {
           children: [
             new TextRun({
               text: term.term,
-              font: 'Arial',
+              font: "Arial",
               bold: true,
               size: HEADING_SIZE,
-              color: '000000',
+              color: "000000",
             }),
           ],
           spacing: { before: 300, after: 100 },
-        })
+        }),
       );
 
       // Definition
@@ -251,7 +270,7 @@ function App() {
             }),
           ],
           spacing: { after: 200 },
-        })
+        }),
       );
 
       // Expanded content if available
@@ -266,7 +285,7 @@ function App() {
                 }),
               ],
               spacing: { after: 200 },
-            })
+            }),
           );
         });
 
@@ -282,12 +301,12 @@ function App() {
                 }),
               ],
               spacing: { before: 100, after: 100 },
-            })
+            }),
           );
 
           term.expandedContent.sources.forEach((source) => {
             const bulletChildren: (TextRun | ExternalHyperlink)[] = [
-              new TextRun({ text: '• ', size: BODY_SIZE }),
+              new TextRun({ text: "• ", size: BODY_SIZE }),
             ];
 
             if (source.url) {
@@ -296,26 +315,33 @@ function App() {
                   children: [
                     new TextRun({
                       text: source.name,
-                      style: 'Hyperlink',
+                      style: "Hyperlink",
                       size: BODY_SIZE,
                     }),
                   ],
                   link: source.url,
-                })
+                }),
               );
             } else {
-              bulletChildren.push(new TextRun({ text: source.name, size: BODY_SIZE }));
+              bulletChildren.push(
+                new TextRun({ text: source.name, size: BODY_SIZE }),
+              );
             }
 
             if (source.description) {
-              bulletChildren.push(new TextRun({ text: ` - ${source.description}`, size: BODY_SIZE }));
+              bulletChildren.push(
+                new TextRun({
+                  text: ` - ${source.description}`,
+                  size: BODY_SIZE,
+                }),
+              );
             }
 
             children.push(
               new Paragraph({
                 children: bulletChildren,
                 spacing: { after: 50 },
-              })
+              }),
             );
           });
 
@@ -329,11 +355,10 @@ function App() {
                 }),
               ],
               spacing: { after: 200 },
-            })
+            }),
           );
         }
       }
-
     });
 
     // Header text: "GLOSSARY BUILDER: SEEDWORD" if no title, or "GLOSSARY BUILDER: SEEDWORD: TITLE" if title provided
@@ -353,7 +378,7 @@ function App() {
                     new TextRun({
                       text: headerText,
                       size: 18, // 9pt
-                      color: '000000',
+                      color: "000000",
                     }),
                   ],
                 }),
@@ -369,7 +394,7 @@ function App() {
                     new TextRun({
                       children: [PageNumber.CURRENT],
                       size: 20, // 10pt
-                      color: '000000',
+                      color: "000000",
                     }),
                   ],
                 }),
@@ -392,7 +417,7 @@ function App() {
 
   const handleReset = () => {
     setGlossary(null);
-    setError('');
+    setError("");
     setShowReminder(false);
     clearStorage();
     setMenuOpen(false);
@@ -421,7 +446,7 @@ function App() {
 
     // Fetch new content
     setExpandingTermIndex(termIndex);
-    setError('');
+    setError("");
 
     try {
       const expandedContent = await expandTerm(
@@ -429,7 +454,7 @@ function App() {
         term.definition,
         glossary.title,
         glossary.seedWord,
-        glossary.detectedLanguage
+        glossary.detectedLanguage,
       );
 
       const updatedTerms = [...glossary.terms];
@@ -440,9 +465,12 @@ function App() {
       };
       setGlossary({ ...glossary, terms: updatedTerms });
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : `Failed to load more info for "${term.term}"`;
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : `Failed to load more info for "${term.term}"`;
       setError(errorMessage);
-      console.error('Error expanding term:', err);
+      console.error("Error expanding term:", err);
     } finally {
       setExpandingTermIndex(null);
     }
@@ -455,9 +483,11 @@ function App() {
         <div className="w-full bg-yellow-100/70 mb-4">
           <div className="max-w-[760px] mx-auto px-4 lg:px-0 py-3 flex items-center justify-between gap-4">
             <p className="text-black text-sm md:text-base flex-1">
-              {glossary.translations?.downloadReminder || DEFAULT_TRANSLATIONS.downloadReminder}
+              {glossary.translations?.downloadReminder ||
+                DEFAULT_TRANSLATIONS.downloadReminder}
               <br />
-              {glossary.translations?.downloadReminderLoss || DEFAULT_TRANSLATIONS.downloadReminderLoss}
+              {glossary.translations?.downloadReminderLoss ||
+                DEFAULT_TRANSLATIONS.downloadReminderLoss}
             </p>
             <button
               onClick={() => setShowReminder(false)}
@@ -484,8 +514,12 @@ function App() {
 
       <div className="mx-auto px-4 pt-3 pb-8 md:pt-8">
         {/* Header */}
-        <header className={`max-w-[760px] mx-auto ${glossary ? 'mb-20' : 'mb-5'} flex justify-between items-start md:items-center`}>
-          <h1 className={`tool-title font-bold text-black ${glossary ? 'text-2xl' : 'text-3xl md:text-5xl'}`}>
+        <header
+          className={`max-w-[760px] mx-auto ${glossary ? "mb-20" : "mb-5"} flex justify-between items-start md:items-center`}
+        >
+          <h1
+            className={`tool-title font-bold text-black ${glossary ? "text-2xl" : "text-3xl md:text-5xl"}`}
+          >
             {ui.appTitle}
           </h1>
 
@@ -554,7 +588,9 @@ function App() {
         {glossary && (
           <div
             className={`fixed inset-0 z-50 md:hidden transition-opacity duration-300 ${
-              menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+              menuOpen
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
             }`}
           >
             {/* Backdrop */}
@@ -566,9 +602,9 @@ function App() {
             {/* Slide Panel */}
             <div
               className={`absolute top-0 left-0 h-full w-64 shadow-lg transform transition-transform duration-300 ease-out ${
-                menuOpen ? 'translate-x-0' : '-translate-x-full'
+                menuOpen ? "translate-x-0" : "-translate-x-full"
               }`}
-              style={{ backgroundColor: 'var(--dark-gray)' }}
+              style={{ backgroundColor: "rgba(48, 48, 48, 0.85)" }}
             >
               <div className="p-4">
                 <button
@@ -651,7 +687,8 @@ function App() {
         </main>
 
         <footer className="max-w-[760px] mx-auto py-4 text-sm text-left text-black">
-          {ui.createdBy}<br />
+          {ui.createdBy}
+          <br />
           <span className="text-[#f90]">{ui.lastUpdate}</span>
         </footer>
       </div>
