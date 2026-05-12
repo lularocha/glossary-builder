@@ -517,11 +517,14 @@ function App() {
         <header
           className={`max-w-[760px] mx-auto ${glossary ? "mb-20" : "mb-5"} flex justify-between items-start md:items-center`}
         >
-          <h1
-            className={`tool-title font-bold text-black ${glossary ? "text-2xl" : "text-3xl md:text-5xl"}`}
-          >
-            {ui.appTitle}
-          </h1>
+          <div>
+            <p className="eyebrown">sugiro.ai</p>
+            <h1
+              className={`tool-title font-bold text-black ${glossary ? "text-2xl" : "text-3xl md:text-5xl"}`}
+            >
+              {ui.appTitle}
+            </h1>
+          </div>
 
           {/* Language Toggle - Only on input page */}
           {!glossary && <LanguageToggle className="mt-[6px] md:mt-0" />}

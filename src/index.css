@@ -7,7 +7,13 @@
 
 body {
   border-top: 0.75rem solid #fe0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
 }
 
 .mb-20 {
@@ -30,10 +36,20 @@ h1.glossary-title {
   line-height: 1.25;
 }
 
+.eyebrown {
+  font-size: 0.85rem;
+  color: #000;
+}
+
 /* Increase font-weight on mobile Retina displays for better visibility */
 @media (max-width: 768px) {
   .font-bold,
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 800 !important;
   }
 }
