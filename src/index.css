@@ -41,6 +41,12 @@ h1.glossary-title {
   color: #000;
 }
 
+@media (max-width: 768px) {
+  .eyebrown {
+    margin-top: -1rem;
+  }
+}
+
 /* Increase font-weight on mobile Retina displays for better visibility */
 @media (max-width: 768px) {
   .font-bold,

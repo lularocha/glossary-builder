@@ -512,7 +512,7 @@ function App() {
         </div>
       )}
 
-      <div className="mx-auto px-4 pt-3 pb-8 md:pt-8">
+      <div className="mx-auto p-[30px] md:px-4 md:pt-8 md:pb-8">
         {/* Header */}
         <header
           className={`max-w-[760px] mx-auto ${glossary ? "mb-20" : "mb-5"} flex justify-between items-start md:items-center`}
