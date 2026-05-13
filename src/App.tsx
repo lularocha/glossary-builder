@@ -691,7 +691,7 @@ function App() {
 
         <footer
           className="max-w-[760px] mx-auto py-4 text-center text-black"
-          style={{ fontSize: 16, fontWeight: 400 }}
+          style={{ fontSize: 14, fontWeight: 400 }}
         >
           {ui.createdBy}
           <a
