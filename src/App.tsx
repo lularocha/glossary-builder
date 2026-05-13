@@ -477,10 +477,10 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--bg)]">
       {/* Reminder Banner */}
       {glossary && showReminder && (
-        <div className="w-full bg-yellow-100/70 mb-4">
+        <div className="w-full bg-[var(--bg-warning)] mb-4">
           <div className="max-w-[760px] mx-auto px-4 lg:px-0 py-3 flex items-center justify-between gap-4">
             <p className="text-black text-sm md:text-base flex-1">
               {glossary.translations?.downloadReminder ||
@@ -632,28 +632,28 @@ function App() {
                 <div className="flex flex-col gap-4">
                   <button
                     onClick={handleReset}
-                    className="bg-orange-400 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                    className="bg-orange-400 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <ArrowLeft size={20} />
                     {ui.new}
                   </button>
                   <button
                     onClick={handleCopy}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <Copy size={20} />
                     {copied ? ui.copied : ui.copy}
                   </button>
                   <button
                     onClick={handleExport}
-                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                    className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <Download size={20} />
                     {ui.mdFile}
                   </button>
                   <button
                     onClick={handleExportDocx}
-                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
+                    className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center gap-2"
                   >
                     <Download size={20} />
                     {ui.docxFile}

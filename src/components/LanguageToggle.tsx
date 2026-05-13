@@ -1,15 +1,18 @@
-import React from 'react';
-import { useLanguage } from '../i18n/LanguageContext';
-import type { Language } from '../i18n/strings';
+import React from "react";
+import { useLanguage } from "../i18n/LanguageContext";
+import type { Language } from "../i18n/strings";
 
 interface LanguageToggleProps {
   className?: string;
 }
 
-export const LanguageToggle: React.FC<LanguageToggleProps> = ({ className = '' }) => {
+export const LanguageToggle: React.FC<LanguageToggleProps> = ({
+  className = "",
+}) => {
   const { language, setLanguage } = useLanguage();
 
-  const buttonBase = 'px-2 py-0.5 text-sm font-semibold rounded transition-colors text-white';
+  const buttonBase =
+    "w-[42px] h-[42px] text-sm font-semibold rounded-full transition-colors text-white flex items-center justify-center";
 
   const getButtonClasses = (lang: Language) => {
     const isActive = language === lang;
@@ -22,15 +25,15 @@ export const LanguageToggle: React.FC<LanguageToggleProps> = ({ className = '' }
   return (
     <div className={`flex gap-2 ${className}`}>
       <button
-        onClick={() => setLanguage('en')}
-        className={getButtonClasses('en')}
+        onClick={() => setLanguage("en")}
+        className={getButtonClasses("en")}
         aria-label="English"
       >
         EN
       </button>
       <button
-        onClick={() => setLanguage('pt')}
-        className={getButtonClasses('pt')}
+        onClick={() => setLanguage("pt")}
+        className={getButtonClasses("pt")}
         aria-label="Português"
       >
         PT

@@ -47,7 +47,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({
             id="seedWord"
             value={seedWord}
             onChange={(e) => setSeedWord(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2 bg-[var(--bg-input)] border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
             placeholder={ui.seedWordPlaceholder}
             required
           />
@@ -67,7 +67,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2 bg-[var(--bg-input)] border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
             placeholder={ui.titlePlaceholder}
           />
           <p className="mt-1 text-sm text-black">{ui.titleHelp}</p>

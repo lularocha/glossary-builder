@@ -3,6 +3,9 @@
 :root {
   --spacing: 0.25rem;
   --dark-gray: #222;
+  --bg: #f8f0f1;
+  --bg-input: #ffffff;
+  --bg-warning: #f7f1a9;
 }
 
 body {
@@ -30,6 +33,11 @@ body {
 
 .-mt-1 {
   margin-top: calc(var(--spacing) * -1);
+}
+
+h1.glossary-title,
+h1.tool-title {
+  letter-spacing: -0.03em;
 }
 
 h1.glossary-title {
