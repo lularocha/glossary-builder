@@ -23,7 +23,7 @@ export const LanguageToggle: React.FC<LanguageToggleProps> = ({
   };
 
   return (
-    <div className={`flex gap-2 ${className}`}>
+    <div className={`flex gap-1 ${className}`}>
       <button
         onClick={() => setLanguage("en")}
         className={getButtonClasses("en")}

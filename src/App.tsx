@@ -527,7 +527,7 @@ function App() {
           </div>
 
           {/* Language Toggle - Only on input page */}
-          {!glossary && <LanguageToggle className="mt-[6px] md:mt-0" />}
+          {!glossary && <LanguageToggle className="-mt-[5px] md:mt-0" />}
 
           {/* Action Buttons - only show when glossary exists */}
           {glossary && (
