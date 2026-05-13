@@ -689,10 +689,19 @@ function App() {
           )}
         </main>
 
-        <footer className="max-w-[760px] mx-auto py-4 text-sm text-left text-black">
+        <footer
+          className="max-w-[760px] mx-auto py-4 text-center text-black"
+          style={{ fontSize: 16, fontWeight: 400 }}
+        >
           {ui.createdBy}
-          <br />
-          <span className="text-[#f90]">{ui.lastUpdate}</span>
+          <a
+            href="https://sugiro.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontWeight: 500, color: "#f80" }}
+          >
+            sugiro.ai
+          </a>
         </footer>
       </div>
     </div>

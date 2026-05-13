@@ -40,7 +40,6 @@ export interface UIStrings {
 
   // Footer
   createdBy: string;
-  lastUpdate: string;
 
   // File/Document exports
   glossary: string;
@@ -89,8 +88,7 @@ export const strings: Record<Language, UIStrings> = {
       "Just enter a single term (Seed Word) and automatically generate 12 related terms with clear definitions. Output is optimized for technical, scientific, and educational contexts in any language.",
 
     // Footer
-    createdBy: "Created by Lula Rocha + Claude",
-    lastUpdate: "Last update: February 10, 2026",
+    createdBy: "developed by Lula Rocha / ",
 
     // File/Document exports
     glossary: "Glossary",
@@ -138,8 +136,7 @@ export const strings: Record<Language, UIStrings> = {
       "Basta inserir um único termo (Palavra Semente) e gerar automaticamente 12 termos relacionados com definições claras. O resultado é otimizado para contextos técnicos, científicos e educacionais em qualquer idioma.",
 
     // Footer
-    createdBy: "Criado por Lula Rocha + Claude",
-    lastUpdate: "Última atualização: 10 de fevereiro de 2026",
+    createdBy: "desenvolvido por Lula Rocha / ",
 
     // File/Document exports
     glossary: "Glossário",
