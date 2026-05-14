@@ -29,7 +29,7 @@ export const GlossaryInput: React.FC<GlossaryInputProps> = ({
 
   return (
     <div className="max-w-190 mx-auto">
-      <div className="text-base md:text-xl text-black mb-12 space-y-2">
+      <div className="text-base md:text-xl text-[#777] mb-12 space-y-2">
         <p>{ui.introParagraph1}</p>
         <p>{ui.introParagraph2}</p>
       </div>
