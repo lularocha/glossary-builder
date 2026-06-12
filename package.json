@@ -10,11 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.71.2",
+    "@anthropic-ai/sdk": "^0.104.1",
     "dexie": "^4.2.1",
     "docx": "^9.5.1",
     "file-saver": "^2.0.5",
     "lucide-react": "^0.562.0",
+    "openai": "^6.42.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

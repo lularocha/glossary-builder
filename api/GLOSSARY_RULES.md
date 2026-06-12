@@ -1,18 +1,21 @@
 # Glossary Generation Quality Rules
 
-These rules are embedded in the Claude prompt (`api/generate.ts`) to ensure consistent, high-quality glossary output.
+These rules are embedded in the LLM prompt (`api/generate.ts`) to ensure consistent, high-quality glossary output. The model provider is selected via the `LLM_PROVIDER` env var (see `api/_llm.ts`).
 
 ---
 
 ## Term Selection Rules
 
 ### Hierarchical Coverage
+
 Balance the 12 terms across difficulty levels:
+
 - **3-4 foundational terms** (importance 9-10): Building blocks you can't understand the topic without
 - **4-5 core concepts** (importance 7-8): Central ideas that define the domain
 - **3-4 practical/applied terms** (importance 5-7): How concepts are used in practice
 
 ### Selection Principles
+
 1. The **seed word MUST be the first term** with importance 10
 2. Include foundational "atoms" (smallest building blocks of the concept)
 3. Before including a specialized variant, ensure its parent category exists
@@ -26,6 +29,7 @@ Balance the 12 terms across difficulty levels:
 ## Formatting Rules
 
 ### Term Name Casing
+
 - **Abbreviations/acronyms**: Always written in ALL UPPERCASE (e.g., "API", "BASH", "HTML", "REST")
 - **Regular terms**: Use standard title case (e.g., "Gradient Descent", "Neural Network")
 
@@ -36,17 +40,21 @@ If the seed word is entered as an abbreviation, it should remain uppercase as th
 ## Definition Rules
 
 ### Standard Structure (Regular Terms)
+
 1. **Sentence 1**: WHAT it is (category + distinguishing characteristic)
 2. **Sentence 2**: WHY it matters or HOW it's used
 
 ### Abbreviation/Acronym Structure
+
 For terms that are abbreviations or acronyms:
+
 1. **Sentence 1**: State what it stands for (e.g., "API stands for Application Programming Interface.")
 2. **Line break** (`\n`)
 3. **Sentence 2**: WHAT it is (category + key characteristic)
 4. **Sentence 3**: WHY it matters or HOW it's used
 
 ### Writing Guidelines
+
 - Start with "A/An [category]..." or "The [noun/process]..." to immediately classify
 - Never use the term being defined within its own definition
 - Avoid vague quantifiers ("various", "different", "many") - be specific
@@ -55,6 +63,7 @@ For terms that are abbreviations or acronyms:
 - Each definition should be understandable without reading other definitions first
 
 ### Example of a Good Definition (Regular Term)
+
 ```
 Term: Gradient Descent
 Definition: An optimization algorithm that iteratively adjusts parameters by
@@ -63,6 +72,7 @@ foundation of how neural networks learn from training data.
 ```
 
 ### Example of a Good Definition (Abbreviation)
+
 ```
 Term: API
 Definition: API stands for Application Programming Interface.
@@ -75,14 +85,14 @@ different platforms.
 
 ## Importance Score Calibration
 
-| Score | Meaning | Example (Neural Networks) |
-|-------|---------|---------------------------|
-| 10 | The seed word itself | Neural Network |
-| 9 | Absolute prerequisites - cannot understand topic without | Weights, Activation Function |
-| 8 | Core concepts central to the domain | Backpropagation, Loss Function |
-| 7 | Important supporting concepts | Gradient Descent, Overfitting |
-| 6 | Commonly encountered related terms | Dropout, Batch Normalization |
-| 5 | Specialized or advanced topics | LSTM, Attention Mechanism |
+| Score | Meaning                                                  | Example (Neural Networks)      |
+| ----- | -------------------------------------------------------- | ------------------------------ |
+| 10    | The seed word itself                                     | Neural Network                 |
+| 9     | Absolute prerequisites - cannot understand topic without | Weights, Activation Function   |
+| 8     | Core concepts central to the domain                      | Backpropagation, Loss Function |
+| 7     | Important supporting concepts                            | Gradient Descent, Overfitting  |
+| 6     | Commonly encountered related terms                       | Dropout, Batch Normalization   |
+| 5     | Specialized or advanced topics                           | LSTM, Attention Mechanism      |
 
 ---
 
@@ -98,11 +108,11 @@ different platforms.
 
 These settings in `api/generate.ts` support quality output:
 
-| Setting | Value | Purpose |
-|---------|-------|---------|
-| `model` | claude-sonnet-4-20250514 | Balanced quality and speed |
-| `temperature` | 0.7 | Reduces variability while maintaining creativity |
-| `max_tokens` | 4096 | Sufficient for 12 detailed terms |
+| Setting       | Value                                                                                        | Purpose                                          |
+| ------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `model`       | deepseek-chat (default), gemini-2.5-flash, or claude-sonnet-4-6 (via `LLM_PROVIDER` env var) | Balanced quality and speed                       |
+| `temperature` | 0.7                                                                                          | Reduces variability while maintaining creativity |
+| `max_tokens`  | 4096                                                                                         | Sufficient for 12 detailed terms                 |
 
 ---
 
@@ -171,8 +181,8 @@ The "Learn More" feature allows users to expand any term with additional context
 
 ### API Configuration (expand.ts)
 
-| Setting | Value | Purpose |
-|---------|-------|---------|
-| `model` | claude-sonnet-4-20250514 | Consistent with generate endpoint |
-| `temperature` | 0.7 | Balanced creativity |
-| `max_tokens` | 2048 | Sufficient for expanded content |
+| Setting       | Value                                                                                        | Purpose                           |
+| ------------- | -------------------------------------------------------------------------------------------- | --------------------------------- |
+| `model`       | deepseek-chat (default), gemini-2.5-flash, or claude-sonnet-4-6 (via `LLM_PROVIDER` env var) | Consistent with generate endpoint |
+| `temperature` | 0.7                                                                                          | Balanced creativity               |
+| `max_tokens`  | 2048                                                                                         | Sufficient for expanded content   |

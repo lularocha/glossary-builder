@@ -1,5 +1,5 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import Anthropic from '@anthropic-ai/sdk';
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { generateText, isLLMApiError } from "./_llm.js";
 
 interface Term {
   term: string;
@@ -22,16 +22,18 @@ interface Translations {
 }
 
 const DEFAULT_TRANSLATIONS: Translations = {
-  generatedGlossary: 'Generated glossary',
-  learnMore: 'Learn more',
-  showLess: 'Show less',
-  sources: 'Sources',
-  linksDisclaimer: 'Links verified at time of generation. External sites may change.',
-  relatedTerms: 'Related Terms:',
-  seedWord: 'Seed Word:',
-  totalTerms: 'Total Terms:',
+  generatedGlossary: "Generated glossary",
+  learnMore: "Learn more",
+  showLess: "Show less",
+  sources: "Sources",
+  linksDisclaimer:
+    "Links verified at time of generation. External sites may change.",
+  relatedTerms: "Related Terms:",
+  seedWord: "Seed Word:",
+  totalTerms: "Total Terms:",
   downloadReminder: "Don't forget to download your glossary!",
-  downloadReminderLoss: "Your glossary will be lost if you hit the \"New\" button or exit this page.",
+  downloadReminderLoss:
+    'Your glossary will be lost if you hit the "New" button or exit this page.',
 };
 
 interface GenerateRequest {
@@ -76,27 +78,23 @@ function cleanJsonResponse(text: string): string {
 
 export default async function handler(
   request: VercelRequest,
-  response: VercelResponse
+  response: VercelResponse,
 ) {
   // Only allow POST requests
-  if (request.method !== 'POST') {
-    return response.status(405).json({ error: 'Method not allowed' });
+  if (request.method !== "POST") {
+    return response.status(405).json({ error: "Method not allowed" });
   }
 
   const { title, seedWord } = request.body as GenerateRequest;
 
-  if (!seedWord || typeof seedWord !== 'string') {
-    return response.status(400).json({ error: 'seedWord is required' });
+  if (!seedWord || typeof seedWord !== "string") {
+    return response.status(400).json({ error: "seedWord is required" });
   }
 
   try {
-    const anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY,
-    });
-
     const domainContext = title
       ? `The glossary is titled "${title}". IMPORTANT: Interpret the seed word "${seedWord}" within this context. Select terms and write definitions that are specific to this domain. If the seed word has multiple meanings, use only the meaning relevant to "${title}".`
-      : 'Focus on technical and development-related terms.';
+      : "Focus on technical and development-related terms.";
 
     const prompt = `You are a technical glossary expert. Generate a comprehensive glossary based on the seed word: "${seedWord}".
 
@@ -201,39 +199,35 @@ Return ONLY valid JSON in this exact format:
   ]
 }`;
 
-    const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 4096,
+    const text = await generateText({
+      prompt,
+      maxTokens: 4096,
       temperature: 0.7,
-      messages: [
-        {
-          role: 'user',
-          content: prompt,
-        },
-      ],
     });
-
-    const content = message.content[0];
-    if (content.type !== 'text') {
-      return response.status(500).json({ error: 'Unexpected response format from Claude API' });
+    if (!text) {
+      return response
+        .status(500)
+        .json({ error: "Empty response from LLM API" });
     }
 
-    const cleanedText = cleanJsonResponse(content.text);
+    const cleanedText = cleanJsonResponse(text);
 
     let parsed;
     try {
       parsed = JSON.parse(cleanedText);
     } catch (parseError) {
-      console.error('JSON Parse Error:', parseError);
-      console.error('Raw response:', content.text.substring(0, 500));
-      console.error('Cleaned text:', cleanedText.substring(0, 500));
-      throw new SyntaxError('Failed to parse Claude API response as JSON');
+      console.error("JSON Parse Error:", parseError);
+      console.error("Raw response:", text.substring(0, 500));
+      console.error("Cleaned text:", cleanedText.substring(0, 500));
+      throw new SyntaxError("Failed to parse LLM API response as JSON");
     }
 
     // Validate the parsed response has the expected structure
     if (!parsed.description || !Array.isArray(parsed.terms)) {
-      console.error('Invalid response structure:', parsed);
-      return response.status(500).json({ error: 'Invalid response structure from Claude API' });
+      console.error("Invalid response structure:", parsed);
+      return response
+        .status(500)
+        .json({ error: "Invalid response structure from LLM API" });
     }
 
     const glossary: GenerateResponse = {
@@ -241,7 +235,7 @@ Return ONLY valid JSON in this exact format:
       title: title,
       description: parsed.description,
       seedWord: seedWord,
-      detectedLanguage: parsed.detectedLanguage || 'English',
+      detectedLanguage: parsed.detectedLanguage || "English",
       translations: parsed.translations || DEFAULT_TRANSLATIONS,
       terms: parsed.terms,
       createdAt: new Date().toISOString(),
@@ -250,15 +244,19 @@ Return ONLY valid JSON in this exact format:
 
     return response.status(200).json(glossary);
   } catch (error) {
-    console.error('Error generating glossary:', error);
+    console.error("Error generating glossary:", error);
 
-    if (error instanceof Anthropic.APIError) {
-      return response.status(500).json({ error: `Claude API Error: ${error.message}` });
+    if (isLLMApiError(error)) {
+      return response
+        .status(500)
+        .json({ error: `LLM API Error: ${error.message}` });
     }
     if (error instanceof SyntaxError) {
-      return response.status(500).json({ error: 'Failed to parse Claude API response as JSON' });
+      return response
+        .status(500)
+        .json({ error: "Failed to parse LLM API response as JSON" });
     }
 
-    return response.status(500).json({ error: 'Internal server error' });
+    return response.status(500).json({ error: "Internal server error" });
   }
 }
