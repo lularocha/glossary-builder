@@ -1,6 +1,6 @@
 // UI Strings Dictionary
 // Edit this file to update translations for the interface elements
-// Note: Glossary content (definitions, sources, etc.) is auto-translated by Claude
+// Note: Glossary content (definitions, sources, etc.) is auto-translated by the LLM
 
 export type Language = "en" | "pt";
 
@@ -75,7 +75,7 @@ export const strings: Record<Language, UIStrings> = {
     // Form Help Text
     seedWordHelp: "Enter a term or concept to build your glossary around.",
     titleHelp:
-      "Give your glossary a descriptive title. This helps Claude understand the context of the Seed Word.",
+      "Give your glossary a descriptive title. This helps the AI understand the context of the Seed Word.",
 
     // Loading
     processing: "Processing...",
@@ -83,7 +83,7 @@ export const strings: Record<Language, UIStrings> = {
     loading: "Loading...",
 
     // Intro paragraphs
-    introParagraph1: "Build glossaries powered by Claude AI.",
+    introParagraph1: "Build glossaries powered by AI.",
     introParagraph2:
       "Just enter a single term (Seed Word) and automatically generate 12 related terms with clear definitions. Output is optimized for technical, scientific, and educational contexts in any language.",
 
@@ -123,7 +123,7 @@ export const strings: Record<Language, UIStrings> = {
     // Form Help Text
     seedWordHelp: "Digite um termo ou conceito para construir seu glossário.",
     titleHelp:
-      "Dê um título descritivo ao seu glossário. Isso ajuda o Claude a entender o contexto da Palavra Semente.",
+      "Dê um título descritivo ao seu glossário. Isso ajuda a IA a entender o contexto da Palavra Semente.",
 
     // Loading
     processing: "Processando...",
@@ -131,7 +131,7 @@ export const strings: Record<Language, UIStrings> = {
     loading: "Carregando...",
 
     // Intro paragraphs
-    introParagraph1: "Crie glossários com Claude AI.",
+    introParagraph1: "Crie glossários com IA.",
     introParagraph2:
       "Basta inserir um único termo (Palavra Semente) e gerar automaticamente 12 termos relacionados com definições claras. O resultado é otimizado para contextos técnicos, científicos e educacionais em qualquer idioma.",
 
