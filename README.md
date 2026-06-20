@@ -220,14 +220,16 @@ glossary-builder/
 ├── api/
 │   ├── _llm.ts                # LLM provider abstraction (DeepSeek/Gemini/Anthropic)
 │   ├── generate.ts            # Serverless function for glossary generation
-│   ├── expand.ts              # Serverless function for term expansion
-│   └── GLOSSARY_RULES.md      # Documentation of generation quality rules
+│   └── expand.ts              # Serverless function for term expansion
 ├── src/
 │   ├── components/
 │   │   ├── GlossaryInput.tsx      # Input form with language-aware UI
 │   │   ├── GlossaryDisplay.tsx    # Term display with Learn More expansion
+│   │   ├── GlossaryRulesModal.tsx # Popup that renders the glossary rules doc
 │   │   ├── LanguageToggle.tsx     # EN/PT UI language switcher
 │   │   └── ScrollToTopButton.tsx  # Quick scroll navigation
+│   ├── content/
+│   │   └── GLOSSARY_RULES.md      # Documentation of generation quality rules
 │   ├── i18n/
 │   │   ├── LanguageContext.tsx    # Language state management
 │   │   └── strings.ts             # UI translations (EN, PT-BR)
@@ -245,7 +247,7 @@ glossary-builder/
 
 ## Quality Rules
 
-The glossary generation follows explicit quality rules to ensure consistent, high-quality output. See [`api/GLOSSARY_RULES.md`](api/GLOSSARY_RULES.md) for full documentation.
+The glossary generation follows explicit quality rules to ensure consistent, high-quality output. See [`src/content/GLOSSARY_RULES.md`](src/content/GLOSSARY_RULES.md) for full documentation.
 
 Key principles:
 

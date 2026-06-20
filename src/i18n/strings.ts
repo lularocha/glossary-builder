@@ -40,6 +40,7 @@ export interface UIStrings {
 
   // Footer
   createdBy: string;
+  glossaryRules: string;
 
   // File/Document exports
   glossary: string;
@@ -89,6 +90,7 @@ export const strings: Record<Language, UIStrings> = {
 
     // Footer
     createdBy: "developed by Lula Rocha / ",
+    glossaryRules: "Glossary Rules",
 
     // File/Document exports
     glossary: "Glossary",
@@ -137,6 +139,7 @@ export const strings: Record<Language, UIStrings> = {
 
     // Footer
     createdBy: "desenvolvido por Lula Rocha / ",
+    glossaryRules: "Regras do Glossário",
 
     // File/Document exports
     glossary: "Glossário",

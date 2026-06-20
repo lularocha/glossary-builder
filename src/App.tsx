@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { GlossaryInput } from "./components/GlossaryInput";
 import { GlossaryDisplay } from "./components/GlossaryDisplay";
 import { LanguageToggle } from "./components/LanguageToggle";
+import { GlossaryRulesModal } from "./components/GlossaryRulesModal";
 import type {
   Glossary,
   GlossaryInput as GlossaryInputType,
@@ -37,6 +38,7 @@ function App() {
     null,
   );
   const [copied, setCopied] = useState(false);
+  const [rulesOpen, setRulesOpen] = useState(false);
 
   // Load saved data on component mount
   useEffect(() => {
@@ -702,8 +704,26 @@ function App() {
           >
             sugiro.ai
           </a>
+          {!glossary && (
+            <>
+              <span className="mx-2 text-gray-400">·</span>
+              <button
+                onClick={() => setRulesOpen(true)}
+                style={{ fontWeight: 500, color: "#f80" }}
+                className="hover:underline"
+              >
+                {ui.glossaryRules}
+              </button>
+            </>
+          )}
         </footer>
       </div>
+
+      <GlossaryRulesModal
+        open={rulesOpen}
+        onClose={() => setRulesOpen(false)}
+        title={ui.glossaryRules}
+      />
     </div>
   );
 }
