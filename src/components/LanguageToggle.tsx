@@ -36,7 +36,7 @@ export const LanguageToggle: React.FC<LanguageToggleProps> = ({
         className={getButtonClasses("pt")}
         aria-label="Português"
       >
-        PT
+        BR
       </button>
     </div>
   );
