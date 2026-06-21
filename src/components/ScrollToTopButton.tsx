@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../i18n';
+import React, { useState, useEffect } from "react";
+import { useLanguage } from "../i18n";
 
 export const ScrollToTopButton: React.FC = () => {
   const { t: ui } = useLanguage();
@@ -9,42 +9,45 @@ export const ScrollToTopButton: React.FC = () => {
     const handleScroll = () => {
       // Calculate scroll percentage
       const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = (scrollTop / docHeight) * 100;
 
       // Show button after 30% scroll
       setIsVisible(scrollPercent > 30);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     // Check initial scroll position
     handleScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed bottom-8 right-8 w-[50px] h-[50px] rounded-full transition-all duration-300 flex items-center justify-center z-50 ${
-        isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
+      className={`fixed bottom-8 right-8 w-[40px] h-[40px] rounded-full transition-all duration-300 flex items-center justify-center z-50 ${
+        isVisible
+          ? "opacity-100 scale-100"
+          : "opacity-0 scale-90 pointer-events-none"
       }`}
       style={{
-        backgroundColor: '#ff8800'
+        backgroundColor: "#ff8800",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = '#ff5500';
+        e.currentTarget.style.backgroundColor = "#ff5500";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = '#ff8800';
+        e.currentTarget.style.backgroundColor = "#ff8800";
       }}
       aria-label={ui.scrollToTop}
     >
