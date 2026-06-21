@@ -8,7 +8,7 @@ import type {
   GlossaryInput as GlossaryInputType,
 } from "./types/glossary";
 import { DEFAULT_TRANSLATIONS } from "./types/glossary";
-import { generateGlossary, expandTerm } from "./utils/claudeApi";
+import { generateGlossary, expandTerm } from "./utils/llmApi";
 import { saveGlossary, loadGlossary, clearStorage } from "./utils/storage";
 import {
   Document,

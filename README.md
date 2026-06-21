@@ -234,7 +234,7 @@ glossary-builder/
 │   │   ├── LanguageContext.tsx    # Language state management
 │   │   └── strings.ts             # UI translations (EN, PT-BR)
 │   ├── utils/
-│   │   ├── claudeApi.ts           # API wrapper (generateGlossary, expandTerm)
+│   │   ├── llmApi.ts              # API wrapper (generateGlossary, expandTerm)
 │   │   └── storage.ts             # localStorage persistence
 │   ├── types/
 │   │   └── glossary.ts            # TypeScript types (Term, Glossary, Source, etc.)
