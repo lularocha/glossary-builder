@@ -702,7 +702,7 @@ function App() {
         </main>
 
         <footer
-          className="max-w-[760px] mx-auto py-4 text-center text-black"
+          className={`max-w-[760px] mx-auto py-4 ${glossary ? "text-left" : "text-center"} text-black`}
           style={{ fontSize: 14, fontWeight: 400 }}
         >
           {ui.createdBy}
