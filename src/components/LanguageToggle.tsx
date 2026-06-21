@@ -25,18 +25,18 @@ export const LanguageToggle: React.FC<LanguageToggleProps> = ({
   return (
     <div className={`flex gap-1 ${className}`}>
       <button
-        onClick={() => setLanguage("pt")}
-        className={getButtonClasses("pt")}
-        aria-label="Português"
-      >
-        BR
-      </button>
-      <button
         onClick={() => setLanguage("en")}
         className={getButtonClasses("en")}
         aria-label="English"
       >
         EN
+      </button>
+      <button
+        onClick={() => setLanguage("pt")}
+        className={getButtonClasses("pt")}
+        aria-label="Português"
+      >
+        BR
       </button>
     </div>
   );
