@@ -1,8 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { GlossaryInput } from "./components/GlossaryInput";
 import { GlossaryDisplay } from "./components/GlossaryDisplay";
 import { LanguageToggle } from "./components/LanguageToggle";
-import { GlossaryRulesModal } from "./components/GlossaryRulesModal";
+// Lazy-loaded: pulls in react-markdown/remark-gfm, only needed when the
+// rules modal is actually opened from the footer.
+const GlossaryRulesModal = lazy(() =>
+  import("./components/GlossaryRulesModal").then((m) => ({
+    default: m.GlossaryRulesModal,
+  })),
+);
 import type {
   Glossary,
   GlossaryInput as GlossaryInputType,
@@ -10,19 +16,7 @@ import type {
 import { DEFAULT_TRANSLATIONS } from "./types/glossary";
 import { generateGlossary, expandTerm } from "./utils/llmApi";
 import { saveGlossary, loadGlossary, clearStorage } from "./utils/storage";
-import {
-  Document,
-  Packer,
-  Paragraph,
-  TextRun,
-  ExternalHyperlink,
-  Header,
-  Footer,
-  PageNumber,
-  AlignmentType,
-  HeadingLevel,
-} from "docx";
-import { saveAs } from "file-saver";
+import type { Paragraph, TextRun, ExternalHyperlink } from "docx";
 import { ArrowLeft, Copy, Download } from "lucide-react";
 import { useLanguage } from "./i18n";
 
@@ -159,6 +153,22 @@ function App() {
 
   const handleExportDocx = async () => {
     if (!glossary) return;
+
+    // Load the heavy docx/file-saver libs only when the user actually exports,
+    // keeping them out of the initial bundle.
+    const {
+      Document,
+      Packer,
+      Paragraph,
+      TextRun,
+      ExternalHyperlink,
+      Header,
+      Footer,
+      PageNumber,
+      AlignmentType,
+      HeadingLevel,
+    } = await import("docx");
+    const { saveAs } = await import("file-saver");
 
     const t = glossary.translations || DEFAULT_TRANSLATIONS;
 
@@ -719,11 +729,15 @@ function App() {
         </footer>
       </div>
 
-      <GlossaryRulesModal
-        open={rulesOpen}
-        onClose={() => setRulesOpen(false)}
-        title={ui.glossaryRules}
-      />
+      {rulesOpen && (
+        <Suspense fallback={null}>
+          <GlossaryRulesModal
+            open={rulesOpen}
+            onClose={() => setRulesOpen(false)}
+            title={ui.glossaryRules}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }
