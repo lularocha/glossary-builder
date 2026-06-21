@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { X } from "lucide-react";
@@ -20,11 +20,23 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
   const { language } = useLanguage();
   const rulesContent = language === "pt" ? rulesContentPt : rulesContentEn;
 
+  // Drives the slide transition: false = off-screen (below), true = in place.
+  const [entered, setEntered] = useState(false);
+
+  // Slide in on the frame after mount.
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setEntered(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  // Start the slide-out; the real unmount happens on the panel's transitionend.
+  const handleClose = () => setEntered(false);
+
   // Close on Escape and lock background scroll while open
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") setEntered(false);
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -32,7 +44,7 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [open, onClose]);
+  }, [open]);
 
   if (!open) return null;
 
@@ -44,17 +56,30 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
       aria-label={title}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div
+        className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${
+          entered ? "opacity-100" : "opacity-0"
+        }`}
+        onClick={handleClose}
+      />
 
       {/* Panel */}
-      <div className="relative bg-[var(--bg-input)] rounded-lg shadow-xl w-full max-w-[760px] max-h-[90vh] flex flex-col">
+      <div
+        className={`relative bg-[var(--bg-input)] rounded-lg shadow-xl w-full max-w-[760px] max-h-[90vh] flex flex-col transform transition-transform duration-300 ease-out ${
+          entered ? "translate-y-0" : "translate-y-full"
+        }`}
+        onTransitionEnd={(e) => {
+          // Only the panel's own slide-out unmounts the modal.
+          if (e.target === e.currentTarget && !entered) onClose();
+        }}
+      >
         {/* Header */}
         <div className="flex items-center justify-between px-8 py-4 border-b-8 border-[#FE0] flex-shrink-0">
           <h2 className="glossary-title text-xl font-bold text-black">
             {title}
           </h2>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="text-black hover:text-gray-600 transition-colors"
             aria-label="Close"
           >
@@ -116,24 +141,28 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
               ),
               hr: () => <hr className="border-t border-gray-300 my-8" />,
               code: ({ className, children }) => {
-                const isBlock = /language-/.test(className || "");
+                // Fenced blocks here have no language, so also treat any
+                // multi-line content as a block (inline code never wraps lines).
+                const isBlock =
+                  /language-/.test(className || "") ||
+                  String(children).includes("\n");
                 if (isBlock) {
                   return <code className={className}>{children}</code>;
                 }
                 return (
-                  <code className="bg-gray-100 text-black rounded px-1.5 py-0.5 text-[0.9em] font-mono">
+                  <code className="bg-gray-100 text-black rounded px-1.5 py-0.5 text-[0.9em] font-mono break-words">
                     {children}
                   </code>
                 );
               },
               pre: ({ children }) => (
-                <pre className="bg-gray-100 text-black rounded-md p-4 mb-4 overflow-x-auto text-sm font-mono leading-relaxed">
+                <pre className="bg-gray-100 text-black rounded-md p-4 mb-4 whitespace-pre-wrap break-words text-sm font-mono leading-relaxed">
                   {children}
                 </pre>
               ),
               table: ({ children }) => (
                 <div className="overflow-x-auto mb-4">
-                  <table className="w-full text-sm text-left border-collapse">
+                  <table className="w-full text-xs sm:text-sm text-left border-collapse">
                     {children}
                   </table>
                 </div>
@@ -142,12 +171,12 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
                 <thead className="border-b-2 border-gray-300">{children}</thead>
               ),
               th: ({ children }) => (
-                <th className="font-semibold text-black py-2 pr-4 align-top">
+                <th className="font-semibold text-black py-2 pr-2 sm:pr-4 align-top break-words">
                   {children}
                 </th>
               ),
               td: ({ children }) => (
-                <td className="text-black py-2 pr-4 align-top border-b border-gray-200">
+                <td className="text-black py-2 pr-2 sm:pr-4 align-top border-b border-gray-200 break-words">
                   {children}
                 </td>
               ),

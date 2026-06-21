@@ -1,6 +1,6 @@
 # Regras de Qualidade da Geração de Glossários
 
-Estas regras são incorporadas ao prompt do LLM (`api/generate.ts`) para garantir um glossário consistente e de alta qualidade. O provedor do modelo é selecionado pela variável de ambiente `LLM_PROVIDER` (veja `api/_llm.ts`).
+Nos bastidores, estas regras são incorporadas ao prompt do LLM para garantir um glossário consistente e de alta qualidade.
 
 ---
 
@@ -108,11 +108,11 @@ de se comunicar entre diferentes plataformas.
 
 Estas configurações garantem qualidade tanto na geração do glossário quanto na expansão de termos:
 
-| Configuração  | Valor                                                                                        | Finalidade                                    |
-| ------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `model`       | deepseek-chat (padrão), gemini-2.5-flash, ou claude-sonnet-4-6 (via variável `LLM_PROVIDER`) | Equilíbrio entre qualidade e velocidade       |
-| `temperature` | 0.7                                                                                          | Reduz a variabilidade mantendo a criatividade |
-| `max_tokens`  | 4096 (geração) / 2048 (expansão)                                                             | Suficiente para um resultado detalhado        |
+| Configuração  | Valor                                                          | Finalidade                                    |
+| ------------- | -------------------------------------------------------------- | --------------------------------------------- |
+| `model`       | deepseek-chat (padrão), gemini-2.5-flash, ou claude-sonnet-4-6 | Equilíbrio entre qualidade e velocidade       |
+| `temperature` | 0.7                                                            | Reduz a variabilidade mantendo a criatividade |
+| `max_tokens`  | 4096 (geração) / 2048 (expansão)                               | Suficiente para um resultado detalhado        |
 
 ---
 

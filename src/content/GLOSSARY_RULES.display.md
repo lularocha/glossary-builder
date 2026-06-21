@@ -1,6 +1,6 @@
 # Glossary Generation Quality Rules
 
-These rules are embedded in the LLM prompt (`api/generate.ts`) to ensure consistent, high-quality glossary output. The model provider is selected via the `LLM_PROVIDER` env var (see `api/_llm.ts`).
+Behind the scenes, these rules are embedded in the LLM prompt to ensure consistent, high-quality glossary output.
 
 ---
 
@@ -108,11 +108,11 @@ different platforms.
 
 These settings support quality output for both glossary generation and term expansion:
 
-| Setting       | Value                                                                                        | Purpose                                          |
-| ------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `model`       | deepseek-chat (default), gemini-2.5-flash, or claude-sonnet-4-6 (via `LLM_PROVIDER` env var) | Balanced quality and speed                       |
-| `temperature` | 0.7                                                                                          | Reduces variability while maintaining creativity |
-| `max_tokens`  | 4096 (generation) / 2048 (expansion)                                                         | Sufficient for detailed output                   |
+| Setting       | Value                                                           | Purpose                                          |
+| ------------- | --------------------------------------------------------------- | ------------------------------------------------ |
+| `model`       | deepseek-chat (default), gemini-2.5-flash, or claude-sonnet-4-6 | Balanced quality and speed                       |
+| `temperature` | 0.7                                                             | Reduces variability while maintaining creativity |
+| `max_tokens`  | 4096 (generation) / 2048 (expansion)                            | Sufficient for detailed output                   |
 
 ---
 
