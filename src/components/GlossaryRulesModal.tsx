@@ -98,7 +98,7 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="text-2xl font-bold text-black mb-3 mt-8">
+                <h2 className="text-[26px] font-bold text-[#F80] tracking-[-0.03em] mb-3 mt-8">
                   {children}
                 </h2>
               ),
