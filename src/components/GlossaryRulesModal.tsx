@@ -98,7 +98,7 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="text-[26px] font-bold text-[#F80] tracking-[-0.03em] mb-3 mt-8">
+                <h2 className="text-[26px] font-bold text-[#F80] tracking-[-0.03em] leading-[1.15] mb-3 mt-8">
                   {children}
                 </h2>
               ),
@@ -191,7 +191,7 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
           </ReactMarkdown>
 
           {/* Footer */}
-          <div className="mt-8 border-t border-gray-200 pt-4 text-left text-sm text-black">
+          <div className="mt-8 border-t border-gray-200 pt-4 text-left text-[14px] text-black">
             {ui.developedBy}
             <a
               href="https://sugiro.ai"
