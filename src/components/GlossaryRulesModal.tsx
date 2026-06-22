@@ -17,7 +17,7 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
   onClose,
   title,
 }) => {
-  const { language } = useLanguage();
+  const { language, t: ui } = useLanguage();
   const rulesContent = language === "pt" ? rulesContentPt : rulesContentEn;
 
   // Drives the slide transition: false = off-screen (below), true = in place.
@@ -189,6 +189,19 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
           >
             {rulesContent}
           </ReactMarkdown>
+
+          {/* Footer */}
+          <div className="mt-8 border-t border-gray-200 pt-4 text-left text-sm text-black">
+            {ui.developedBy}
+            <a
+              href="https://sugiro.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontWeight: 500, color: "#f80" }}
+            >
+              sugiro.ai
+            </a>
+          </div>
         </div>
       </div>
     </div>
