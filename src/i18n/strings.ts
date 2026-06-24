@@ -90,7 +90,7 @@ export const strings: Record<Language, UIStrings> = {
       "Just enter a single term (Seed Word) and automatically generate 12 related terms with clear definitions. Output is optimized for technical, scientific, and educational contexts in any language.",
 
     // Footer
-    createdBy: "developed by Lula Rocha / ",
+    createdBy: "Developed by Lula Rocha / ",
     developedBy: "Developed by Lula Rocha / ",
     glossaryRules: "Glossary Rules",
 
@@ -140,7 +140,7 @@ export const strings: Record<Language, UIStrings> = {
       "Basta inserir um único termo (Palavra Semente) e gerar automaticamente 12 termos relacionados com definições claras. O resultado é otimizado para contextos técnicos, científicos e educacionais em qualquer idioma.",
 
     // Footer
-    createdBy: "desenvolvido por Lula Rocha / ",
+    createdBy: "Desenvolvido por Lula Rocha / ",
     developedBy: "Desenvolvido por Lula Rocha / ",
     glossaryRules: "Regras do Glossário",
 
