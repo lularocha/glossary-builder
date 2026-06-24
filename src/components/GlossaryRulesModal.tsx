@@ -65,7 +65,7 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
 
       {/* Panel */}
       <div
-        className={`relative bg-[var(--bg-input)] rounded-lg shadow-xl w-full max-w-[760px] max-h-[90vh] flex flex-col transform transition-transform duration-300 ease-out ${
+        className={`relative bg-[var(--bg-input)] rounded-lg shadow-xl w-full max-w-[760px] max-h-[90dvh] flex flex-col transform transition-transform duration-300 ease-out ${
           entered ? "translate-y-0" : "translate-y-full"
         }`}
         onTransitionEnd={(e) => {
@@ -88,7 +88,7 @@ export const GlossaryRulesModal: React.FC<GlossaryRulesModalProps> = ({
         </div>
 
         {/* Scrollable Markdown Body */}
-        <div className="overflow-y-auto px-8 py-6">
+        <div className="overflow-y-auto px-8 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
