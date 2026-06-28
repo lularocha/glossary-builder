@@ -532,7 +532,7 @@ function App() {
           <div>
             <p className="eyebrown">sugiro.ai</p>
             <h1
-              className={`tool-title font-bold text-black ${glossary ? "text-2xl" : "text-3xl md:text-5xl"}`}
+              className={`tool-title font-bold text-black leading-none md:leading-[normal] ${glossary ? "text-2xl" : "text-3xl md:text-5xl"}`}
             >
               {ui.appTitle}
             </h1>
