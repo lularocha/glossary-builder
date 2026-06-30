@@ -624,7 +624,7 @@ function App() {
               <div className="p-4">
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="mb-6 p-2 text-white"
+                  className="mb-6 p-2 text-white ml-auto block"
                 >
                   <svg
                     className="w-6 h-6"
