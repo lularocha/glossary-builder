@@ -579,7 +579,7 @@ function App() {
               {/* Mobile Hamburger Button */}
               <button
                 onClick={() => setMenuOpen(true)}
-                className="md:hidden p-2 text-black -mt-1"
+                className="md:hidden p-2 text-black -mt-[9px]"
               >
                 <svg
                   className="w-9 h-9"
@@ -616,30 +616,32 @@ function App() {
 
             {/* Slide Panel */}
             <div
-              className={`absolute top-0 left-0 h-full w-64 shadow-lg transform transition-transform duration-300 ease-out ${
-                menuOpen ? "translate-x-0" : "-translate-x-full"
+              className={`absolute top-0 right-0 h-full w-64 shadow-lg transform transition-transform duration-300 ease-out ${
+                menuOpen ? "translate-x-0" : "translate-x-full"
               }`}
               style={{ backgroundColor: "rgba(0, 0, 0, 0.75)" }}
             >
               <div className="p-4">
-                <button
-                  onClick={() => setMenuOpen(false)}
-                  className="mb-6 p-2 text-white"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                <div className="mb-6 flex justify-end">
+                  <button
+                    onClick={() => setMenuOpen(false)}
+                    className="p-2 text-white"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
 
                 <div className="flex flex-col gap-4">
                   <button
