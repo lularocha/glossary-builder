@@ -10,10 +10,9 @@
 
 body {
   border-top: 0.75rem solid #fe0;
-  padding-top: env(safe-area-inset-top);
-  padding-right: env(safe-area-inset-right);
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-left: env(safe-area-inset-left);
+  /* Fill the iOS status-bar / home-indicator safe areas with the page
+     background so the standalone web app doesn't show bare white there. */
+  background-color: var(--bg);
   font-family:
     "Inter",
     -apple-system,
